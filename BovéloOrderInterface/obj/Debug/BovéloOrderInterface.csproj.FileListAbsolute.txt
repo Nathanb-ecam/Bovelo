@@ -1,0 +1,10 @@
+C:\Users\Nathan Buchin\source\repos\BovéloOrderInterface\BovéloOrderInterface\bin\Debug\BovéloOrderInterface.exe.config
+C:\Users\Nathan Buchin\source\repos\BovéloOrderInterface\BovéloOrderInterface\bin\Debug\BovéloOrderInterface.exe
+C:\Users\Nathan Buchin\source\repos\BovéloOrderInterface\BovéloOrderInterface\bin\Debug\BovéloOrderInterface.pdb
+C:\Users\Nathan Buchin\source\repos\BovéloOrderInterface\BovéloOrderInterface\obj\Debug\BovéloOrderInterface.csprojAssemblyReference.cache
+C:\Users\Nathan Buchin\source\repos\BovéloOrderInterface\BovéloOrderInterface\obj\Debug\BovéloOrderInterface.Form1.resources
+C:\Users\Nathan Buchin\source\repos\BovéloOrderInterface\BovéloOrderInterface\obj\Debug\BovéloOrderInterface.Properties.Resources.resources
+C:\Users\Nathan Buchin\source\repos\BovéloOrderInterface\BovéloOrderInterface\obj\Debug\BovéloOrderInterface.csproj.GenerateResource.cache
+C:\Users\Nathan Buchin\source\repos\BovéloOrderInterface\BovéloOrderInterface\obj\Debug\BovéloOrderInterface.csproj.CoreCompileInputs.cache
+C:\Users\Nathan Buchin\source\repos\BovéloOrderInterface\BovéloOrderInterface\obj\Debug\BovéloOrderInterface.exe
+C:\Users\Nathan Buchin\source\repos\BovéloOrderInterface\BovéloOrderInterface\obj\Debug\BovéloOrderInterface.pdb
