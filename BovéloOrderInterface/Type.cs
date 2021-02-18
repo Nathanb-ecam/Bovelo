@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Bovelo
 {
-    class Type
+    public class Type
     {
         private string type;
 

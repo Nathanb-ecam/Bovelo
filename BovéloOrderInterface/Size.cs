@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Bovelo
 {
-    class Size
+    public class Size
     {
         private int size;
 

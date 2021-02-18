@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Bovelo
 {
-    class Color
+    public class Color
     {
         private string color;
 

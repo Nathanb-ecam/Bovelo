@@ -8,17 +8,18 @@ namespace Bovelo
 {
     public class Bike
     {
-        private int idBike;
+        private static int idBike=0;
         private Type type;
         private Size size;
         private Color color;
         private Parts partsList;
         private double price;
-
+        private int id;
         //Constructor
-        public Bike(int idBike, double price)
+        public Bike(Type type, Size size, Color color,double price)
         {
-            this.idBike = idBike;
+            this.id = idBike;
+            idBike++;
             this.price = price;
         }
 
@@ -33,10 +34,11 @@ namespace Bovelo
             get { return price; }
             set { price = value; }
         }
+ 
 
         public override string ToString()
         {
-            return String.Format("{0} {1}", this.idBike, this.price);
+            return String.Format("{0} {1}", this.id, this.price);
         }
     }
 }

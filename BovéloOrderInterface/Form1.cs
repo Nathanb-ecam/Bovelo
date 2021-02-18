@@ -8,12 +8,15 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace BovéloOrderInterface
+namespace Bovelo
 {
     public partial class Form1 : Form
     {
         int totalPrice = 0;
-        
+        int nbrBikeAdv = 0;
+        int nbrBikeCity = 0;
+        int nbrBikeExpl = 0;
+
         public Form1()
         {
             InitializeComponent();
@@ -27,6 +30,16 @@ namespace BovéloOrderInterface
         private void label1_Click(object sender, EventArgs e)
         {
            
+        }
+        private void orderBikeBuilder(Type model, Size size, Color color,int price, int quantity)
+        {
+            for (int value= 0; value < quantity; value++)
+            {
+                Bike bike_name = new Bike(model,size,color,price);
+                Console.WriteLine(bike_name.IdBike);
+                Console.WriteLine(bike_name.Price);
+            }
+
         }
 
         private void label3_Click(object sender, EventArgs e)
@@ -86,28 +99,48 @@ namespace BovéloOrderInterface
             string model = modelBox.Text;
             string size = sizeBox.Text;
             string color = colorBox.Text;
-    
-            if (modelBox.Text == "Adventure")
+            int bikeSize = Int32.Parse(size.Substring(0,2));
+            Type t = new Type(model);
+            Color c = new Color(color);
+            Size s = new Size(bikeSize);
+            int price = 0;
+
+            if (model== "Adventure")
             {
-                recap += model + ":   " + size + '_' + color + "_ 150€ x " + quantity + " piece(s)" +'\n';
-                recapTxt.Text = recap;
+                nbrBikeAdv += quantity;
+                price = 150;
+               
+                orderBikeBuilder(t,s,c,price,quantity);
+               
+
+             
                 totalPrice += quantity * 150;
                 totalPriceTxt.Text = totalPrice.ToString();
             }
             else if (model =="City"){
-                recap += model + ":   " + size + '_' + color + "_ 100€ x " + quantity + " piece(s)" + '\n';
-                recapTxt.Text = recap;
+                nbrBikeCity += quantity;
+                price = 100;
+                
+                orderBikeBuilder(t, s, c, price, quantity);
+                
+                
                 totalPrice += quantity * 100;
                 totalPriceTxt.Text = totalPrice.ToString();
             }
-            else
+            else if(model =="Explorer")
             {
+                nbrBikeExpl += quantity;
+                price = 250;
                 
-                recap += model + ":   " + size + '_' + color + "_ 250€ x " + quantity + " piece(s)"+ '\n';
-                recapTxt.Text = recap;
+                orderBikeBuilder(t, s, c, price, quantity);
+          
+                
                 totalPrice += quantity * 250;
                 totalPriceTxt.Text = totalPrice.ToString();
             }
+            recap += String.Format("{0}: {1}{2}{3}€ x {4} piece(s)+ '\n'", model, size,color,price,quantity);
+            recapTxt.Text = recap;
+
 
         }
 
