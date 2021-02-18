@@ -52,7 +52,17 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="Size.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="Type.cs" />
+    <Compile Include="Bike.cs" />
+    <Compile Include="Color.cs" />
+    <Compile Include="Catalog.cs" />
+    <Compile Include="Customer.cs" />
+    <Compile Include="Parts.cs" />
+    <Compile Include="Person.cs" />
+    <Compile Include="Order.cs" />
+    <Compile Include="Manager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
