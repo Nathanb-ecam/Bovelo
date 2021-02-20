@@ -37,29 +37,16 @@ namespace Bovelo
                 order.AddBike(bike_name, value);
                 Console.WriteLine(order.ToString());
             }
+            //order.AddBike(bike_name, quantity);
             
         }
              
-        private void label3_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label5_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void label7_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void recapBtn_Click(object sender, EventArgs e)
         {
-            panelMain.Visible = false;
             panelRecap.Visible = true;
+            panelOrder.Visible = false;
             panelDelay.Visible = false;
+            panelCatalog.Visible = false;
             
             
         }
@@ -67,8 +54,9 @@ namespace Bovelo
         private void delayBtn_Click(object sender, EventArgs e)
         {
             panelDelay.Visible = true;
-            panelMain.Visible = false;
+            panelOrder.Visible = false;
             panelRecap.Visible = false;
+            panelCatalog.Visible = false;
             // chercher dans la bdd si vélo en stock puis estimer delay
             //delayEstimater();
             if (totalPrice != 0)
@@ -80,15 +68,12 @@ namespace Bovelo
 
         private void orderPageBtn_Click(object sender, EventArgs e)
         {
-            panelMain.Visible = true;
+            panelOrder.Visible = true;
             panelDelay.Visible = false;
             panelRecap.Visible = false;
+            panelCatalog.Visible = false;
         }
 
-        private void label10_Click(object sender, EventArgs e)
-        {
-
-        }
 
         private void addBtn_Click(object sender, EventArgs e)
         {
@@ -99,6 +84,7 @@ namespace Bovelo
             string bikeRef = model.Substring(0, 1) + color.Substring(0, 1) + size.Substring(0, 2);
 
             int bikeSize = Int32.Parse(size.Substring(0,2));
+           
             int quantity = Int32.Parse(quantityBox.Text);
 
             Type t = new Type(model);
@@ -112,8 +98,6 @@ namespace Bovelo
             }
 
             totalPrice += quantity * t.Price;
-
-            
             totalPriceTxt.Text = totalPrice.ToString();
             recapTxt.Text = recap;
             
@@ -124,8 +108,6 @@ namespace Bovelo
             recapTxt.Text = "";
             totalPrice = 0;
             totalPriceTxt.Text= totalPrice.ToString();
-           
-
         }
 
         private void confirmBtn_Click(object sender, EventArgs e)
@@ -133,9 +115,13 @@ namespace Bovelo
             // doit retirer la commande de la bdd
         }
 
-        private void panelDelay_Paint(object sender, PaintEventArgs e)
+        private void catalogBtn_Click(object sender, EventArgs e)
         {
-
+            panelCatalog.Visible = true;
+            panelOrder.Visible = false;
+            panelDelay.Visible = false;
+            panelRecap.Visible = false;
         }
+
     }
 }
