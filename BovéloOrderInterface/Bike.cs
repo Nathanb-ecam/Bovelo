@@ -9,26 +9,25 @@ namespace Bovelo
 {
     public class Bike
     {
-        private static int idBike=0;
+        
         private Type type;
         private Size size;
         private Color color;
         private Parts partsList;
         private double price;
-        private int id;
+        private static int id = 0;
         //Constructor
         public Bike(Type type, Size size, Color color,double price)
         {
-            this.id = idBike;
-            idBike++;
+            id++;
             this.price = price;
             this.type = type;
         }
 
         public int IdBike
         {
-            get { return idBike; }
-            set { idBike = value; }
+            get { return id; }
+            set { id = value; }
         }
 
         public Type Type

@@ -11,7 +11,7 @@ namespace Bovelo
         protected int id;
         protected string name;
         
-        public Person (int id, string name)
+        public Person (string name, int id =0)
         {
             this.id = id;
             this.name = name;

@@ -8,28 +8,44 @@ namespace Bovelo
 {
     class Order
     {
-        private readonly int id;
-        private Dictionary<Bike, int> bikes;
-
-        public Order(int id, Dictionary<Bike, int> bikes)
+        private Dictionary<string, List<int>> bikes;
+        private List<Bike> bikes_list = new List<Bike>();
+        private static int id =0;
+        public Order(Dictionary<string, List<int>> bikes)
         {
-            this.id = id;
+            id++;
             this.bikes = bikes;
         }
-
-        public void AddBike(Bike bike, int number)
+        public Dictionary<string, List<int>> Bikes
         {
-            bikes.Add(bike, number);
+            get { return bikes; }
+        }
+
+        public void AddBike(Bike bike)
+        {
+            bikes_list.Add(bike);
+            if (!bikes.ContainsKey(bike.Type.Types))
+            {
+                List<int> l = new List<int>();
+                l.Add(1);
+                l.Add(bike.Type.Price);
+                bikes[bike.Type.Types] = l;
+            }
+            else
+            {
+                bikes[bike.Type.Types][0] += 1;
+                bikes[bike.Type.Types][1] += bike.Type.Price;
+            }
         }
 
         public int GetNumBike(Type type)
         {
             int num = 0;
-            foreach (KeyValuePair<Bike, int> bike in bikes)
+            foreach (KeyValuePair<string, List<int>> bike in bikes)
             {
-                if (bike.Key.Type == type)
+                if (bike.Key == type.Types)
                 {
-                    num = bikes[bike.Key];
+                    num += 1;
                 }
             }
             return num;
@@ -37,11 +53,7 @@ namespace Bovelo
 
         public override string ToString()
         {
-            foreach (KeyValuePair<Bike, int> bike in bikes)
-            {
-                Console.WriteLine(bike.Key.ToString(), bike.Value);
-            }
-            return String.Format("{0}", this.id);
+            return String.Format("{0}", id);
         }
     }
 

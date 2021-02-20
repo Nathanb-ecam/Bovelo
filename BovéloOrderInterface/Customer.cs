@@ -9,27 +9,30 @@ namespace Bovelo
     class Customer : Person
     {
         private Order order;
-
-        public Customer(int id, string name) : base(id, name)
+        private static int id_customer =0;
+        public Customer(string name) : base(name)
         {
-            
+            id_customer++;
         }
 
         public void SetOrder (Order order)
         {
             this.order = order;
-        }
+        }        
 
-        // bikes is private, no access to it here( getter setter)
-        /* 
-        public void ModifyOrder(Bike bike, int number)
-        {
-            this.order.bikes[bike] = number;
-        }
-        */
         public Order GetOrder()
         {
             return this.order;
+        }
+
+        public int Id
+        {
+            get{ return id_customer; }
+        }
+
+        public override string ToString()
+        {
+            return String.Format("Order ID : {0} Customer ID :{1}", order.ToString(), Id);
         }
 
     }

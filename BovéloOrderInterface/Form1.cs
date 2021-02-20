@@ -13,8 +13,8 @@ namespace Bovelo
 {
     public partial class Form1 : Form
     {
-        int totalPrice = 0;
-        Order order = new Order(1, new Dictionary<Bike, int>());
+     
+        Order order = new Order(new Dictionary<string, List<int>>());
 
         public Form1()
         {
@@ -31,13 +31,12 @@ namespace Bovelo
         }
         private void orderBikeBuilder(Type model, Size size, Color color, int quantity)
         {
+
             for (int value= 0; value < quantity; value++)
             {
                 Bike bike_name = new Bike(model,size,color,model.Price);
-                order.AddBike(bike_name, value);
-                Console.WriteLine(order.ToString());
+                order.AddBike(bike_name);          
             }
-            //order.AddBike(bike_name, quantity);
             
         }
              
@@ -59,10 +58,7 @@ namespace Bovelo
             panelCatalog.Visible = false;
             // chercher dans la bdd si vélo en stock puis estimer delay
             //delayEstimater();
-            if (totalPrice != 0)
-            {
-                delayInfobox.Text = "Le délai estimé est de ";
-            }
+            
             
         }
 
@@ -78,13 +74,13 @@ namespace Bovelo
         private void addBtn_Click(object sender, EventArgs e)
         {
             string recap = "";
+            int totalPrice = 0;
             string model = modelBox.Text;
             string size = sizeBox.Text;
             string color = colorBox.Text;
-            string bikeRef = model.Substring(0, 1) + color.Substring(0, 1) + size.Substring(0, 2);
-
-            int bikeSize = Int32.Parse(size.Substring(0,2));
            
+            int bikeSize = Int32.Parse(size.Substring(0,2));
+   
             int quantity = Int32.Parse(quantityBox.Text);
 
             Type t = new Type(model);
@@ -94,10 +90,14 @@ namespace Bovelo
             if (model== "Adventure" || model == "Explorer" || model == "City")
             {
                 orderBikeBuilder(t,s,c,quantity);
-                recap = order.GetNumBike(t).ToString();
             }
 
-            totalPrice += quantity * t.Price;
+            foreach (KeyValuePair<string, List<int>> bike in order.Bikes)
+            {         
+                recap += String.Format("{0} {1} piece(s) {2}$\n", bike.Key, bike.Value[0], bike.Value[1]);
+                totalPrice += bike.Value[1];
+            }
+
             totalPriceTxt.Text = totalPrice.ToString();
             recapTxt.Text = recap;
             
@@ -105,13 +105,27 @@ namespace Bovelo
 
         private void resetBtn_Click(object sender, EventArgs e)
         {
+            order.Bikes.Clear();
+            totalPriceTxt.Text = "";
             recapTxt.Text = "";
-            totalPrice = 0;
-            totalPriceTxt.Text= totalPrice.ToString();
         }
 
         private void confirmBtn_Click(object sender, EventArgs e)
         {
+            if(order.Bikes.Count != 0)
+            {
+                Customer customer = new Customer("FrigoFri");
+                customer.SetOrder(order);
+                Console.WriteLine(customer.ToString());
+                order.Bikes.Clear();
+                totalPriceTxt.Text = "";
+                recapTxt.Text = "";
+            }
+            else
+            {
+                Console.WriteLine("Please choose articles first :)");
+            }
+
             // doit retirer la commande de la bdd
         }
 

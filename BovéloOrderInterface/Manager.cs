@@ -10,7 +10,7 @@ namespace Bovelo
     {
         private List<Customer> customers = new List<Customer>();
 
-        public Manager(int id, string name) : base(id, name)
+        public Manager(string name) : base(name)
         {
 
         }
