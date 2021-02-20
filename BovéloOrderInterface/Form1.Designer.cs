@@ -200,6 +200,7 @@
             this.panelDelay.Name = "panelDelay";
             this.panelDelay.Size = new System.Drawing.Size(969, 381);
             this.panelDelay.TabIndex = 16;
+            this.panelDelay.Paint += new System.Windows.Forms.PaintEventHandler(this.panelDelay_Paint);
             // 
             // delayInfobox
             // 

@@ -7,15 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace Bovelo
 {
     public partial class Form1 : Form
     {
         int totalPrice = 0;
-        int nbrBikeAdv = 0;
-        int nbrBikeCity = 0;
-        int nbrBikeExpl = 0;
+        Order order = new Order(1, new Dictionary<Bike, int>());
 
         public Form1()
         {
@@ -24,24 +23,23 @@ namespace Bovelo
             sizeBox.SelectedIndex = 0;
             colorBox.SelectedIndex = 0;
             quantityBox.SelectedText = "1";
-
         }
         
         private void label1_Click(object sender, EventArgs e)
         {
            
         }
-        private void orderBikeBuilder(Type model, Size size, Color color,int price, int quantity)
+        private void orderBikeBuilder(Type model, Size size, Color color, int quantity)
         {
             for (int value= 0; value < quantity; value++)
             {
-                Bike bike_name = new Bike(model,size,color,price);
-                Console.WriteLine(bike_name.IdBike);
-                Console.WriteLine(bike_name.Price);
+                Bike bike_name = new Bike(model,size,color,model.Price);
+                order.AddBike(bike_name, value);
+                Console.WriteLine(order.ToString());
             }
-
+            
         }
-
+             
         private void label3_Click(object sender, EventArgs e)
         {
 
@@ -94,54 +92,31 @@ namespace Bovelo
 
         private void addBtn_Click(object sender, EventArgs e)
         {
-            string recap = recapTxt.Text;
-            int quantity = Int32.Parse(quantityBox.Text);
+            string recap = "";
             string model = modelBox.Text;
             string size = sizeBox.Text;
             string color = colorBox.Text;
+            string bikeRef = model.Substring(0, 1) + color.Substring(0, 1) + size.Substring(0, 2);
+
             int bikeSize = Int32.Parse(size.Substring(0,2));
+            int quantity = Int32.Parse(quantityBox.Text);
+
             Type t = new Type(model);
             Color c = new Color(color);
             Size s = new Size(bikeSize);
-            int price = 0;
 
-            if (model== "Adventure")
+            if (model== "Adventure" || model == "Explorer" || model == "City")
             {
-                nbrBikeAdv += quantity;
-                price = 150;
-               
-                orderBikeBuilder(t,s,c,price,quantity);
-               
+                orderBikeBuilder(t,s,c,quantity);
+                recap = order.GetNumBike(t).ToString();
+            }
 
-             
-                totalPrice += quantity * 150;
-                totalPriceTxt.Text = totalPrice.ToString();
-            }
-            else if (model =="City"){
-                nbrBikeCity += quantity;
-                price = 100;
-                
-                orderBikeBuilder(t, s, c, price, quantity);
-                
-                
-                totalPrice += quantity * 100;
-                totalPriceTxt.Text = totalPrice.ToString();
-            }
-            else if(model =="Explorer")
-            {
-                nbrBikeExpl += quantity;
-                price = 250;
-                
-                orderBikeBuilder(t, s, c, price, quantity);
-          
-                
-                totalPrice += quantity * 250;
-                totalPriceTxt.Text = totalPrice.ToString();
-            }
-            recap += String.Format("{0}: {1}{2}{3}€ x {4} piece(s)+ '\n'", model, size,color,price,quantity);
+            totalPrice += quantity * t.Price;
+
+            
+            totalPriceTxt.Text = totalPrice.ToString();
             recapTxt.Text = recap;
-
-
+            
         }
 
         private void resetBtn_Click(object sender, EventArgs e)
@@ -156,6 +131,11 @@ namespace Bovelo
         private void confirmBtn_Click(object sender, EventArgs e)
         {
             // doit retirer la commande de la bdd
+        }
+
+        private void panelDelay_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }

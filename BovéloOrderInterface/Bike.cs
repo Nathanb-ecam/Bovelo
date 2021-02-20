@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace Bovelo
 {
     public class Bike
@@ -21,12 +22,18 @@ namespace Bovelo
             this.id = idBike;
             idBike++;
             this.price = price;
+            this.type = type;
         }
 
         public int IdBike
         {
             get { return idBike; }
             set { idBike = value; }
+        }
+
+        public Type Type
+        {
+            get { return type; }
         }
 
         public double Price
@@ -38,7 +45,8 @@ namespace Bovelo
 
         public override string ToString()
         {
-            return String.Format("{0} {1}", this.id, this.price);
+            return String.Format("{0} {1}", this.type.Types, this.price);
         }
+
     }
 }

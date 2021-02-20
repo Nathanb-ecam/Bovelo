@@ -17,20 +17,30 @@ namespace Bovelo
             this.bikes = bikes;
         }
 
-        public string AddBike(Bike bike, int number)
+        public void AddBike(Bike bike, int number)
         {
             bikes.Add(bike, number);
-            String s = String.Format("You added {0} of {1}", number,bike) ;
-            return s;
         }
 
-        public int GetNumBike(Bike bike)
+        public int GetNumBike(Type type)
         {
-            return this.bikes[bike];
+            int num = 0;
+            foreach (KeyValuePair<Bike, int> bike in bikes)
+            {
+                if (bike.Key.Type == type)
+                {
+                    num = bikes[bike.Key];
+                }
+            }
+            return num;
         }
 
         public override string ToString()
         {
+            foreach (KeyValuePair<Bike, int> bike in bikes)
+            {
+                Console.WriteLine(bike.Key.ToString(), bike.Value);
+            }
             return String.Format("{0}", this.id);
         }
     }
