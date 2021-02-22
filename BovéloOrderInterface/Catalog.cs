@@ -8,7 +8,16 @@ namespace Bovelo
 {
     public class Catalog
     {
-        private Bike bikeList;
+        private List<Bike> bikeList = new List<Bike>();
 
+        public void addBike(Bike bike)
+        {
+            this.bikeList.Add(bike);
+        }
+
+        public void removeBike(Bike bike)
+        {
+            this.bikeList.Remove(bike);
+        }
     }
 }
