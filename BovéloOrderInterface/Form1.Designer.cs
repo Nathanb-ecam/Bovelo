@@ -31,8 +31,8 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.panelOrder = new System.Windows.Forms.Panel();
+            this.previewBtn = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.addBtn = new System.Windows.Forms.Button();
             this.quantityBox = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -43,23 +43,7 @@
             this.modelBox = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.panelCatalog = new System.Windows.Forms.Panel();
-            this.testBox = new System.Windows.Forms.PictureBox();
-            this.label16 = new System.Windows.Forms.Label();
-            this.label15 = new System.Windows.Forms.Label();
-            this.label14 = new System.Windows.Forms.Label();
-            this.pictureBox10 = new System.Windows.Forms.PictureBox();
-            this.pictureBox9 = new System.Windows.Forms.PictureBox();
-            this.pictureBox8 = new System.Windows.Forms.PictureBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.pictureBox7 = new System.Windows.Forms.PictureBox();
-            this.pictureBox6 = new System.Windows.Forms.PictureBox();
-            this.pictureBox5 = new System.Windows.Forms.PictureBox();
-            this.pictureBox4 = new System.Windows.Forms.PictureBox();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
-            this.pic1 = new System.Windows.Forms.PictureBox();
-            this.label13 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
             this.panelDelay = new System.Windows.Forms.Panel();
             this.delayInfobox = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
@@ -80,28 +64,20 @@
             this.Bovelo = new System.Windows.Forms.Label();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.previewBox = new System.Windows.Forms.PictureBox();
             this.panelOrder.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panelCatalog.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.testBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pic1)).BeginInit();
             this.panelDelay.SuspendLayout();
             this.panelRecap.SuspendLayout();
             this.panelNav.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.previewBox)).BeginInit();
             this.SuspendLayout();
             // 
             // panelOrder
             // 
+            this.panelOrder.Controls.Add(this.previewBox);
+            this.panelOrder.Controls.Add(this.previewBtn);
             this.panelOrder.Controls.Add(this.label6);
-            this.panelOrder.Controls.Add(this.pictureBox1);
             this.panelOrder.Controls.Add(this.addBtn);
             this.panelOrder.Controls.Add(this.quantityBox);
             this.panelOrder.Controls.Add(this.label5);
@@ -117,6 +93,21 @@
             this.panelOrder.Size = new System.Drawing.Size(1097, 524);
             this.panelOrder.TabIndex = 14;
             // 
+            // previewBtn
+            // 
+            this.previewBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(76)))));
+            this.previewBtn.FlatAppearance.BorderSize = 0;
+            this.previewBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.previewBtn.Font = new System.Drawing.Font("EuroRoman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
+            this.previewBtn.ForeColor = System.Drawing.Color.Black;
+            this.previewBtn.Location = new System.Drawing.Point(589, 224);
+            this.previewBtn.Name = "previewBtn";
+            this.previewBtn.Size = new System.Drawing.Size(145, 45);
+            this.previewBtn.TabIndex = 29;
+            this.previewBtn.Text = "Preview bike";
+            this.previewBtn.UseVisualStyleBackColor = false;
+            this.previewBtn.Click += new System.EventHandler(this.previewBtn_Click);
+            // 
             // label6
             // 
             this.label6.AutoSize = true;
@@ -129,15 +120,6 @@
             this.label6.TabIndex = 28;
             this.label6.Text = "Bovelo Order Page";
             // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox1.Image")));
-            this.pictureBox1.Location = new System.Drawing.Point(498, 49);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(198, 136);
-            this.pictureBox1.TabIndex = 27;
-            this.pictureBox1.TabStop = false;
-            // 
             // addBtn
             // 
             this.addBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(76)))));
@@ -145,7 +127,7 @@
             this.addBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.addBtn.Font = new System.Drawing.Font("EuroRoman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
             this.addBtn.ForeColor = System.Drawing.Color.Black;
-            this.addBtn.Location = new System.Drawing.Point(665, 228);
+            this.addBtn.Location = new System.Drawing.Point(770, 224);
             this.addBtn.Name = "addBtn";
             this.addBtn.Size = new System.Drawing.Size(145, 45);
             this.addBtn.TabIndex = 24;
@@ -240,95 +222,11 @@
             // 
             // panelCatalog
             // 
-            this.panelCatalog.Controls.Add(this.testBox);
-            this.panelCatalog.Controls.Add(this.label16);
-            this.panelCatalog.Controls.Add(this.label15);
-            this.panelCatalog.Controls.Add(this.label14);
-            this.panelCatalog.Controls.Add(this.pictureBox10);
-            this.panelCatalog.Controls.Add(this.pictureBox9);
-            this.panelCatalog.Controls.Add(this.pictureBox8);
             this.panelCatalog.Controls.Add(this.label2);
-            this.panelCatalog.Controls.Add(this.pictureBox7);
-            this.panelCatalog.Controls.Add(this.pictureBox6);
-            this.panelCatalog.Controls.Add(this.pictureBox5);
-            this.panelCatalog.Controls.Add(this.pictureBox4);
-            this.panelCatalog.Controls.Add(this.pictureBox3);
-            this.panelCatalog.Controls.Add(this.pic1);
-            this.panelCatalog.Controls.Add(this.label13);
-            this.panelCatalog.Controls.Add(this.label12);
-            this.panelCatalog.Controls.Add(this.label11);
             this.panelCatalog.Location = new System.Drawing.Point(226, 58);
             this.panelCatalog.Name = "panelCatalog";
-            this.panelCatalog.Size = new System.Drawing.Size(1097, 524);
+            this.panelCatalog.Size = new System.Drawing.Size(1097, 521);
             this.panelCatalog.TabIndex = 2;
-            // 
-            // testBox
-            // 
-            this.testBox.Location = new System.Drawing.Point(47, 383);
-            this.testBox.Name = "testBox";
-            this.testBox.Size = new System.Drawing.Size(231, 106);
-            this.testBox.TabIndex = 31;
-            this.testBox.TabStop = false;
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label16.Location = new System.Drawing.Point(135, 297);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(31, 13);
-            this.label16.TabIndex = 39;
-            this.label16.Text = "200€";
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.Location = new System.Drawing.Point(148, 225);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(31, 13);
-            this.label15.TabIndex = 38;
-            this.label15.Text = "150€";
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label14.Location = new System.Drawing.Point(88, 148);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(31, 13);
-            this.label14.TabIndex = 30;
-            this.label14.Text = "100€";
-            // 
-            // pictureBox10
-            // 
-            this.pictureBox10.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox10.Image")));
-            this.pictureBox10.Location = new System.Drawing.Point(342, 312);
-            this.pictureBox10.Name = "pictureBox10";
-            this.pictureBox10.Size = new System.Drawing.Size(160, 109);
-            this.pictureBox10.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox10.TabIndex = 37;
-            this.pictureBox10.TabStop = false;
-            // 
-            // pictureBox9
-            // 
-            this.pictureBox9.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox9.Image")));
-            this.pictureBox9.Location = new System.Drawing.Point(575, 312);
-            this.pictureBox9.Name = "pictureBox9";
-            this.pictureBox9.Size = new System.Drawing.Size(166, 109);
-            this.pictureBox9.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox9.TabIndex = 36;
-            this.pictureBox9.TabStop = false;
-            // 
-            // pictureBox8
-            // 
-            this.pictureBox8.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox8.Image")));
-            this.pictureBox8.Location = new System.Drawing.Point(817, 313);
-            this.pictureBox8.Name = "pictureBox8";
-            this.pictureBox8.Size = new System.Drawing.Size(176, 108);
-            this.pictureBox8.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox8.TabIndex = 35;
-            this.pictureBox8.TabStop = false;
             // 
             // label2
             // 
@@ -341,102 +239,6 @@
             this.label2.Size = new System.Drawing.Size(120, 29);
             this.label2.TabIndex = 0;
             this.label2.Text = "Our Bikes";
-            // 
-            // pictureBox7
-            // 
-            this.pictureBox7.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox7.Image")));
-            this.pictureBox7.Location = new System.Drawing.Point(342, 195);
-            this.pictureBox7.Name = "pictureBox7";
-            this.pictureBox7.Size = new System.Drawing.Size(160, 94);
-            this.pictureBox7.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox7.TabIndex = 34;
-            this.pictureBox7.TabStop = false;
-            // 
-            // pictureBox6
-            // 
-            this.pictureBox6.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox6.Image")));
-            this.pictureBox6.Location = new System.Drawing.Point(575, 83);
-            this.pictureBox6.Name = "pictureBox6";
-            this.pictureBox6.Size = new System.Drawing.Size(166, 91);
-            this.pictureBox6.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox6.TabIndex = 33;
-            this.pictureBox6.TabStop = false;
-            // 
-            // pictureBox5
-            // 
-            this.pictureBox5.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox5.Image")));
-            this.pictureBox5.Location = new System.Drawing.Point(575, 195);
-            this.pictureBox5.Name = "pictureBox5";
-            this.pictureBox5.Size = new System.Drawing.Size(166, 94);
-            this.pictureBox5.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox5.TabIndex = 32;
-            this.pictureBox5.TabStop = false;
-            // 
-            // pictureBox4
-            // 
-            this.pictureBox4.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox4.Image")));
-            this.pictureBox4.Location = new System.Drawing.Point(817, 84);
-            this.pictureBox4.Name = "pictureBox4";
-            this.pictureBox4.Size = new System.Drawing.Size(176, 90);
-            this.pictureBox4.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox4.TabIndex = 31;
-            this.pictureBox4.TabStop = false;
-            // 
-            // pictureBox3
-            // 
-            this.pictureBox3.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox3.Image")));
-            this.pictureBox3.Location = new System.Drawing.Point(817, 195);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(176, 95);
-            this.pictureBox3.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pictureBox3.TabIndex = 30;
-            this.pictureBox3.TabStop = false;
-            // 
-            // pic1
-            // 
-            this.pic1.Image = ((System.Drawing.Image)(resources.GetObject("pic1.Image")));
-            this.pic1.Location = new System.Drawing.Point(342, 83);
-            this.pic1.Name = "pic1";
-            this.pic1.Size = new System.Drawing.Size(160, 91);
-            this.pic1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pic1.TabIndex = 29;
-            this.pic1.TabStop = false;
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(76)))));
-            this.label13.Font = new System.Drawing.Font("EuroRoman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
-            this.label13.Location = new System.Drawing.Point(34, 286);
-            this.label13.Margin = new System.Windows.Forms.Padding(3);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(82, 22);
-            this.label13.TabIndex = 3;
-            this.label13.Text = "Explorer";
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(76)))));
-            this.label12.Font = new System.Drawing.Font("EuroRoman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
-            this.label12.Location = new System.Drawing.Point(34, 216);
-            this.label12.Margin = new System.Windows.Forms.Padding(3);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(101, 22);
-            this.label12.TabIndex = 2;
-            this.label12.Text = "Adventure";
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(76)))));
-            this.label11.Font = new System.Drawing.Font("EuroRoman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
-            this.label11.Location = new System.Drawing.Point(34, 139);
-            this.label11.Margin = new System.Windows.Forms.Padding(3);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(44, 22);
-            this.label11.TabIndex = 1;
-            this.label11.Text = "City";
             // 
             // panelDelay
             // 
@@ -678,16 +480,24 @@
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
+            // previewBox
+            // 
+            this.previewBox.Location = new System.Drawing.Point(420, 83);
+            this.previewBox.Name = "previewBox";
+            this.previewBox.Size = new System.Drawing.Size(187, 94);
+            this.previewBox.TabIndex = 30;
+            this.previewBox.TabStop = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(1)))), ((int)(((byte)(91)))), ((int)(((byte)(150)))));
             this.ClientSize = new System.Drawing.Size(1426, 675);
-            this.Controls.Add(this.flowLayoutPanel1);
-            this.Controls.Add(this.panelCatalog);
             this.Controls.Add(this.panelOrder);
+            this.Controls.Add(this.flowLayoutPanel1);
             this.Controls.Add(this.panelRecap);
+            this.Controls.Add(this.panelCatalog);
             this.Controls.Add(this.panelNav);
             this.Controls.Add(this.panelDelay);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
@@ -695,25 +505,15 @@
             this.Text = "Bovelo";
             this.panelOrder.ResumeLayout(false);
             this.panelOrder.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panelCatalog.ResumeLayout(false);
             this.panelCatalog.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.testBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox7)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox6)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox5)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.pic1)).EndInit();
             this.panelDelay.ResumeLayout(false);
             this.panelDelay.PerformLayout();
             this.panelRecap.ResumeLayout(false);
             this.panelRecap.PerformLayout();
             this.panelNav.ResumeLayout(false);
             this.panelNav.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.previewBox)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -722,7 +522,6 @@
 
         private System.Windows.Forms.Panel panelOrder;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button delayBtn;
         private System.Windows.Forms.Button recapBtn;
         private System.Windows.Forms.Button addBtn;
@@ -744,24 +543,9 @@
         private System.Windows.Forms.Button resetBtn;
         private System.Windows.Forms.ColorDialog colorDialog1;
         private System.Windows.Forms.Panel panelCatalog;
-        private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Label label11;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.PictureBox pictureBox10;
-        private System.Windows.Forms.PictureBox pictureBox9;
-        private System.Windows.Forms.PictureBox pictureBox8;
-        private System.Windows.Forms.PictureBox pictureBox7;
-        private System.Windows.Forms.PictureBox pictureBox6;
-        private System.Windows.Forms.PictureBox pictureBox5;
-        private System.Windows.Forms.PictureBox pictureBox4;
-        private System.Windows.Forms.PictureBox pictureBox3;
-        private System.Windows.Forms.PictureBox pic1;
-        private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Button catalogBtn;
         private System.Windows.Forms.Panel panelNav;
-        private System.Windows.Forms.Label label16;
-        private System.Windows.Forms.Label label15;
-        private System.Windows.Forms.Label label14;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel1;
         private System.Windows.Forms.Label Bovelo;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
@@ -769,6 +553,7 @@
         private System.Windows.Forms.Label totalPriceTxt;
         private System.Windows.Forms.Label delayInfobox;
         private System.Windows.Forms.Button exitBtn;
-        private System.Windows.Forms.PictureBox testBox;
+        private System.Windows.Forms.Button previewBtn;
+        private System.Windows.Forms.PictureBox previewBox;
     }
 }

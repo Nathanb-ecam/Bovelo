@@ -15,6 +15,7 @@ namespace Bovelo
     {
      
         Order order = new Order(new Dictionary<string, List<int>>());
+        Catalog c = new Catalog();
 
         public Form1()
         {
@@ -140,27 +141,114 @@ namespace Bovelo
 
         private void generateCatalog()
         {
-            Catalog c = new Catalog();
             Dictionary<string, string> bikeDict = c.getDico;
+            int count = 0; //pour compter les itérations, apres 3 photos on passe a la ligne
+            int x =250; // x et y pour positionner le poin de départ des picturebox
+            int y = 65;
+            int n = 1; // index pour determiner le label a ecricre 
+            int a = 5; // a et b pour positionner les labels correspondants aux photos
+            int b = 150;
             foreach(KeyValuePair<string, string> item in bikeDict)
             {
-                Console.WriteLine(item.Key);
-                Console.WriteLine(item.Value);
-                if (item.Key == "CR")
-                {
-                    Bitmap bm = new Bitmap(item.Value);
-                    testBox.Image = bm;
-                    testBox.SizeMode = PictureBoxSizeMode.Zoom;
-                }
+                
+                Console.WriteLine(item.Key); // CR 
+                Console.WriteLine(item.Value);// lien velo city rouge
+                //if (item.Key == "CR" || item.Key=="CB" || item.Key == "CG")
+                //{
+                    if (count < 3 && item.Key.Substring(0,1)=="C")
+                    { 
+                        // on genere une image du vélo 
+                        PictureBox_generator(x,y,item.Value, "City a 100euros");
+                        if (n == 1)
+                        {
+                            //Label_generator("City a 100euros",a,b);
+                            n++;
+                        }
+                        x += 250;
+                        count++;
+                    }
+                    
+                    else if (count > 2 && count <6 && item.Key.Substring(0, 1) == "A")
+                    {
+                    
+                    // on remet le compteur au point de départ
+                        y = 245;
+                    
+                        PictureBox_generator(x-750, y, item.Value, "Adventure a 150euros");
+                        x += 250;
+                        if (n == 2)
+                        {
+                            //Label_generator("Adventure a 150euros",a,b+150);
+                            n++;
+                        } 
+                        count++;
+                    }
+                    else if (count >5 && count<9 && item.Key.Substring(0, 1) == "E")
+                    {  
+                        y = 400;
+                    Console.WriteLine(x); // il vaut 1000 puis 1250 puis 1500
+                    PictureBox_generator(x-1500, y, item.Value, "Explorer a 200euros");
+                        x += 250;
+                        if (n == 3)
+                        {
+                            //Label_generator("Explorer a 200euros", a, b+300);
+                            n++;
+                        }
+                        count++;
+                    }
+                    
+                //}
 
             }
             
 
         }
+/*        private void Label_generator(string name, int x , int y)
+        {
+            Label l = new Label();
+            panelCatalog.Controls.Add(l);
+            l.AutoSize = true;
+            l.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(76)))));
+            l.Font = new System.Drawing.Font("EuroRoman", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
+            l.Location = new System.Drawing.Point(x, y);
+            l.Size = new System.Drawing.Size(212, 29);
+            l.Name = name; 
+            l.Text = name;
+        }*/
+        private void PictureBox_generator(int x, int y,string imageLink, string name)
+        {
+            PictureBox box = new PictureBox();
+            box.Click+=new EventHandler(this.box_Click);
+            panelCatalog.Controls.Add(box);
+            box.Location = new System.Drawing.Point(x, y);
+            box.Size = new System.Drawing.Size(198, 136);
+            box.Name = name;
+            box.SizeMode = PictureBoxSizeMode.Zoom;
+            box.Image = new Bitmap(imageLink);
+            //Label_generator(name, x-25, y-25);
 
+        }
         private void exitBtn_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void box_Click(object sender, EventArgs e)
+        {
+            Console.WriteLine("Image has been pressed");
+        }
+
+        private void previewBtn_Click(object sender, EventArgs e)
+        {
+            
+            string re = modelBox.Text.Substring(0, 1) + colorBox.Text.Substring(0,1);
+            Console.WriteLine(modelBox.Text);
+            string imageLink = c.getValue(re); // besoin de manipuler l'instance de la classe catalog !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                                                                                                          // alors il faut afficher le vélo correspondant
+            Bitmap bm = new Bitmap(imageLink);
+            previewBox.SizeMode = PictureBoxSizeMode.Zoom;
+            previewBox.Image = bm;
+
         }
     }
 }
