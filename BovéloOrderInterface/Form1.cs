@@ -23,6 +23,7 @@ namespace Bovelo
             sizeBox.SelectedIndex = 0;
             colorBox.SelectedIndex = 0;
             quantityBox.SelectedText = "1";
+            generateCatalog();
         }
         
         private void label1_Click(object sender, EventArgs e)
@@ -137,6 +138,25 @@ namespace Bovelo
             panelRecap.Visible = false;
         }
 
+        private void generateCatalog()
+        {
+            Catalog c = new Catalog();
+            Dictionary<string, string> bikeDict = c.getDico;
+            foreach(KeyValuePair<string, string> item in bikeDict)
+            {
+                Console.WriteLine(item.Key);
+                Console.WriteLine(item.Value);
+                if (item.Key == "CR")
+                {
+                    Bitmap bm = new Bitmap(item.Value);
+                    testBox.Image = bm;
+                    testBox.SizeMode = PictureBoxSizeMode.Zoom;
+                }
+
+            }
+            
+
+        }
 
         private void exitBtn_Click(object sender, EventArgs e)
         {

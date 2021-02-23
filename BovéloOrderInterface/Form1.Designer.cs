@@ -43,6 +43,7 @@
             this.modelBox = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.panelCatalog = new System.Windows.Forms.Panel();
+            this.testBox = new System.Windows.Forms.PictureBox();
             this.label16 = new System.Windows.Forms.Label();
             this.label15 = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
@@ -82,6 +83,7 @@
             this.panelOrder.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panelCatalog.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.testBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).BeginInit();
@@ -238,6 +240,7 @@
             // 
             // panelCatalog
             // 
+            this.panelCatalog.Controls.Add(this.testBox);
             this.panelCatalog.Controls.Add(this.label16);
             this.panelCatalog.Controls.Add(this.label15);
             this.panelCatalog.Controls.Add(this.label14);
@@ -258,6 +261,14 @@
             this.panelCatalog.Name = "panelCatalog";
             this.panelCatalog.Size = new System.Drawing.Size(1097, 524);
             this.panelCatalog.TabIndex = 2;
+            // 
+            // testBox
+            // 
+            this.testBox.Location = new System.Drawing.Point(47, 383);
+            this.testBox.Name = "testBox";
+            this.testBox.Size = new System.Drawing.Size(231, 106);
+            this.testBox.TabIndex = 31;
+            this.testBox.TabStop = false;
             // 
             // label16
             // 
@@ -687,6 +698,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panelCatalog.ResumeLayout(false);
             this.panelCatalog.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.testBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox10)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox9)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox8)).EndInit();
@@ -757,5 +769,6 @@
         private System.Windows.Forms.Label totalPriceTxt;
         private System.Windows.Forms.Label delayInfobox;
         private System.Windows.Forms.Button exitBtn;
+        private System.Windows.Forms.PictureBox testBox;
     }
 }
