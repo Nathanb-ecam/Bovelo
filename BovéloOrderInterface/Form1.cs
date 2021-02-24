@@ -253,15 +253,10 @@ namespace Bovelo
         {
             Console.WriteLine("Image has been pressed");
         }
-
-        private void previewBtn_Click(object sender, EventArgs e)
+        private Type Detect_Model(string model)
         {
             Type t;
-            Color col;
-            string m = modelBox.Text.Substring(0, 1);
-            string color = colorBox.Text.Substring(0, 1);
-
-            switch (m) // pour recuperer le model
+            switch (model) // pour recuperer le model
             {
                 case "C":
                     t = new Type("City");
@@ -276,6 +271,12 @@ namespace Bovelo
                     t = new Type("City");
                     break;
             }
+
+            return t;
+        }
+        private Color Detect_Color(string color)
+        {
+            Color col;
             switch (color) // pour recuperer la couleur
             {
                 case "R":
@@ -291,17 +292,23 @@ namespace Bovelo
                     col = new Color("Red");
                     break;
             }
-            string imageLink= "C:/Users/nathanbuchin/Desktop/BAC3/Software2/boveloPictures/Ville/rougeVille.png";
-            
-            foreach(KeyValuePair<Bike,string> item in c.getDico)
+            return col;
+        }
+        // genere une image en fonction des choix selectionnés
+        private void previewBtn_Click(object sender, EventArgs e)
+        {
+            string m = modelBox.Text.Substring(0, 1);
+            string color = colorBox.Text.Substring(0, 1);
+            Type t = Detect_Model(m);
+            Color col = Detect_Color(color);
+            string imageLink = "C:/Users/nathanbuchin/Desktop/BAC3/Software2/boveloPictures/Ville/rougeVille.png";
+
+            foreach (KeyValuePair<Bike, string> item in c.getDico)
             {
-                Console.WriteLine(item.Key.Type.Types.GetType());
-                if(t.Types.Equals(item.Key.Type.Types))
-                    if (col.Colors.Equals(item.Key.Color.Colors)) 
-                        {
-                            Console.WriteLine("Yes Sir!");
-                            imageLink = item.Value;
-                        }
+                if (item.Key.Type.Types == t.Types && item.Key.Color.Colors == col.Colors)
+                {
+                    imageLink = item.Value;
+                }
                 Bitmap bm = new Bitmap(imageLink);
                 previewBox.SizeMode = PictureBoxSizeMode.Zoom;
                 previewBox.Size = new System.Drawing.Size(300, 300);
@@ -310,5 +317,6 @@ namespace Bovelo
             }
 
         }
+
     }
 }

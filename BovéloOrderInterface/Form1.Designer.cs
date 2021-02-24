@@ -383,7 +383,7 @@
             // 
             this.recapBtn.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.recapBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.recapBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
+            this.recapBtn.Font = new System.Drawing.Font("EuroRoman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
             this.recapBtn.ForeColor = System.Drawing.Color.White;
             this.recapBtn.Image = ((System.Drawing.Image)(resources.GetObject("recapBtn.Image")));
             this.recapBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
