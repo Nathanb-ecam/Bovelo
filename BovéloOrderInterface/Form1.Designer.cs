@@ -106,7 +106,7 @@
             this.previewBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(76)))));
             this.previewBtn.FlatAppearance.BorderSize = 0;
             this.previewBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.previewBtn.Font = new System.Drawing.Font("EuroRoman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
+            this.previewBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
             this.previewBtn.ForeColor = System.Drawing.Color.Black;
             this.previewBtn.Location = new System.Drawing.Point(608, 328);
             this.previewBtn.Name = "previewBtn";
@@ -121,10 +121,10 @@
             this.label6.AutoSize = true;
             this.label6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(76)))));
             this.label6.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label6.Font = new System.Drawing.Font("EuroRoman", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
             this.label6.Location = new System.Drawing.Point(0, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(212, 29);
+            this.label6.Size = new System.Drawing.Size(449, 30);
             this.label6.TabIndex = 28;
             this.label6.Text = "Bovelo Order Page";
             // 
@@ -133,7 +133,7 @@
             this.addBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(76)))));
             this.addBtn.FlatAppearance.BorderSize = 0;
             this.addBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.addBtn.Font = new System.Drawing.Font("EuroRoman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
+            this.addBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
             this.addBtn.ForeColor = System.Drawing.Color.Black;
             this.addBtn.Location = new System.Drawing.Point(789, 328);
             this.addBtn.Name = "addBtn";
@@ -175,20 +175,20 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("EuroRoman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
             this.label4.Location = new System.Drawing.Point(99, 351);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(63, 22);
+            this.label4.Size = new System.Drawing.Size(107, 23);
             this.label4.TabIndex = 20;
             this.label4.Text = "Colors";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("EuroRoman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
             this.label3.Location = new System.Drawing.Point(100, 306);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(54, 22);
+            this.label3.Size = new System.Drawing.Size(122, 23);
             this.label3.TabIndex = 19;
             this.label3.Text = "Size :";
             // 
@@ -221,10 +221,10 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("EuroRoman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
             this.label1.Location = new System.Drawing.Point(88, 267);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(124, 22);
+            this.label1.Size = new System.Drawing.Size(264, 23);
             this.label1.TabIndex = 14;
             this.label1.Text = "Bike Models :";
             // 
@@ -241,10 +241,10 @@
             this.label2.AutoSize = true;
             this.label2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(76)))));
             this.label2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label2.Font = new System.Drawing.Font("EuroRoman", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
             this.label2.Location = new System.Drawing.Point(0, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(120, 29);
+            this.label2.Size = new System.Drawing.Size(230, 30);
             this.label2.TabIndex = 0;
             this.label2.Text = "Our Bikes";
             // 
@@ -273,10 +273,10 @@
             this.label8.AutoSize = true;
             this.label8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(76)))));
             this.label8.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label8.Font = new System.Drawing.Font("EuroRoman", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
             this.label8.Location = new System.Drawing.Point(0, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(290, 29);
+            this.label8.Size = new System.Drawing.Size(582, 30);
             this.label8.TabIndex = 0;
             this.label8.Text = "Order Delay informations";
             // 
@@ -355,10 +355,10 @@
             this.label7.AutoSize = true;
             this.label7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(76)))));
             this.label7.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label7.Font = new System.Drawing.Font("EuroRoman", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
             this.label7.Location = new System.Drawing.Point(0, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(204, 29);
+            this.label7.Size = new System.Drawing.Size(438, 30);
             this.label7.TabIndex = 0;
             this.label7.Text = "Order Recap Page";
             // 
@@ -366,7 +366,7 @@
             // 
             this.delayBtn.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.delayBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.delayBtn.Font = new System.Drawing.Font("EuroRoman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
+            this.delayBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
             this.delayBtn.ForeColor = System.Drawing.Color.White;
             this.delayBtn.Image = ((System.Drawing.Image)(resources.GetObject("delayBtn.Image")));
             this.delayBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -383,7 +383,7 @@
             // 
             this.recapBtn.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.recapBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.recapBtn.Font = new System.Drawing.Font("EuroRoman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
+            this.recapBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
             this.recapBtn.ForeColor = System.Drawing.Color.White;
             this.recapBtn.Image = ((System.Drawing.Image)(resources.GetObject("recapBtn.Image")));
             this.recapBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -400,7 +400,7 @@
             // 
             this.orderPageBtn.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.orderPageBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.orderPageBtn.Font = new System.Drawing.Font("EuroRoman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
+            this.orderPageBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
             this.orderPageBtn.ForeColor = System.Drawing.Color.White;
             this.orderPageBtn.Image = ((System.Drawing.Image)(resources.GetObject("orderPageBtn.Image")));
             this.orderPageBtn.Location = new System.Drawing.Point(0, 238);
@@ -417,7 +417,7 @@
             // 
             this.catalogBtn.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.catalogBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.catalogBtn.Font = new System.Drawing.Font("EuroRoman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
+            this.catalogBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
             this.catalogBtn.ForeColor = System.Drawing.Color.White;
             this.catalogBtn.Image = ((System.Drawing.Image)(resources.GetObject("catalogBtn.Image")));
             this.catalogBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -449,7 +449,7 @@
             // 
             this.exitBtn.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.exitBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.exitBtn.Font = new System.Drawing.Font("EuroRoman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
+            this.exitBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
             this.exitBtn.ForeColor = System.Drawing.Color.White;
             this.exitBtn.Image = ((System.Drawing.Image)(resources.GetObject("exitBtn.Image")));
             this.exitBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -466,11 +466,11 @@
             // 
             this.Bovelo.AutoSize = true;
             this.Bovelo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.Bovelo.Font = new System.Drawing.Font("EuroRoman", 39.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
+            this.Bovelo.Font = new System.Drawing.Font("Microsoft Sans Serif", 39.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
             this.Bovelo.ForeColor = System.Drawing.Color.White;
             this.Bovelo.Location = new System.Drawing.Point(12, 43);
             this.Bovelo.Name = "Bovelo";
-            this.Bovelo.Size = new System.Drawing.Size(171, 59);
+            this.Bovelo.Size = new System.Drawing.Size(304, 60);
             this.Bovelo.TabIndex = 32;
             this.Bovelo.Text = "Bovelo";
             // 

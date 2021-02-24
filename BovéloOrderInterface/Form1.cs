@@ -139,7 +139,7 @@ namespace Bovelo
             panelDelay.Visible = false;
             panelRecap.Visible = false;
         }
-
+        
         /* private void generateCatalog()
          {
              Dictionary<string, string> bikeDict = c.getDico;
@@ -204,15 +204,17 @@ namespace Bovelo
 
 
         //}
+
+        // générer un catalogue de manière dynamique
         private void NewGen_Catalog()
         {
-            //Dictionary<Bike, string> bikeDict = c.getDico;
-            /*foreach (KeyValuePair<Bike, string> item in c.getDico)
+            
+            foreach (KeyValuePair<Bike, string> item in c.getDico)
             {
                 Console.WriteLine(item.Key.Type.Types);
                 Console.WriteLine(item.Key.Color.Colors);
                 Console.WriteLine(item.Value);
-            }*/
+            }
         }
 
 

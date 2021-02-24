@@ -38,3 +38,13 @@ C:\Users\nathanbuchin\source\repos\Bovelo\BovéloOrderInterface\obj\Debug\Bovelo
 C:\Users\nathanbuchin\source\repos\Bovelo\BovéloOrderInterface\obj\Debug\Bovelo.csproj.CoreCompileInputs.cache
 C:\Users\nathanbuchin\source\repos\Bovelo\BovéloOrderInterface\obj\Debug\BovéloOrderInterface.exe
 C:\Users\nathanbuchin\source\repos\Bovelo\BovéloOrderInterface\obj\Debug\BovéloOrderInterface.pdb
+C:\Users\User\Source\Repos\Nathanb-hub\Bovelo\BovéloOrderInterface\bin\Debug\BovéloOrderInterface.exe.config
+C:\Users\User\Source\Repos\Nathanb-hub\Bovelo\BovéloOrderInterface\bin\Debug\BovéloOrderInterface.exe
+C:\Users\User\Source\Repos\Nathanb-hub\Bovelo\BovéloOrderInterface\bin\Debug\BovéloOrderInterface.pdb
+C:\Users\User\Source\Repos\Nathanb-hub\Bovelo\BovéloOrderInterface\obj\Debug\Bovelo.csprojAssemblyReference.cache
+C:\Users\User\Source\Repos\Nathanb-hub\Bovelo\BovéloOrderInterface\obj\Debug\Bovelo.Form1.resources
+C:\Users\User\Source\Repos\Nathanb-hub\Bovelo\BovéloOrderInterface\obj\Debug\BovéloOrderInterface.Properties.Resources.resources
+C:\Users\User\Source\Repos\Nathanb-hub\Bovelo\BovéloOrderInterface\obj\Debug\Bovelo.csproj.GenerateResource.cache
+C:\Users\User\Source\Repos\Nathanb-hub\Bovelo\BovéloOrderInterface\obj\Debug\Bovelo.csproj.CoreCompileInputs.cache
+C:\Users\User\Source\Repos\Nathanb-hub\Bovelo\BovéloOrderInterface\obj\Debug\BovéloOrderInterface.exe
+C:\Users\User\Source\Repos\Nathanb-hub\Bovelo\BovéloOrderInterface\obj\Debug\BovéloOrderInterface.pdb
