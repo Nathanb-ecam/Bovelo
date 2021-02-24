@@ -250,7 +250,7 @@ namespace Bovelo
             string color = colorBox.Text.Substring(0, 1);
             Type t = Detect_Model(m);
             Color col = Detect_Color(color);
-            string imageLink = "C:/Users/nathanbuchin/Desktop/BAC3/Software2/boveloPictures/Ville/rougeVille.png";
+            string imageLink = "Images/rougeVille.png";
 
             foreach (KeyValuePair<Bike, string> item in c.getDico)
             {
