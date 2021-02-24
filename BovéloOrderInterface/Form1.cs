@@ -24,7 +24,6 @@ namespace Bovelo
             sizeBox.SelectedIndex = 0;
             colorBox.SelectedIndex = 0;
             quantityBox.SelectedText = "1";
-            //generateCatalog();
             NewGen_Catalog();
         }
         
@@ -32,25 +31,30 @@ namespace Bovelo
         {
            
         }
+        // pour instancier autant de velo que le client renseigne dans la case quantity
         private void orderBikeBuilder(Type model, Size size, Color color, int quantity)
         {
-
             for (int value= 0; value < quantity; value++)
             {
                 Bike bike_name = new Bike(model,size,color,model.Price,true);
                 order.AddBike(bike_name);          
-            }
-            
+            } 
         }
              
+        // les 3 fonctions qui suivent servent juste a determiner la page active
         private void recapBtn_Click(object sender, EventArgs e)
         {
             panelRecap.Visible = true;
             panelOrder.Visible = false;
             panelDelay.Visible = false;
             panelCatalog.Visible = false;
-            
-            
+        }
+        private void orderPageBtn_Click(object sender, EventArgs e)
+        {
+            panelOrder.Visible = true;
+            panelDelay.Visible = false;
+            panelRecap.Visible = false;
+            panelCatalog.Visible = false;
         }
 
         private void delayBtn_Click(object sender, EventArgs e)
@@ -61,19 +65,10 @@ namespace Bovelo
             panelCatalog.Visible = false;
             // chercher dans la bdd si vélo en stock puis estimer delay
             //delayEstimater();
-            
-            
+   
         }
 
-        private void orderPageBtn_Click(object sender, EventArgs e)
-        {
-            panelOrder.Visible = true;
-            panelDelay.Visible = false;
-            panelRecap.Visible = false;
-            panelCatalog.Visible = false;
-        }
-
-
+        // pour ajouter les elements selectiones dans commande
         private void addBtn_Click(object sender, EventArgs e)
         {
             string recap = "";
@@ -81,9 +76,7 @@ namespace Bovelo
             string model = modelBox.Text;
             string size = sizeBox.Text;
             string color = colorBox.Text;
-           
             int bikeSize = Int32.Parse(size.Substring(0,2));
-   
             int quantity = Int32.Parse(quantityBox.Text);
 
             Type t = new Type(model);
@@ -106,6 +99,7 @@ namespace Bovelo
             
         }
 
+        // pour vider le panier et recommencer une commande 
         private void resetBtn_Click(object sender, EventArgs e)
         {
             order.Bikes.Clear();
@@ -113,6 +107,7 @@ namespace Bovelo
             recapTxt.Text = "";
         }
 
+        // pour confirmer une commande 
         private void confirmBtn_Click(object sender, EventArgs e)
         {
             if(order.Bikes.Count != 0)
@@ -140,108 +135,53 @@ namespace Bovelo
             panelRecap.Visible = false;
         }
         
-        /* private void generateCatalog()
-         {
-             Dictionary<string, string> bikeDict = c.getDico;
-             int count = 0; //pour compter les itérations, apres 3 photos on passe a la ligne
-             int x =250; // x et y pour positionner le poin de départ des picturebox
-             int y = 65;
-             int n = 1; // index pour determiner le label a ecricre 
-             int a = 5; // a et b pour positionner les labels correspondants aux photos
-             int b = 150;
-             foreach(KeyValuePair<string, string> item in bikeDict)
-             {
-
-                 Console.WriteLine(item.Key); // CR 
-                 Console.WriteLine(item.Value);// lien velo city rouge
-                 //if (item.Key == "CR" || item.Key=="CB" || item.Key == "CG")
-                 //{
-                     if ( item.Key.Substring(0,1)=="C")//count < 3 &&
-                 { 
-                         // on genere une image du vélo 
-                         PictureBox_generator(x,y,item.Value, "City a 100euros");
-                         if (n == 1)
-                         {
-                             //Label_generator("City a 100euros",a,b);
-                             n++;
-                         }
-                         x += 250;
-                         count++;
-                     }
-
-                     else if ( item.Key.Substring(0, 1) == "A") // count > 2 && count <6 &&
-                 {
-
-                     // on remet le compteur au point de départ
-                         y = 245;
-
-                         PictureBox_generator(x-750, y, item.Value, "Adventure a 150euros");
-                         x += 250;
-                         if (n == 2)
-                         {
-                             //Label_generator("Adventure a 150euros",a,b+150);
-                             n++;
-                         } 
-                         count++;
-                     }
-                     else if ( item.Key.Substring(0, 1) == "E") // count >5 && count<9 &&
-                 {  
-                         y = 400;
-                     Console.WriteLine(x); // il vaut 1000 puis 1250 puis 1500
-                     PictureBox_generator(x-1500, y, item.Value, "Explorer a 200euros");
-                         x += 250;
-                         if (n == 3)
-                         {
-                             //Label_generator("Explorer a 200euros", a, b+300);
-                             n++;
-                         }
-                         count++;
-                     }
-
-                 //}
-
-             }*/
 
 
-        //}
-
-        // générer un catalogue de manière dynamique
+        // fonction qui va générer le contenu de la page catalogue de manière dynamique
         private void NewGen_Catalog()
         {
-            
+            int x = 200;
+            int y;
+            int n = 0;
+            int i =1;
+            int nbr = 3;
+
             foreach (KeyValuePair<Bike, string> item in c.getDico)
             {
-                Console.WriteLine(item.Key.Type.Types);
-                Console.WriteLine(item.Key.Color.Colors);
-                Console.WriteLine(item.Value);
+                if (n < nbr)
+                {
+                    i = 0;  
+                }
+                else if(n>= nbr && n < 2*nbr)
+                {
+                    i = 1;
+                }
+                else if (n >= 2*nbr && n < 3*nbr)
+                {
+                    i = 2;
+                }
+                else if (n>=3*nbr && n < 4*nbr)
+                {
+                    i = 3;
+                }
+                y = 255 * 3*i/4;
+                PictureBox_generator(x - (nbr * 245 * i), y+75, item.Value, "picture" + n);
+                x += 250;
+                n += 1;
             }
         }
 
-
-
-        /*        private void Label_generator(string name, int x , int y)
-                {
-                    Label l = new Label();
-                    panelCatalog.Controls.Add(l);
-                    l.AutoSize = true;
-                    l.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(76)))));
-                    l.Font = new System.Drawing.Font("EuroRoman", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
-                    l.Location = new System.Drawing.Point(x, y);
-                    l.Size = new System.Drawing.Size(212, 29);
-                    l.Name = name; 
-                    l.Text = name;
-                }*/
+        // fonction qui permet de creer un espace pour mettre une image dans le panel Catalog
         private void PictureBox_generator(int x, int y,string imageLink, string name)
         {
             PictureBox box = new PictureBox();
             box.Click+=new EventHandler(this.box_Click);
             panelCatalog.Controls.Add(box);
             box.Location = new System.Drawing.Point(x, y);
-            box.Size = new System.Drawing.Size(198, 136);
+            box.Size = new System.Drawing.Size(180, 126);
             box.Name = name;
             box.SizeMode = PictureBoxSizeMode.Zoom;
             box.Image = new Bitmap(imageLink);
-            //Label_generator(name, x-25, y-25);
 
         }
         private void exitBtn_Click(object sender, EventArgs e)
@@ -249,10 +189,17 @@ namespace Bovelo
             Application.Exit();
         }
 
+        // fonction qui est executee lorsqu'on clique sur une image du catalogue
         private void box_Click(object sender, EventArgs e)
         {
+           
             Console.WriteLine("Image has been pressed");
+            //MessageBox.Show("Comportement a ajouter");
+            // Faire un popup qui affiche le modele, la couleur et le prix 
+
         }
+
+        //pour recuperer le model selectionnee par l'utilisateur
         private Type Detect_Model(string model)
         {
             Type t;
@@ -274,10 +221,12 @@ namespace Bovelo
 
             return t;
         }
+        
+        // pour recuperer la couleur selectionnee par l'utilisateur
         private Color Detect_Color(string color)
         {
             Color col;
-            switch (color) // pour recuperer la couleur
+            switch (color) 
             {
                 case "R":
                     col = new Color("Red");
@@ -294,7 +243,7 @@ namespace Bovelo
             }
             return col;
         }
-        // genere une image en fonction des choix selectionnés
+        // genere une image "preview" dans la page de commande en fonction des choix selectionnés
         private void previewBtn_Click(object sender, EventArgs e)
         {
             string m = modelBox.Text.Substring(0, 1);
@@ -315,8 +264,6 @@ namespace Bovelo
                 previewBox.Location = new System.Drawing.Point(425, 15);
                 previewBox.Image = bm;
             }
-
         }
-
     }
 }

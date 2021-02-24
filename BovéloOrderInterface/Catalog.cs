@@ -74,6 +74,10 @@ namespace Bovelo
             bikeDict.Add(new Bike(new Type("Explorer"), new Size(26), new Color("Red"), 200,false), "C:/Users/nathanbuchin/Desktop/BAC3/Software2/boveloPictures/Explorer/vtcRouge.jpg");
             bikeDict.Add(new Bike(new Type("Explorer"), new Size(26), new Color("Blue"), 200,false), "C:/Users/nathanbuchin/Desktop/BAC3/Software2/boveloPictures/Explorer/vtcBleu.jpg");
             bikeDict.Add(new Bike(new Type("Explorer"), new Size(26), new Color("Green"), 200,false), "C:/Users/nathanbuchin/Desktop/BAC3/Software2/boveloPictures/Explorer/vtcNoir.jpg");
+            // en test 
+            //bikeDict.Add(new Bike(new Type("Explorer"), new Size(26), new Color("Red"), 200, false), "C:/Users/nathanbuchin/Desktop/BAC3/Software2/boveloPictures/Explorer/vtcRouge.jpg");
+            //bikeDict.Add(new Bike(new Type("Explorer"), new Size(26), new Color("Blue"), 200, false), "C:/Users/nathanbuchin/Desktop/BAC3/Software2/boveloPictures/Explorer/vtcBleu.jpg");
+            //bikeDict.Add(new Bike(new Type("Explorer"), new Size(26), new Color("Green"), 200, false), "C:/Users/nathanbuchin/Desktop/BAC3/Software2/boveloPictures/Explorer/vtcNoir.jpg");
         }
         public void addBike(Bike b, string img)
         {
