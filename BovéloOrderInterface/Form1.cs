@@ -24,7 +24,8 @@ namespace Bovelo
             sizeBox.SelectedIndex = 0;
             colorBox.SelectedIndex = 0;
             quantityBox.SelectedText = "1";
-            generateCatalog();
+            //generateCatalog();
+            NewGen_Catalog();
         }
         
         private void label1_Click(object sender, EventArgs e)
@@ -36,7 +37,7 @@ namespace Bovelo
 
             for (int value= 0; value < quantity; value++)
             {
-                Bike bike_name = new Bike(model,size,color,model.Price);
+                Bike bike_name = new Bike(model,size,color,model.Price,true);
                 order.AddBike(bike_name);          
             }
             
@@ -139,82 +140,95 @@ namespace Bovelo
             panelRecap.Visible = false;
         }
 
-        private void generateCatalog()
+        /* private void generateCatalog()
+         {
+             Dictionary<string, string> bikeDict = c.getDico;
+             int count = 0; //pour compter les itérations, apres 3 photos on passe a la ligne
+             int x =250; // x et y pour positionner le poin de départ des picturebox
+             int y = 65;
+             int n = 1; // index pour determiner le label a ecricre 
+             int a = 5; // a et b pour positionner les labels correspondants aux photos
+             int b = 150;
+             foreach(KeyValuePair<string, string> item in bikeDict)
+             {
+
+                 Console.WriteLine(item.Key); // CR 
+                 Console.WriteLine(item.Value);// lien velo city rouge
+                 //if (item.Key == "CR" || item.Key=="CB" || item.Key == "CG")
+                 //{
+                     if ( item.Key.Substring(0,1)=="C")//count < 3 &&
+                 { 
+                         // on genere une image du vélo 
+                         PictureBox_generator(x,y,item.Value, "City a 100euros");
+                         if (n == 1)
+                         {
+                             //Label_generator("City a 100euros",a,b);
+                             n++;
+                         }
+                         x += 250;
+                         count++;
+                     }
+
+                     else if ( item.Key.Substring(0, 1) == "A") // count > 2 && count <6 &&
+                 {
+
+                     // on remet le compteur au point de départ
+                         y = 245;
+
+                         PictureBox_generator(x-750, y, item.Value, "Adventure a 150euros");
+                         x += 250;
+                         if (n == 2)
+                         {
+                             //Label_generator("Adventure a 150euros",a,b+150);
+                             n++;
+                         } 
+                         count++;
+                     }
+                     else if ( item.Key.Substring(0, 1) == "E") // count >5 && count<9 &&
+                 {  
+                         y = 400;
+                     Console.WriteLine(x); // il vaut 1000 puis 1250 puis 1500
+                     PictureBox_generator(x-1500, y, item.Value, "Explorer a 200euros");
+                         x += 250;
+                         if (n == 3)
+                         {
+                             //Label_generator("Explorer a 200euros", a, b+300);
+                             n++;
+                         }
+                         count++;
+                     }
+
+                 //}
+
+             }*/
+
+
+        //}
+        private void NewGen_Catalog()
         {
-            Dictionary<string, string> bikeDict = c.getDico;
-            int count = 0; //pour compter les itérations, apres 3 photos on passe a la ligne
-            int x =250; // x et y pour positionner le poin de départ des picturebox
-            int y = 65;
-            int n = 1; // index pour determiner le label a ecricre 
-            int a = 5; // a et b pour positionner les labels correspondants aux photos
-            int b = 150;
-            foreach(KeyValuePair<string, string> item in bikeDict)
+            //Dictionary<Bike, string> bikeDict = c.getDico;
+            /*foreach (KeyValuePair<Bike, string> item in c.getDico)
             {
-                
-                Console.WriteLine(item.Key); // CR 
-                Console.WriteLine(item.Value);// lien velo city rouge
-                //if (item.Key == "CR" || item.Key=="CB" || item.Key == "CG")
-                //{
-                    if (count < 3 && item.Key.Substring(0,1)=="C")
-                    { 
-                        // on genere une image du vélo 
-                        PictureBox_generator(x,y,item.Value, "City a 100euros");
-                        if (n == 1)
-                        {
-                            //Label_generator("City a 100euros",a,b);
-                            n++;
-                        }
-                        x += 250;
-                        count++;
-                    }
-                    
-                    else if (count > 2 && count <6 && item.Key.Substring(0, 1) == "A")
-                    {
-                    
-                    // on remet le compteur au point de départ
-                        y = 245;
-                    
-                        PictureBox_generator(x-750, y, item.Value, "Adventure a 150euros");
-                        x += 250;
-                        if (n == 2)
-                        {
-                            //Label_generator("Adventure a 150euros",a,b+150);
-                            n++;
-                        } 
-                        count++;
-                    }
-                    else if (count >5 && count<9 && item.Key.Substring(0, 1) == "E")
-                    {  
-                        y = 400;
-                    Console.WriteLine(x); // il vaut 1000 puis 1250 puis 1500
-                    PictureBox_generator(x-1500, y, item.Value, "Explorer a 200euros");
-                        x += 250;
-                        if (n == 3)
-                        {
-                            //Label_generator("Explorer a 200euros", a, b+300);
-                            n++;
-                        }
-                        count++;
-                    }
-                    
-                //}
-
-            }
-            
-
+                Console.WriteLine(item.Key.Type.Types);
+                Console.WriteLine(item.Key.Color.Colors);
+                Console.WriteLine(item.Value);
+            }*/
         }
-/*        private void Label_generator(string name, int x , int y)
-        {
-            Label l = new Label();
-            panelCatalog.Controls.Add(l);
-            l.AutoSize = true;
-            l.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(76)))));
-            l.Font = new System.Drawing.Font("EuroRoman", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
-            l.Location = new System.Drawing.Point(x, y);
-            l.Size = new System.Drawing.Size(212, 29);
-            l.Name = name; 
-            l.Text = name;
-        }*/
+
+
+
+        /*        private void Label_generator(string name, int x , int y)
+                {
+                    Label l = new Label();
+                    panelCatalog.Controls.Add(l);
+                    l.AutoSize = true;
+                    l.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(76)))));
+                    l.Font = new System.Drawing.Font("EuroRoman", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
+                    l.Location = new System.Drawing.Point(x, y);
+                    l.Size = new System.Drawing.Size(212, 29);
+                    l.Name = name; 
+                    l.Text = name;
+                }*/
         private void PictureBox_generator(int x, int y,string imageLink, string name)
         {
             PictureBox box = new PictureBox();
@@ -240,14 +254,58 @@ namespace Bovelo
 
         private void previewBtn_Click(object sender, EventArgs e)
         {
+            Type t;
+            Color col;
+            string m = modelBox.Text.Substring(0, 1);
+            string color = colorBox.Text.Substring(0, 1);
+
+            switch (m) // pour recuperer le model
+            {
+                case "C":
+                    t = new Type("City");
+                    break;
+                case "A":
+                    t = new Type("Adventure");
+                    break;
+                case "E":
+                    t = new Type("Explorer");
+                    break;
+                default:
+                    t = new Type("City");
+                    break;
+            }
+            switch (color) // pour recuperer la couleur
+            {
+                case "R":
+                    col = new Color("Red");
+                    break;
+                case "B":
+                    col = new Color("Blue");
+                    break;
+                case "G":
+                    col = new Color("Green");
+                    break;
+                default:
+                    col = new Color("Red");
+                    break;
+            }
+            string imageLink= "C:/Users/nathanbuchin/Desktop/BAC3/Software2/boveloPictures/Ville/rougeVille.png";
             
-            string re = modelBox.Text.Substring(0, 1) + colorBox.Text.Substring(0,1);
-            Console.WriteLine(modelBox.Text);
-            string imageLink = c.getValue(re); // besoin de manipuler l'instance de la classe catalog !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-                                                                                                          // alors il faut afficher le vélo correspondant
-            Bitmap bm = new Bitmap(imageLink);
-            previewBox.SizeMode = PictureBoxSizeMode.Zoom;
-            previewBox.Image = bm;
+            foreach(KeyValuePair<Bike,string> item in c.getDico)
+            {
+                Console.WriteLine(item.Key.Type.Types.GetType());
+                if(t.Types.Equals(item.Key.Type.Types))
+                    if (col.Colors.Equals(item.Key.Color.Colors)) 
+                        {
+                            Console.WriteLine("Yes Sir!");
+                            imageLink = item.Value;
+                        }
+                Bitmap bm = new Bitmap(imageLink);
+                previewBox.SizeMode = PictureBoxSizeMode.Zoom;
+                previewBox.Size = new System.Drawing.Size(300, 300);
+                previewBox.Location = new System.Drawing.Point(425, 15);
+                previewBox.Image = bm;
+            }
 
         }
     }

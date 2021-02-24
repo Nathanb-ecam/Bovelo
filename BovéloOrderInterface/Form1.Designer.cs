@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.panelOrder = new System.Windows.Forms.Panel();
+            this.previewBox = new System.Windows.Forms.PictureBox();
             this.previewBtn = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.addBtn = new System.Windows.Forms.Button();
@@ -64,13 +65,12 @@
             this.Bovelo = new System.Windows.Forms.Label();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.previewBox = new System.Windows.Forms.PictureBox();
             this.panelOrder.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.previewBox)).BeginInit();
             this.panelCatalog.SuspendLayout();
             this.panelDelay.SuspendLayout();
             this.panelRecap.SuspendLayout();
             this.panelNav.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.previewBox)).BeginInit();
             this.SuspendLayout();
             // 
             // panelOrder
@@ -93,6 +93,14 @@
             this.panelOrder.Size = new System.Drawing.Size(1097, 524);
             this.panelOrder.TabIndex = 14;
             // 
+            // previewBox
+            // 
+            this.previewBox.Location = new System.Drawing.Point(439, 106);
+            this.previewBox.Name = "previewBox";
+            this.previewBox.Size = new System.Drawing.Size(187, 94);
+            this.previewBox.TabIndex = 30;
+            this.previewBox.TabStop = false;
+            // 
             // previewBtn
             // 
             this.previewBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(76)))));
@@ -100,7 +108,7 @@
             this.previewBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.previewBtn.Font = new System.Drawing.Font("EuroRoman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
             this.previewBtn.ForeColor = System.Drawing.Color.Black;
-            this.previewBtn.Location = new System.Drawing.Point(589, 224);
+            this.previewBtn.Location = new System.Drawing.Point(608, 328);
             this.previewBtn.Name = "previewBtn";
             this.previewBtn.Size = new System.Drawing.Size(145, 45);
             this.previewBtn.TabIndex = 29;
@@ -127,7 +135,7 @@
             this.addBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.addBtn.Font = new System.Drawing.Font("EuroRoman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
             this.addBtn.ForeColor = System.Drawing.Color.Black;
-            this.addBtn.Location = new System.Drawing.Point(770, 224);
+            this.addBtn.Location = new System.Drawing.Point(789, 328);
             this.addBtn.Name = "addBtn";
             this.addBtn.Size = new System.Drawing.Size(145, 45);
             this.addBtn.TabIndex = 24;
@@ -137,7 +145,7 @@
             // 
             // quantityBox
             // 
-            this.quantityBox.Location = new System.Drawing.Point(467, 241);
+            this.quantityBox.Location = new System.Drawing.Point(486, 345);
             this.quantityBox.Name = "quantityBox";
             this.quantityBox.Size = new System.Drawing.Size(100, 20);
             this.quantityBox.TabIndex = 23;
@@ -145,7 +153,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(417, 245);
+            this.label5.Location = new System.Drawing.Point(436, 349);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(44, 13);
             this.label5.TabIndex = 22;
@@ -158,7 +166,7 @@
             "Red",
             "Blue",
             "Green"});
-            this.colorBox.Location = new System.Drawing.Point(212, 251);
+            this.colorBox.Location = new System.Drawing.Point(231, 355);
             this.colorBox.Name = "colorBox";
             this.colorBox.Size = new System.Drawing.Size(121, 21);
             this.colorBox.TabIndex = 21;
@@ -168,7 +176,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("EuroRoman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
-            this.label4.Location = new System.Drawing.Point(80, 247);
+            this.label4.Location = new System.Drawing.Point(99, 351);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(63, 22);
             this.label4.TabIndex = 20;
@@ -178,7 +186,7 @@
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("EuroRoman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
-            this.label3.Location = new System.Drawing.Point(81, 202);
+            this.label3.Location = new System.Drawing.Point(100, 306);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(54, 22);
             this.label3.TabIndex = 19;
@@ -190,7 +198,7 @@
             this.sizeBox.Items.AddRange(new object[] {
             "26\"",
             "28\""});
-            this.sizeBox.Location = new System.Drawing.Point(212, 206);
+            this.sizeBox.Location = new System.Drawing.Point(231, 310);
             this.sizeBox.Name = "sizeBox";
             this.sizeBox.Size = new System.Drawing.Size(121, 21);
             this.sizeBox.TabIndex = 18;
@@ -203,7 +211,7 @@
             "City",
             "Adventure",
             "Explorer"});
-            this.modelBox.Location = new System.Drawing.Point(212, 167);
+            this.modelBox.Location = new System.Drawing.Point(231, 271);
             this.modelBox.Name = "modelBox";
             this.modelBox.Size = new System.Drawing.Size(121, 21);
             this.modelBox.TabIndex = 15;
@@ -214,7 +222,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("EuroRoman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
-            this.label1.Location = new System.Drawing.Point(69, 163);
+            this.label1.Location = new System.Drawing.Point(88, 267);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(124, 22);
             this.label1.TabIndex = 14;
@@ -480,14 +488,6 @@
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
-            // previewBox
-            // 
-            this.previewBox.Location = new System.Drawing.Point(420, 83);
-            this.previewBox.Name = "previewBox";
-            this.previewBox.Size = new System.Drawing.Size(187, 94);
-            this.previewBox.TabIndex = 30;
-            this.previewBox.TabStop = false;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -505,6 +505,7 @@
             this.Text = "Bovelo";
             this.panelOrder.ResumeLayout(false);
             this.panelOrder.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.previewBox)).EndInit();
             this.panelCatalog.ResumeLayout(false);
             this.panelCatalog.PerformLayout();
             this.panelDelay.ResumeLayout(false);
@@ -513,7 +514,6 @@
             this.panelRecap.PerformLayout();
             this.panelNav.ResumeLayout(false);
             this.panelNav.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.previewBox)).EndInit();
             this.ResumeLayout(false);
 
         }

@@ -15,13 +15,20 @@ namespace Bovelo
         private Color color;
         private Parts partsList;
         private double price;
+        private bool increment; // pour choisir si il faut incrementer l'id ou pas 
         private static int id = 0;
+
         //Constructor
-        public Bike(Type type, Size size, Color color,double price)
+        public Bike(Type type, Size size, Color color,double price, bool i)
         {
-            id++;
+            this.increment = i;
             this.price = price;
             this.type = type;
+            this.color = color;
+            if (i == true)
+            {
+                id++;
+            }
         }
 
         public int IdBike
@@ -33,6 +40,10 @@ namespace Bovelo
         public Type Type
         {
             get { return type; }
+        }
+        public Color Color
+        {
+            get { return color; }
         }
 
         public double Price
