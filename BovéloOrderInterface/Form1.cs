@@ -17,6 +17,7 @@ namespace Bovelo
         Order order = new Order(new Dictionary<string, List<int>>());
         Catalog c = new Catalog();
 
+
         public Form1()
         {
             InitializeComponent();
@@ -24,12 +25,19 @@ namespace Bovelo
             sizeBox.SelectedIndex = 0;
             colorBox.SelectedIndex = 0;
             quantityBox.SelectedText = "1";
+            // si on souhaite ajouter un velo different
+            c.addBike(new Bike(new Type("Electric"), new Size(26), new Color("Red"), 100, false), "C:/Users/nathanbuchin/Desktop/BAC3/Software2/boveloPictures/Ville/images.jpg");
+            c.addBike(new Bike(new Type("City"), new Size(26), new Color("Red"), 100, false), "C:/Users/nathanbuchin/Desktop/BAC3/Software2/boveloPictures/Ville/rougeVille.png");
             NewGen_Catalog();
+
+            //c.addBike(new Bike(new Type("City"), new Size(26), new Color("Red"), 100, false), "C:/Users/nathanbuchin/Desktop/BAC3/Software2/boveloPictures/Ville/rougeVille.png");
+
+
         }
 
         private void label1_Click(object sender, EventArgs e)
         {
-
+           
         }
         // pour instancier autant de velo que le client renseigne dans la case quantity
         private void orderBikeBuilder(Type model, Size size, Color color, int quantity)
