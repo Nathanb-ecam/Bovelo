@@ -13,7 +13,7 @@ namespace Bovelo
 {
     public partial class Form1 : Form
     {
-     
+
         Order order = new Order(new Dictionary<string, List<int>>());
         Catalog c = new Catalog();
 
@@ -26,21 +26,21 @@ namespace Bovelo
             quantityBox.SelectedText = "1";
             NewGen_Catalog();
         }
-        
+
         private void label1_Click(object sender, EventArgs e)
         {
-           
+
         }
         // pour instancier autant de velo que le client renseigne dans la case quantity
         private void orderBikeBuilder(Type model, Size size, Color color, int quantity)
         {
-            for (int value= 0; value < quantity; value++)
+            for (int value = 0; value < quantity; value++)
             {
-                Bike bike_name = new Bike(model,size,color,model.Price,true);
-                order.AddBike(bike_name);          
-            } 
+                Bike bike_name = new Bike(model, size, color, model.Price, true);
+                order.AddBike(bike_name);
+            }
         }
-             
+
         // les 3 fonctions qui suivent servent juste a determiner la page active
         private void recapBtn_Click(object sender, EventArgs e)
         {
@@ -65,7 +65,7 @@ namespace Bovelo
             panelCatalog.Visible = false;
             // chercher dans la bdd si vélo en stock puis estimer delay
             //delayEstimater();
-   
+
         }
 
         // pour ajouter les elements selectiones dans commande
@@ -76,27 +76,27 @@ namespace Bovelo
             string model = modelBox.Text;
             string size = sizeBox.Text;
             string color = colorBox.Text;
-            int bikeSize = Int32.Parse(size.Substring(0,2));
+            int bikeSize = Int32.Parse(size.Substring(0, 2));
             int quantity = Int32.Parse(quantityBox.Text);
 
             Type t = new Type(model);
             Color c = new Color(color);
             Size s = new Size(bikeSize);
 
-            if (model== "Adventure" || model == "Explorer" || model == "City")
+            if (model == "Adventure" || model == "Explorer" || model == "City")
             {
-                orderBikeBuilder(t,s,c,quantity);
+                orderBikeBuilder(t, s, c, quantity);
             }
 
             foreach (KeyValuePair<string, List<int>> bike in order.Bikes)
-            {         
+            {
                 recap += String.Format("{0} {1} piece(s) {2}$\n", bike.Key, bike.Value[0], bike.Value[1]);
                 totalPrice += bike.Value[1];
             }
 
             totalPriceTxt.Text = totalPrice.ToString();
             recapTxt.Text = recap;
-            
+
         }
 
         // pour vider le panier et recommencer une commande 
@@ -110,7 +110,7 @@ namespace Bovelo
         // pour confirmer une commande 
         private void confirmBtn_Click(object sender, EventArgs e)
         {
-            if(order.Bikes.Count != 0)
+            if (order.Bikes.Count != 0)
             {
                 Customer customer = new Customer("FrigoFri");
                 customer.SetOrder(order);
@@ -134,66 +134,71 @@ namespace Bovelo
             panelDelay.Visible = false;
             panelRecap.Visible = false;
         }
-        
+
 
 
         // fonction qui va générer le contenu de la page catalogue de manière dynamique
         private void NewGen_Catalog()
         {
-            int x = 200;
-            int y;
-            int n = 0;
-            int i =1;
-            int nbr = 3;
+            FlowLayoutPanel fp = new FlowLayoutPanel();
+            fp.Location = new System.Drawing.Point(200, 50);
+            fp.Size = new System.Drawing.Size(1105, 658);
+            fp.FlowDirection = FlowDirection.LeftToRight;
+            fp.AutoScroll = true;
+            panelCatalog.Controls.Add(fp);
 
             foreach (KeyValuePair<Bike, string> item in c.getDico)
             {
-                if (n < nbr)
-                {
-                    i = 0;  
-                }
-                else if(n>= nbr && n < 2*nbr)
-                {
-                    i = 1;
-                }
-                else if (n >= 2*nbr && n < 3*nbr)
-                {
-                    i = 2;
-                }
-                else if (n>=3*nbr && n < 4*nbr)
-                {
-                    i = 3;
-                }
-                y = 255 * 3*i/4;
-                PictureBox_generator(x - (nbr * 245 * i), y+75, item.Value, "picture" + n);
-                x += 250;
-                n += 1;
+                // panel qui va contenir une image et un bouton 
+                Panel p = new Panel();
+                p.Size = new System.Drawing.Size(400, 350);//250, 150
+                p.BackColor = System.Drawing.Color.FromArgb(51, 51, 76);
+                p.BorderStyle = BorderStyle.Fixed3D;
+
+                //bouton pour aller a la page de commande du velo
+                Button btn = new Button();
+                btn.Click += new EventHandler(this.btn_Click);
+                btn.Size = new System.Drawing.Size(400, 75);
+                btn.Text = "Order me";
+                btn.Font = new Font("EuroRoman", 12.5f);
+                btn.FlatAppearance.BorderSize = 1;
+                btn.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(204, 240, 200);
+                btn.BackColor = System.Drawing.Color.FromArgb(114, 140, 170);
+
+                //image du velo
+                PictureBox b = new PictureBox();
+                b.Image = new Bitmap(item.Value);
+                b.SizeMode = PictureBoxSizeMode.Zoom;
+                b.Size = new System.Drawing.Size(375, 225);
+                b.BackColor = System.Drawing.Color.FromArgb(51, 51, 76);
+
+
+
+                // on ajoute le bouton et l'image dans le panel
+                p.Controls.Add(b);
+                b.Dock = DockStyle.None;
+                p.Controls.Add(btn);
+                btn.Dock = DockStyle.Bottom;
+
+                //on ajoute le panel actuel au FLowPanel
+                fp.Controls.Add(p);
+
             }
         }
 
-        // fonction qui permet de creer un espace pour mettre une image dans le panel Catalog
-        private void PictureBox_generator(int x, int y,string imageLink, string name)
-        {
-            PictureBox box = new PictureBox();
-            box.Click+=new EventHandler(this.box_Click);
-            panelCatalog.Controls.Add(box);
-            box.Location = new System.Drawing.Point(x, y);
-            box.Size = new System.Drawing.Size(180, 126);
-            box.Name = name;
-            box.SizeMode = PictureBoxSizeMode.Zoom;
-            box.Image = new Bitmap(imageLink);
 
-        }
         private void exitBtn_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
 
+
         // fonction qui est executee lorsqu'on clique sur une image du catalogue
-        private void box_Click(object sender, EventArgs e)
+        private void btn_Click(object sender, EventArgs e)
         {
-           
+            panelOrder.Visible = true;
             Console.WriteLine("Image has been pressed");
+            //(sender as Button).
             //MessageBox.Show("Comportement a ajouter");
             // Faire un popup qui affiche le modele, la couleur et le prix 
 

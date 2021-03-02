@@ -63,21 +63,17 @@ namespace Bovelo
 
         public Catalog()
         {
-            bikeDict.Add(new Bike(new Type("City"), new Size(26), new Color("Red"), 100,false), "Images/rougeVille.png");
-            bikeDict.Add(new Bike(new Type("City"), new Size(26), new Color("Blue"), 100,false), "Images/bleuVille.jpg");
-            bikeDict.Add(new Bike(new Type("City"), new Size(26), new Color("Green"), 100,false), "Images/vertVille.jpg");
+            bikeDict.Add(new Bike(new Type("City"), new Size(26), new Color("Red"), 100,false), "C:/Users/nathanbuchin/Desktop/BAC3/Software2/boveloPictures/Ville/rougeVille.png");
+            bikeDict.Add(new Bike(new Type("City"), new Size(26), new Color("Blue"), 100,false), "C:/Users/nathanbuchin/Desktop/BAC3/Software2/boveloPictures/Ville/bleuVille.jpg");
+            bikeDict.Add(new Bike(new Type("City"), new Size(26), new Color("Green"), 100,false), "C:/Users/nathanbuchin/Desktop/BAC3/Software2/boveloPictures/Ville/vertVille.jpg");
             // les 3 velo adventure 
-            bikeDict.Add(new Bike(new Type("Adventure"), new Size(26), new Color("Red"), 150,false), "Images/vttRouge.jpg");
-            bikeDict.Add(new Bike(new Type("Adventure"), new Size(26), new Color("Blue"), 150,false), "Images/vttBleu.jpg");
-            bikeDict.Add(new Bike(new Type("Adventure"), new Size(26), new Color("Green"), 150,false), "Images/vttNoir.jpg");
+            bikeDict.Add(new Bike(new Type("Adventure"), new Size(26), new Color("Red"), 150,false), "C:/Users/nathanbuchin/Desktop/BAC3/Software2/boveloPictures/Adventure/vttRouge.jpg");
+            bikeDict.Add(new Bike(new Type("Adventure"), new Size(26), new Color("Blue"), 150,false), "C:/Users/nathanbuchin/Desktop/BAC3/Software2/boveloPictures/Adventure/vttBleu.jpg");
+            bikeDict.Add(new Bike(new Type("Adventure"), new Size(26), new Color("Green"), 150,false), "C:/Users/nathanbuchin/Desktop/BAC3/Software2/boveloPictures/Adventure/vttNoir.jpg");
             // les 3 velo explorer 
-            bikeDict.Add(new Bike(new Type("Explorer"), new Size(26), new Color("Red"), 200,false), "Images/vtcRouge.jpg");
-            bikeDict.Add(new Bike(new Type("Explorer"), new Size(26), new Color("Blue"), 200,false), "Images/vtcBleu.jpg");
-            bikeDict.Add(new Bike(new Type("Explorer"), new Size(26), new Color("Green"), 200,false), "Images/vtcNoir.jpg");
-            // en test 
-            //bikeDict.Add(new Bike(new Type("Explorer"), new Size(26), new Color("Red"), 200, false), "C:/Users/nathanbuchin/Desktop/BAC3/Software2/boveloPictures/Explorer/vtcRouge.jpg");
-            //bikeDict.Add(new Bike(new Type("Explorer"), new Size(26), new Color("Blue"), 200, false), "C:/Users/nathanbuchin/Desktop/BAC3/Software2/boveloPictures/Explorer/vtcBleu.jpg");
-            //bikeDict.Add(new Bike(new Type("Explorer"), new Size(26), new Color("Green"), 200, false), "C:/Users/nathanbuchin/Desktop/BAC3/Software2/boveloPictures/Explorer/vtcNoir.jpg");
+            bikeDict.Add(new Bike(new Type("Explorer"), new Size(26), new Color("Red"), 200, false), "C:/Users/nathanbuchin/Desktop/BAC3/Software2/boveloPictures/Explorer/vtcRouge.jpg");
+            bikeDict.Add(new Bike(new Type("Explorer"), new Size(26), new Color("Blue"), 200, false), "C:/Users/nathanbuchin/Desktop/BAC3/Software2/boveloPictures/Explorer/vtcBleu.jpg");
+            bikeDict.Add(new Bike(new Type("Explorer"), new Size(26), new Color("Green"), 200, false), "C:/Users/nathanbuchin/Desktop/BAC3/Software2/boveloPictures/Explorer/vtcNoir.jpg");
         }
         public void addBike(Bike b, string img)
         {
