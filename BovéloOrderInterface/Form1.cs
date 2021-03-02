@@ -135,8 +135,6 @@ namespace Bovelo
             panelRecap.Visible = false;
         }
 
-
-
         // fonction qui va générer le contenu de la page catalogue de manière dynamique
         private void NewGen_Catalog()
         {
@@ -153,7 +151,7 @@ namespace Bovelo
                 Panel p = new Panel();
                 p.Size = new System.Drawing.Size(400, 350);//250, 150
                 p.BackColor = System.Drawing.Color.FromArgb(51, 51, 76);
-                p.BorderStyle = BorderStyle.Fixed3D;
+
 
                 //bouton pour aller a la page de commande du velo
                 Button btn = new Button();
@@ -173,7 +171,6 @@ namespace Bovelo
                 b.BackColor = System.Drawing.Color.FromArgb(51, 51, 76);
 
 
-
                 // on ajoute le bouton et l'image dans le panel
                 p.Controls.Add(b);
                 b.Dock = DockStyle.None;
@@ -185,6 +182,7 @@ namespace Bovelo
 
             }
         }
+
 
 
         private void exitBtn_Click(object sender, EventArgs e)
