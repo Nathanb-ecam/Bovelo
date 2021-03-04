@@ -31,8 +31,6 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.panelOrder = new System.Windows.Forms.Panel();
-            this.previewBox = new System.Windows.Forms.PictureBox();
-            this.previewBtn = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.addBtn = new System.Windows.Forms.Button();
             this.quantityBox = new System.Windows.Forms.TextBox();
@@ -66,7 +64,6 @@
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.panelOrder.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.previewBox)).BeginInit();
             this.panelCatalog.SuspendLayout();
             this.panelDelay.SuspendLayout();
             this.panelRecap.SuspendLayout();
@@ -75,8 +72,6 @@
             // 
             // panelOrder
             // 
-            this.panelOrder.Controls.Add(this.previewBox);
-            this.panelOrder.Controls.Add(this.previewBtn);
             this.panelOrder.Controls.Add(this.label6);
             this.panelOrder.Controls.Add(this.addBtn);
             this.panelOrder.Controls.Add(this.quantityBox);
@@ -92,29 +87,6 @@
             this.panelOrder.Name = "panelOrder";
             this.panelOrder.Size = new System.Drawing.Size(1305, 708);
             this.panelOrder.TabIndex = 14;
-            // 
-            // previewBox
-            // 
-            this.previewBox.Location = new System.Drawing.Point(439, 106);
-            this.previewBox.Name = "previewBox";
-            this.previewBox.Size = new System.Drawing.Size(187, 94);
-            this.previewBox.TabIndex = 30;
-            this.previewBox.TabStop = false;
-            // 
-            // previewBtn
-            // 
-            this.previewBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(76)))));
-            this.previewBtn.FlatAppearance.BorderSize = 0;
-            this.previewBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.previewBtn.Font = new System.Drawing.Font("EuroRoman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
-            this.previewBtn.ForeColor = System.Drawing.Color.Black;
-            this.previewBtn.Location = new System.Drawing.Point(608, 328);
-            this.previewBtn.Name = "previewBtn";
-            this.previewBtn.Size = new System.Drawing.Size(145, 45);
-            this.previewBtn.TabIndex = 29;
-            this.previewBtn.Text = "Preview bike";
-            this.previewBtn.UseVisualStyleBackColor = false;
-            this.previewBtn.Click += new System.EventHandler(this.previewBtn_Click);
             // 
             // label6
             // 
@@ -135,7 +107,7 @@
             this.addBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.addBtn.Font = new System.Drawing.Font("EuroRoman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
             this.addBtn.ForeColor = System.Drawing.Color.Black;
-            this.addBtn.Location = new System.Drawing.Point(789, 328);
+            this.addBtn.Location = new System.Drawing.Point(665, 310);
             this.addBtn.Name = "addBtn";
             this.addBtn.Size = new System.Drawing.Size(145, 45);
             this.addBtn.TabIndex = 24;
@@ -165,7 +137,7 @@
             this.colorBox.Items.AddRange(new object[] {
             "Red",
             "Blue",
-            "Green"});
+            "Black"});
             this.colorBox.Location = new System.Drawing.Point(231, 355);
             this.colorBox.Name = "colorBox";
             this.colorBox.Size = new System.Drawing.Size(121, 21);
@@ -504,7 +476,6 @@
             this.Text = "Bovelo";
             this.panelOrder.ResumeLayout(false);
             this.panelOrder.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.previewBox)).EndInit();
             this.panelCatalog.ResumeLayout(false);
             this.panelCatalog.PerformLayout();
             this.panelDelay.ResumeLayout(false);
@@ -552,7 +523,5 @@
         private System.Windows.Forms.Label totalPriceTxt;
         private System.Windows.Forms.Label delayInfobox;
         private System.Windows.Forms.Button exitBtn;
-        private System.Windows.Forms.Button previewBtn;
-        private System.Windows.Forms.PictureBox previewBox;
     }
 }

@@ -46,6 +46,11 @@ namespace Bovelo
             get { return color; }
         }
 
+        public Size Size
+        {
+            get { return size; }
+        }
+
         public double Price
         {
             get { return price; }

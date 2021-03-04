@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Resources;
 
 namespace Bovelo
 {
@@ -26,13 +27,9 @@ namespace Bovelo
             colorBox.SelectedIndex = 0;
             quantityBox.SelectedText = "1";
             // si on souhaite ajouter un velo different
-            c.addBike(new Bike(new Type("Electric"), new Size(26), new Color("Red"), 100, false), "C:/Users/nathanbuchin/Desktop/BAC3/Software2/boveloPictures/Ville/images.jpg");
-            c.addBike(new Bike(new Type("City"), new Size(26), new Color("Red"), 100, false), "C:/Users/nathanbuchin/Desktop/BAC3/Software2/boveloPictures/Ville/rougeVille.png");
+            c.addBike(new Bike(new Type("Electric"), new Size(26), new Color("Black"), 100, false), "C:/Users/nathanbuchin/Pictures/OtherBikeModels/ElectricBlack.jpg");
+            c.addBike(new Bike(new Type("City"), new Size(26), new Color("Red"), 100, false), "C:/Users/nathanbuchin/Pictures/Ville/CityRed.png");
             NewGen_Catalog();
-
-            //c.addBike(new Bike(new Type("City"), new Size(26), new Color("Red"), 100, false), "C:/Users/nathanbuchin/Desktop/BAC3/Software2/boveloPictures/Ville/rougeVille.png");
-
-
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -164,6 +161,7 @@ namespace Bovelo
                 //bouton pour aller a la page de commande du velo
                 Button btn = new Button();
                 btn.Click += new EventHandler(this.btn_Click);
+                btn.Name = item.Key.Type.Types +'/'+ item.Key.Color.Colors; //Le Name contient le modele et la couleur 
                 btn.Size = new System.Drawing.Size(400, 75);
                 btn.Text = "Order me";
                 btn.Font = new Font("EuroRoman", 12.5f);
@@ -173,10 +171,12 @@ namespace Bovelo
 
                 //image du velo
                 PictureBox b = new PictureBox();
+                Console.WriteLine(item.Value);
                 b.Image = new Bitmap(item.Value);
                 b.SizeMode = PictureBoxSizeMode.Zoom;
                 b.Size = new System.Drawing.Size(375, 225);
                 b.BackColor = System.Drawing.Color.FromArgb(51, 51, 76);
+               
 
 
                 // on ajoute le bouton et l'image dans le panel
@@ -203,11 +203,10 @@ namespace Bovelo
         private void btn_Click(object sender, EventArgs e)
         {
             panelOrder.Visible = true;
-            Console.WriteLine("Image has been pressed");
-            //(sender as Button).
-            //MessageBox.Show("Comportement a ajouter");
-            // Faire un popup qui affiche le modele, la couleur et le prix 
-
+            string bikeRef = (sender as Button).Name;
+            string[] elems = bikeRef.Split(new char[] { '/' });
+            modelBox.SelectedItem = elems[0];
+            colorBox.SelectedItem = elems[1];
         }
 
         //pour recuperer le model selectionnee par l'utilisateur
@@ -216,13 +215,13 @@ namespace Bovelo
             Type t;
             switch (model) // pour recuperer le model
             {
-                case "C":
+                case "City":
                     t = new Type("City");
                     break;
-                case "A":
+                case "Adventure":
                     t = new Type("Adventure");
                     break;
-                case "E":
+                case "Explorer":
                     t = new Type("Explorer");
                     break;
                 default:
@@ -239,14 +238,14 @@ namespace Bovelo
             Color col;
             switch (color) 
             {
-                case "R":
+                case "Red":
                     col = new Color("Red");
                     break;
-                case "B":
+                case "Blue":
                     col = new Color("Blue");
                     break;
-                case "G":
-                    col = new Color("Green");
+                case "Black":
+                    col = new Color("Black");
                     break;
                 default:
                     col = new Color("Red");
@@ -255,18 +254,21 @@ namespace Bovelo
             return col;
         }
         // genere une image "preview" dans la page de commande en fonction des choix selectionnés
-        private void previewBtn_Click(object sender, EventArgs e)
+/*        private void previewBtn_Click(object sender, EventArgs e)
         {
-            string m = modelBox.Text.Substring(0, 1);
-            string color = colorBox.Text.Substring(0, 1);
+            string m = modelBox.Text;  // .Substring(0, 1);
+            string color = colorBox.Text; //.Substring(0, 1);
             Type t = Detect_Model(m);
             Color col = Detect_Color(color);
-            string imageLink = "Images/rougeVille.png";
+            string imageLink = "C:/Users/nathanbuchin/Pictures/Ville/CityRed.png";  //"Images/rougeVille.png"
+
+            
 
             foreach (KeyValuePair<Bike, string> item in c.getDico)
             {
                 if (item.Key.Type.Types == t.Types && item.Key.Color.Colors == col.Colors)
                 {
+                    Console.WriteLine(item.Key.Type);
                     imageLink = item.Value;
                 }
                 Bitmap bm = new Bitmap(imageLink);
@@ -275,6 +277,6 @@ namespace Bovelo
                 previewBox.Location = new System.Drawing.Point(425, 15);
                 previewBox.Image = bm;
             }
-        }
+        }*/
     }
 }

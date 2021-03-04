@@ -61,11 +61,20 @@ namespace BovéloOrderInterface.Properties {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à C:\Users\nathanbuchin\source\repos\Bovelo\BovéloOrderInterface\Resources\CityRed.png.
+        /// </summary>
+        internal static string CityRed {
+            get {
+                return ResourceManager.GetString("CityRed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une ressource localisée de type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap logoCatalog {
+        internal static System.Drawing.Bitmap CityRed1 {
             get {
-                object obj = ResourceManager.GetObject("logoCatalog", resourceCulture);
+                object obj = ResourceManager.GetObject("CityRed1", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
