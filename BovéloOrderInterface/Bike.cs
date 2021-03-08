@@ -56,12 +56,5 @@ namespace Bovelo
             get { return price; }
             set { price = value; }
         }
- 
-
-        public override string ToString()
-        {
-            return String.Format("{0} {1}", this.type.Types, this.price);
-        }
-
     }
 }

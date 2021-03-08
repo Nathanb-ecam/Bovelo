@@ -15,7 +15,7 @@ namespace Bovelo
     public partial class Form1 : Form
     {
 
-        Order order = new Order(new Dictionary<string, List<int>>());
+        Order order = new Order(new Dictionary<Bike, List<int>>());
         Catalog c = new Catalog();
 
 
@@ -93,9 +93,10 @@ namespace Bovelo
                 orderBikeBuilder(t, s, c, quantity);
             }
 
-            foreach (KeyValuePair<string, List<int>> bike in order.Bikes)
+            foreach (KeyValuePair<Bike, List<int>> bike in order.Bikes)
             {
-                recap += String.Format("{0} {1} piece(s) {2}$\n", bike.Key, bike.Value[0], bike.Value[1]);
+                Console.WriteLine(bike.Value);
+                recap += String.Format("{0} {1} {2} piece(s) {3}$\n", bike.Key.Type.Types,bike.Key.Color.Colors, bike.Value[0], bike.Value[1]);
                 totalPrice += bike.Value[1];
             }
 
@@ -177,7 +178,6 @@ namespace Bovelo
                 b.Size = new System.Drawing.Size(375, 225);
                 b.BackColor = System.Drawing.Color.FromArgb(51, 51, 76);
                
-
 
                 // on ajoute le bouton et l'image dans le panel
                 p.Controls.Add(b);
