@@ -31,6 +31,8 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.panelOrder = new System.Windows.Forms.Panel();
+            this.priceLabel = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.addBtn = new System.Windows.Forms.Button();
             this.quantityBox = new System.Windows.Forms.TextBox();
@@ -72,6 +74,8 @@
             // 
             // panelOrder
             // 
+            this.panelOrder.Controls.Add(this.priceLabel);
+            this.panelOrder.Controls.Add(this.label9);
             this.panelOrder.Controls.Add(this.label6);
             this.panelOrder.Controls.Add(this.addBtn);
             this.panelOrder.Controls.Add(this.quantityBox);
@@ -83,20 +87,40 @@
             this.panelOrder.Controls.Add(this.modelBox);
             this.panelOrder.Controls.Add(this.label1);
             this.panelOrder.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.panelOrder.Location = new System.Drawing.Point(226, 58);
+            this.panelOrder.Location = new System.Drawing.Point(276, 67);
             this.panelOrder.Name = "panelOrder";
-            this.panelOrder.Size = new System.Drawing.Size(1305, 708);
+            this.panelOrder.Size = new System.Drawing.Size(1214, 613);
             this.panelOrder.TabIndex = 14;
+            // 
+            // priceLabel
+            // 
+            this.priceLabel.AutoSize = true;
+            this.priceLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.priceLabel.Location = new System.Drawing.Point(769, 368);
+            this.priceLabel.Name = "priceLabel";
+            this.priceLabel.Size = new System.Drawing.Size(10, 15);
+            this.priceLabel.TabIndex = 30;
+            this.priceLabel.Text = " ";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(673, 366);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(81, 15);
+            this.label9.TabIndex = 29;
+            this.label9.Text = "Item(s) price :";
             // 
             // label6
             // 
             this.label6.AutoSize = true;
             this.label6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(76)))));
             this.label6.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label6.Font = new System.Drawing.Font("EuroRoman", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
+            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.Location = new System.Drawing.Point(0, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(212, 29);
+            this.label6.Size = new System.Drawing.Size(243, 31);
             this.label6.TabIndex = 28;
             this.label6.Text = "Bovelo Order Page";
             // 
@@ -105,7 +129,7 @@
             this.addBtn.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(76)))));
             this.addBtn.FlatAppearance.BorderSize = 0;
             this.addBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.addBtn.Font = new System.Drawing.Font("EuroRoman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
+            this.addBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.addBtn.ForeColor = System.Drawing.Color.Black;
             this.addBtn.Location = new System.Drawing.Point(665, 310);
             this.addBtn.Name = "addBtn";
@@ -121,13 +145,15 @@
             this.quantityBox.Name = "quantityBox";
             this.quantityBox.Size = new System.Drawing.Size(100, 20);
             this.quantityBox.TabIndex = 23;
+            this.quantityBox.TextChanged += new System.EventHandler(this.quantityBox_TextChanged);
             // 
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(436, 349);
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(417, 345);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(44, 13);
+            this.label5.Size = new System.Drawing.Size(54, 16);
             this.label5.TabIndex = 22;
             this.label5.Text = "quantity";
             // 
@@ -147,20 +173,20 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("EuroRoman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.Location = new System.Drawing.Point(99, 351);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(63, 22);
+            this.label4.Size = new System.Drawing.Size(74, 25);
             this.label4.TabIndex = 20;
             this.label4.Text = "Colors";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("EuroRoman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.Location = new System.Drawing.Point(100, 306);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(54, 22);
+            this.label3.Size = new System.Drawing.Size(66, 25);
             this.label3.TabIndex = 19;
             this.label3.Text = "Size :";
             // 
@@ -193,19 +219,19 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("EuroRoman", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(88, 267);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(124, 22);
+            this.label1.Size = new System.Drawing.Size(142, 25);
             this.label1.TabIndex = 14;
             this.label1.Text = "Bike Models :";
             // 
             // panelCatalog
             // 
             this.panelCatalog.Controls.Add(this.label2);
-            this.panelCatalog.Location = new System.Drawing.Point(226, 58);
+            this.panelCatalog.Location = new System.Drawing.Point(276, 67);
             this.panelCatalog.Name = "panelCatalog";
-            this.panelCatalog.Size = new System.Drawing.Size(1305, 708);
+            this.panelCatalog.Size = new System.Drawing.Size(1214, 613);
             this.panelCatalog.TabIndex = 2;
             // 
             // label2
@@ -213,10 +239,10 @@
             this.label2.AutoSize = true;
             this.label2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(76)))));
             this.label2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label2.Font = new System.Drawing.Font("EuroRoman", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(0, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(120, 29);
+            this.label2.Size = new System.Drawing.Size(133, 31);
             this.label2.TabIndex = 0;
             this.label2.Text = "Our Bikes";
             // 
@@ -224,9 +250,9 @@
             // 
             this.panelDelay.Controls.Add(this.delayInfobox);
             this.panelDelay.Controls.Add(this.label8);
-            this.panelDelay.Location = new System.Drawing.Point(226, 58);
+            this.panelDelay.Location = new System.Drawing.Point(276, 67);
             this.panelDelay.Name = "panelDelay";
-            this.panelDelay.Size = new System.Drawing.Size(1305, 708);
+            this.panelDelay.Size = new System.Drawing.Size(1214, 613);
             this.panelDelay.TabIndex = 16;
             // 
             // delayInfobox
@@ -245,10 +271,10 @@
             this.label8.AutoSize = true;
             this.label8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(76)))));
             this.label8.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label8.Font = new System.Drawing.Font("EuroRoman", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.Location = new System.Drawing.Point(0, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(290, 29);
+            this.label8.Size = new System.Drawing.Size(315, 31);
             this.label8.TabIndex = 0;
             this.label8.Text = "Order Delay informations";
             // 
@@ -260,9 +286,9 @@
             this.panelRecap.Controls.Add(this.confirmBtn);
             this.panelRecap.Controls.Add(this.label10);
             this.panelRecap.Controls.Add(this.label7);
-            this.panelRecap.Location = new System.Drawing.Point(226, 58);
+            this.panelRecap.Location = new System.Drawing.Point(276, 67);
             this.panelRecap.Name = "panelRecap";
-            this.panelRecap.Size = new System.Drawing.Size(1305, 708);
+            this.panelRecap.Size = new System.Drawing.Size(1214, 613);
             this.panelRecap.TabIndex = 15;
             // 
             // totalPriceTxt
@@ -308,7 +334,7 @@
             this.confirmBtn.Name = "confirmBtn";
             this.confirmBtn.Size = new System.Drawing.Size(167, 36);
             this.confirmBtn.TabIndex = 31;
-            this.confirmBtn.Text = "Confirm order";
+            this.confirmBtn.Text = "Continue";
             this.confirmBtn.UseVisualStyleBackColor = false;
             this.confirmBtn.Click += new System.EventHandler(this.confirmBtn_Click);
             // 
@@ -327,10 +353,10 @@
             this.label7.AutoSize = true;
             this.label7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(76)))));
             this.label7.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label7.Font = new System.Drawing.Font("EuroRoman", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.Location = new System.Drawing.Point(0, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(204, 29);
+            this.label7.Size = new System.Drawing.Size(239, 31);
             this.label7.TabIndex = 0;
             this.label7.Text = "Order Recap Page";
             // 
@@ -465,12 +491,12 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1582, 822);
-            this.Controls.Add(this.panelOrder);
             this.Controls.Add(this.panelRecap);
-            this.Controls.Add(this.flowLayoutPanel1);
-            this.Controls.Add(this.panelCatalog);
-            this.Controls.Add(this.panelNav);
+            this.Controls.Add(this.panelOrder);
             this.Controls.Add(this.panelDelay);
+            this.Controls.Add(this.panelCatalog);
+            this.Controls.Add(this.flowLayoutPanel1);
+            this.Controls.Add(this.panelNav);
             this.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.Name = "Form1";
             this.Text = "Bovelo";
@@ -523,5 +549,7 @@
         private System.Windows.Forms.Label totalPriceTxt;
         private System.Windows.Forms.Label delayInfobox;
         private System.Windows.Forms.Button exitBtn;
+        private System.Windows.Forms.Label priceLabel;
+        private System.Windows.Forms.Label label9;
     }
 }

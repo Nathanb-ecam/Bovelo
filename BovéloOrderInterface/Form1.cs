@@ -22,7 +22,9 @@ namespace Bovelo
         public Form1()
         {
             InitializeComponent();
+            
             modelBox.SelectedIndex = 0;
+            priceLabel.Text = 100.ToString();
             sizeBox.SelectedIndex = 0;
             colorBox.SelectedIndex = 0;
             quantityBox.SelectedText = "1";
@@ -30,12 +32,39 @@ namespace Bovelo
             c.addBike(new Bike(new Type("Electric"), new Size("26"), new Color("Black"), 100, false), "C:/Users/nathanbuchin/Pictures/OtherBikeModels/ElectricBlack.jpg");
             c.addBike(new Bike(new Type("City"), new Size("26"), new Color("Red"), 100, false), "C:/Users/nathanbuchin/Pictures/Ville/CityRed.png");
             NewGen_Catalog();
+            panelCatalog.Visible = true;
         }
 
         private void label1_Click(object sender, EventArgs e)
         {
-           
+            Price_Changed();
         }
+        private void Price_Changed()
+        {
+            int price = 0;
+            if (quantityBox.Text != "")
+            {
+                if (modelBox.Text == "City")
+                {
+                    price = 100 * Int32.Parse(quantityBox.Text);
+                }
+                else if (modelBox.Text == "Adventure")
+                {
+                    price = 200 * Int32.Parse(quantityBox.Text);
+                }
+                else if (modelBox.Text == "Explorer")
+                {
+                    price = 150 * Int32.Parse(quantityBox.Text);
+                }
+                priceLabel.Text = price.ToString();
+            }
+
+        }
+        private void quantityBox_TextChanged(object sender, EventArgs e)
+        {
+            Price_Changed();
+        }
+
         // pour instancier autant de velo que le client renseigne dans la case quantity
         private void orderBikeBuilder(Type model, Size size, Color color, int quantity)
         {
@@ -286,5 +315,11 @@ namespace Bovelo
             }
             return col;
         }
+/*        private void sendOrderBtn_Click(object sender, EventArgs e)
+        {
+            string name = nameBox.Text;
+            string number = phoneBox.Text;
+            Console.WriteLine(name);
+        }*/
     }
 }
