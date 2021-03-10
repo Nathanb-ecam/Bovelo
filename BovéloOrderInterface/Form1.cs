@@ -27,8 +27,8 @@ namespace Bovelo
             colorBox.SelectedIndex = 0;
             quantityBox.SelectedText = "1";
             // si on souhaite ajouter un velo different
-            c.addBike(new Bike(new Type("Electric"), new Size(26), new Color("Black"), 100, false), "C:/Users/nathanbuchin/Pictures/OtherBikeModels/ElectricBlack.jpg");
-            c.addBike(new Bike(new Type("City"), new Size(26), new Color("Red"), 100, false), "C:/Users/nathanbuchin/Pictures/Ville/CityRed.png");
+            c.addBike(new Bike(new Type("Electric"), new Size("26"), new Color("Black"), 100, false), "C:/Users/nathanbuchin/Pictures/OtherBikeModels/ElectricBlack.jpg");
+            c.addBike(new Bike(new Type("City"), new Size("26"), new Color("Red"), 100, false), "C:/Users/nathanbuchin/Pictures/Ville/CityRed.png");
             NewGen_Catalog();
         }
 
@@ -76,33 +76,66 @@ namespace Bovelo
         // pour ajouter les elements selectiones dans commande
         private void addBtn_Click(object sender, EventArgs e)
         {
-            string recap = "";
-            int totalPrice = 0;
             string model = modelBox.Text;
             string size = sizeBox.Text;
             string color = colorBox.Text;
-            int bikeSize = Int32.Parse(size.Substring(0, 2));
+            string bikeSize = size.Substring(0, 2);
             int quantity = Int32.Parse(quantityBox.Text);
 
             Type t = new Type(model);
             Color c = new Color(color);
             Size s = new Size(bikeSize);
-
             if (model == "Adventure" || model == "Explorer" || model == "City")
             {
                 orderBikeBuilder(t, s, c, quantity);
             }
+            generate_Recap();
 
-            foreach (KeyValuePair<Bike, List<int>> bike in order.Bikes)
+        }
+        private void generate_Recap()
+        {
+            string recap = "";
+            int totalPrice = 0;
+            Dictionary<string, int> bikesCounter = new Dictionary<string, int>(){ };
+            Dictionary<Bike, List<int>> orderedBikes = order.Bikes;
+
+            // boucle pour reordonner le dictionnaire
+            foreach (KeyValuePair<Bike, List<int>> bike in orderedBikes)
             {
-                Console.WriteLine(bike.Value);
-                recap += String.Format("{0} {1} {2} piece(s) {3}$\n", bike.Key.Type.Types,bike.Key.Color.Colors, bike.Value[0], bike.Value[1]);
-                totalPrice += bike.Value[1];
+                string b = bike.Key.Type.Types + bike.Key.Color.Colors + bike.Key.Size.Sizes;
+
+                if (!bikesCounter.ContainsKey(b))
+                {
+                    bikesCounter.Add((b), bike.Value[0]);
+                }
+                else
+                {
+                    bikesCounter[b] += bike.Value[0];
+                }     
             }
 
+            // on parcourir le dictionnaire trier pour afficher le recap
+            foreach (KeyValuePair<string, int> bike in bikesCounter)
+            {
+                if (bike.Key.Substring(0, 3) == "Cit")
+                {
+                    totalPrice += (bike.Value * 100);
+                }
+                else if (bike.Key.Substring(0, 3) == "Adv")
+                {
+                    totalPrice += (bike.Value * 200);
+                }
+                else if (bike.Key.Substring(0, 3) == "Exp")
+                {
+                    totalPrice += (bike.Value * 150);
+                }
+                if (bike.Value != 0)
+                {
+                    recap += String.Format("Vélo : {0}, quantité : {1} piece(s) \n", bike.Key, bike.Value);
+                }
+            }
             totalPriceTxt.Text = totalPrice.ToString();
             recapTxt.Text = recap;
-
         }
 
         // pour vider le panier et recommencer une commande 
@@ -253,30 +286,5 @@ namespace Bovelo
             }
             return col;
         }
-        // genere une image "preview" dans la page de commande en fonction des choix selectionnés
-/*        private void previewBtn_Click(object sender, EventArgs e)
-        {
-            string m = modelBox.Text;  // .Substring(0, 1);
-            string color = colorBox.Text; //.Substring(0, 1);
-            Type t = Detect_Model(m);
-            Color col = Detect_Color(color);
-            string imageLink = "C:/Users/nathanbuchin/Pictures/Ville/CityRed.png";  //"Images/rougeVille.png"
-
-            
-
-            foreach (KeyValuePair<Bike, string> item in c.getDico)
-            {
-                if (item.Key.Type.Types == t.Types && item.Key.Color.Colors == col.Colors)
-                {
-                    Console.WriteLine(item.Key.Type);
-                    imageLink = item.Value;
-                }
-                Bitmap bm = new Bitmap(imageLink);
-                previewBox.SizeMode = PictureBoxSizeMode.Zoom;
-                previewBox.Size = new System.Drawing.Size(300, 300);
-                previewBox.Location = new System.Drawing.Point(425, 15);
-                previewBox.Image = bm;
-            }
-        }*/
     }
 }

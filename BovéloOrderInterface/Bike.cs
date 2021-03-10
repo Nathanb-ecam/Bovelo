@@ -25,6 +25,7 @@ namespace Bovelo
             this.price = price;
             this.type = type;
             this.color = color;
+            this.size = size;
             if (i == true)
             {
                 id++;

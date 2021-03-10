@@ -8,14 +8,14 @@ namespace Bovelo
 {
     public class Size
     {
-        private int size;
+        private string size;
 
-        public Size(int size)
+        public Size(string size)
         {
             this.size = size;
         }
 
-        public int Sizes
+        public string Sizes
         {
             get { return size; }
             set { size = value; }
