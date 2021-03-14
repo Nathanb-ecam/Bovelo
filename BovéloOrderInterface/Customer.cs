@@ -8,31 +8,24 @@ namespace Bovelo
 {
     class Customer : Person
     {
-        private Order order;
-        private static int id_customer =0;
-        public Customer(string name) : base(name)
+        private List<Order> order_list = new List<Order>();
+
+        public Customer(string name, string phone, string adress) : base(name,phone,adress)
         {
-            id_customer++;
+            this.name = name;
+            this.phone = phone;
+            this.adress = adress;
+
         }
 
-        public void SetOrder (Order order)
+        public void AddOrder(Order order)
         {
-            this.order = order;
-        }        
-
-        public Order GetOrder()
-        {
-            return this.order;
-        }
-
-        public int Id
-        {
-            get{ return id_customer; }
+            order_list.Add(order);
         }
 
         public override string ToString()
         {
-            return String.Format("Order ID : {0} Customer ID :{1}", order.ToString(), Id);
+            return String.Format("Customer Name:{0}", this.name);
         }
 
     }

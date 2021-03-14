@@ -5,14 +5,19 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Bovelo
-{
-    class Manager : Person
+{ 
+    class Agent : Person
     {
         private List<Customer> customers = new List<Customer>();
-
-        public Manager(string name, string phone, string adress) : base(name, phone, adress)
+        private int id_agent;
+        public Agent(string name,int id,string phone, string adress) : base(name,phone,adress)
         {
+            this.id_agent = id;
+        }
 
+        public int Id
+        {
+            get { return id_agent; }
         }
         public void AddCustomer(Customer customer)
         {
@@ -24,4 +29,5 @@ namespace Bovelo
         }
     }
 }
+
 

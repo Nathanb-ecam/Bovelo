@@ -8,17 +8,32 @@ namespace Bovelo
 {
     class Person
     {
-        protected int id;
         protected string name;
-        
-        public Person (string name, int id =0)
+        protected string phone;
+        protected string adress;
+        public Person (string name,string phone, string adress)
         {
-            this.id = id;
             this.name = name;
+            this.phone = phone;
+            this.adress = adress;
         }
-        public int Get_id()
+
+        public string Name
         {
-            return this.id;
+            get { return this.name; }
         }
+
+        public string Phone
+        {
+            get { return this.phone; }
+
+        }
+
+        public string Adress
+        {
+            get { return this.adress; }
+
+        }
+
     }
 }

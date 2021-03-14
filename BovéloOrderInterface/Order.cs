@@ -11,14 +11,31 @@ namespace Bovelo
         private Dictionary<Bike, List<int>> bikes;
         private List<Bike> bikes_list = new List<Bike>();
         private static int id =0;
+        private Agent order_agent;
+        private Customer customer;
         public Order(Dictionary<Bike, List<int>> bikes)
         {
             id++;
             this.bikes = bikes;
+            
         }
         public Dictionary<Bike, List<int>> Bikes
         {
             get { return bikes; }
+        }
+        public void SetCustomer(Customer customer)
+        {
+            this.customer = customer;
+        }
+
+        public List<Bike> Bikes_list
+        {
+            get { return bikes_list; }
+        }
+
+        public void Add_Agent(Agent agent)
+        {
+            order_agent = agent;
         }
 
         public void AddBike(Bike bike)

@@ -9,15 +9,18 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using System.Resources;
+using MySql.Data.MySqlClient;
+using System.Globalization;
 
 namespace Bovelo
 {
     public partial class Form1 : Form
     {
-
+        Agent agent = new Agent("Khaled",1,"07","Vilvoorde");
         Order order = new Order(new Dictionary<Bike, List<int>>());
+               
         Catalog c = new Catalog();
-
+        MySqlConnection cn = new MySqlConnection("server=193.191.240.67;user=nick;database=mydb;port=63307;password=1234");
 
         public Form1()
         {
@@ -29,8 +32,8 @@ namespace Bovelo
             colorBox.SelectedIndex = 0;
             quantityBox.SelectedText = "1";
             // si on souhaite ajouter un velo different
-            c.addBike(new Bike(new Type("Electric"), new Size("26"), new Color("Black"), 100, false), "C:/Users/nathanbuchin/Pictures/OtherBikeModels/ElectricBlack.jpg");
-            c.addBike(new Bike(new Type("City"), new Size("26"), new Color("Red"), 100, false), "C:/Users/nathanbuchin/Pictures/Ville/CityRed.png");
+            c.addBike(new Bike(new Type("Electric"), new Size("26"), new Color("Black"), 100, false), "C:/Users/khale/Desktop/Images/vertVille.jpg");
+            c.addBike(new Bike(new Type("City"), new Size("26"), new Color("Red"), 100, false), "C:/Users/khale/Desktop/Images/CityRed.png");
             NewGen_Catalog();
             panelCatalog.Visible = true;
         }
@@ -178,11 +181,55 @@ namespace Bovelo
         // pour confirmer une commande 
         private void confirmBtn_Click(object sender, EventArgs e)
         {
+           
+            DateTime dt = DateTime.Now;
+            dt.AddDays(3);                                      //We add 3 days of delay to the order in the best case.
+            if (cn.State == ConnectionState.Closed) { cn.Open(); };
             if (order.Bikes.Count != 0)
             {
-                Customer customer = new Customer("FrigoFri");
-                customer.SetOrder(order);
-                Console.WriteLine(customer.ToString());
+                Customer customer = new Customer("Yann","07","Nick");
+                string cust_phone = customer.Phone;
+                string cust_id = "0";
+                MySqlCommand command = new MySqlCommand(String.Format("SELECT * FROM Customer WHERE Phone = {0}",cust_phone), cn);
+                DataTable data = new DataTable();
+                data.Load(command.ExecuteReader());
+                if (data.Rows.Count != 0)
+                {
+                    foreach(DataRow row in data.Rows)
+                    {
+                        cust_id = (row["idCustomer"]).ToString();
+                    }
+
+                }
+                else
+                {
+                    MySqlCommand cmd0 = new MySqlCommand("INSERT INTO Customer(Name,Phone,Adress) VALUES (@name,@phone,@adress)", cn);
+                    cmd0.Parameters.AddWithValue("@name", customer.Name);
+                    cmd0.Parameters.AddWithValue("@phone", customer.Phone);
+                    cmd0.Parameters.AddWithValue("@adress", customer.Adress);
+                    cmd0.ExecuteNonQuery();
+                    cust_id = cmd0.LastInsertedId.ToString();
+                }
+
+                order.SetCustomer(customer);
+                order.Add_Agent(agent);                         //We associate an agent for our order.
+                foreach (Bike bike in order.Bikes_list)
+                {
+                    MySqlCommand cmd = new MySqlCommand("INSERT INTO Bike(Color,Type,Size,Assembler_idAssembler,Price) VALUES (@color,@type,@size,@id_assembler,@price)", cn);
+                    cmd.Parameters.AddWithValue("@color", bike.Color.Colors);
+                    cmd.Parameters.AddWithValue("@type", bike.Type.Types);
+                    cmd.Parameters.AddWithValue("@size", bike.Size.Sizes);
+                    cmd.Parameters.AddWithValue("@price", bike.Type.Price);
+                    cmd.Parameters.AddWithValue("@id_assembler", 1);
+                    cmd.ExecuteNonQuery();
+                }
+                //MySqlCommand cmd2 = new MySqlCommand("INSERT INTO Order(Price,BikesQuantity,Delay,Customer_idCustomer,Agent_idAgent) VALUES (@total_price,@quantity,@delay,@id_customer,@id_agent)", cn);
+                //cmd2.Parameters.AddWithValue("@total_price", Int32.Parse(totalPriceTxt.Text));
+                //cmd2.Parameters.AddWithValue("@quantity", (order.Bikes_list).Count);
+                //cmd2.Parameters.AddWithValue("@delay", 1);
+                //cmd2.Parameters.AddWithValue("@id_customer", cust_id);
+                //cmd2.Parameters.AddWithValue("@id_agent", agent.Id);
+                cmd2.ExecuteNonQuery();
                 order.Bikes.Clear();
                 totalPriceTxt.Text = "";
                 recapTxt.Text = "";
