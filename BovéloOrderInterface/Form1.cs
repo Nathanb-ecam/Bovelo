@@ -32,8 +32,8 @@ namespace Bovelo
             colorBox.SelectedIndex = 0;
             quantityBox.SelectedText = "1";
             // si on souhaite ajouter un velo different
-            c.addBike(new Bike(new Type("Electric"), new Size("26"), new Color("Black"), 100, false), "C:/Users/khale/Desktop/Images/vertVille.jpg");
-            c.addBike(new Bike(new Type("City"), new Size("26"), new Color("Red"), 100, false), "C:/Users/khale/Desktop/Images/CityRed.png");
+            c.addBike(new Bike(new Type("Electric"), new Size("26"), new Color("Black"), 100, false), "C:/Users/nathanbuchin/Pictures/Ville/CityRed.png");
+            c.addBike(new Bike(new Type("City"), new Size("26"), new Color("Red"), 100, false), "C:/Users/nathanbuchin/Pictures/Ville/CityRed.png");
             NewGen_Catalog();
             panelCatalog.Visible = true;
         }
@@ -85,6 +85,7 @@ namespace Bovelo
             panelOrder.Visible = false;
             panelDelay.Visible = false;
             panelCatalog.Visible = false;
+            panel1.Visible = false;
         }
         private void orderPageBtn_Click(object sender, EventArgs e)
         {
@@ -92,6 +93,7 @@ namespace Bovelo
             panelDelay.Visible = false;
             panelRecap.Visible = false;
             panelCatalog.Visible = false;
+            panel1.Visible = false;
         }
 
         private void delayBtn_Click(object sender, EventArgs e)
@@ -99,6 +101,7 @@ namespace Bovelo
             panelDelay.Visible = true;
             panelOrder.Visible = false;
             panelRecap.Visible = false;
+            panel1.Visible = false;
             panelCatalog.Visible = false;
             // chercher dans la bdd si vélo en stock puis estimer delay
             //delayEstimater();
@@ -179,7 +182,7 @@ namespace Bovelo
         }
 
         // pour confirmer une commande 
-        private void confirmBtn_Click(object sender, EventArgs e)
+        private void sendOrderBtn_Click(object sender, EventArgs e)
         {
            
             DateTime dt = DateTime.Now;
@@ -187,7 +190,8 @@ namespace Bovelo
             if (cn.State == ConnectionState.Closed) { cn.Open(); };
             if (order.Bikes.Count != 0)
             {
-                Customer customer = new Customer("Yann","07","Nick");
+                Customer customer = new Customer(nameBox.Text, phoneBox.Text, adressBox.Text);
+                //Customer customer = new Customer("Yann","07","Nick");
                 string cust_phone = customer.Phone;
                 string cust_id = "0";
                 MySqlCommand command = new MySqlCommand(String.Format("SELECT * FROM Customer WHERE Phone = {0}",cust_phone), cn);
@@ -229,7 +233,7 @@ namespace Bovelo
                 //cmd2.Parameters.AddWithValue("@delay", 1);
                 //cmd2.Parameters.AddWithValue("@id_customer", cust_id);
                 //cmd2.Parameters.AddWithValue("@id_agent", agent.Id);
-                cmd2.ExecuteNonQuery();
+                //cmd2.ExecuteNonQuery();
                 order.Bikes.Clear();
                 totalPriceTxt.Text = "";
                 recapTxt.Text = "";
@@ -248,6 +252,7 @@ namespace Bovelo
             panelOrder.Visible = false;
             panelDelay.Visible = false;
             panelRecap.Visible = false;
+
         }
 
         // fonction qui va générer le contenu de la page catalogue de manière dynamique
@@ -318,55 +323,17 @@ namespace Bovelo
             colorBox.SelectedItem = elems[1];
         }
 
-        //pour recuperer le model selectionnee par l'utilisateur
-        private Type Detect_Model(string model)
-        {
-            Type t;
-            switch (model) // pour recuperer le model
-            {
-                case "City":
-                    t = new Type("City");
-                    break;
-                case "Adventure":
-                    t = new Type("Adventure");
-                    break;
-                case "Explorer":
-                    t = new Type("Explorer");
-                    break;
-                default:
-                    t = new Type("City");
-                    break;
-            }
 
-            return t;
-        }
-        
-        // pour recuperer la couleur selectionnee par l'utilisateur
-        private Color Detect_Color(string color)
+       
+
+
+        private void panelRecap_Paint(object sender, PaintEventArgs e)
         {
-            Color col;
-            switch (color) 
-            {
-                case "Red":
-                    col = new Color("Red");
-                    break;
-                case "Blue":
-                    col = new Color("Blue");
-                    break;
-                case "Black":
-                    col = new Color("Black");
-                    break;
-                default:
-                    col = new Color("Red");
-                    break;
-            }
-            return col;
+
         }
-/*        private void sendOrderBtn_Click(object sender, EventArgs e)
-        {
-            string name = nameBox.Text;
-            string number = phoneBox.Text;
-            Console.WriteLine(name);
-        }*/
+       private void confirmBtn_Click(object sender, EventArgs e)
+       {
+           panel1.Visible = true;
+       }
     }
 }

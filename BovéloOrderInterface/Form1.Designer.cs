@@ -65,11 +65,20 @@
             this.Bovelo = new System.Windows.Forms.Label();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.nameBox = new System.Windows.Forms.TextBox();
+            this.phoneBox = new System.Windows.Forms.TextBox();
+            this.adressBox = new System.Windows.Forms.TextBox();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.sendOrderBtn = new System.Windows.Forms.Button();
             this.panelOrder.SuspendLayout();
             this.panelCatalog.SuspendLayout();
             this.panelDelay.SuspendLayout();
             this.panelRecap.SuspendLayout();
             this.panelNav.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelOrder
@@ -280,6 +289,7 @@
             // 
             // panelRecap
             // 
+            this.panelRecap.Controls.Add(this.panel1);
             this.panelRecap.Controls.Add(this.totalPriceTxt);
             this.panelRecap.Controls.Add(this.recapTxt);
             this.panelRecap.Controls.Add(this.resetBtn);
@@ -290,6 +300,7 @@
             this.panelRecap.Name = "panelRecap";
             this.panelRecap.Size = new System.Drawing.Size(1214, 613);
             this.panelRecap.TabIndex = 15;
+            this.panelRecap.Paint += new System.Windows.Forms.PaintEventHandler(this.panelRecap_Paint);
             // 
             // totalPriceTxt
             // 
@@ -364,7 +375,7 @@
             // 
             this.delayBtn.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.delayBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.delayBtn.Font = new System.Drawing.Font("EuroRoman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
+            this.delayBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.delayBtn.ForeColor = System.Drawing.Color.White;
             this.delayBtn.Image = ((System.Drawing.Image)(resources.GetObject("delayBtn.Image")));
             this.delayBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -381,7 +392,7 @@
             // 
             this.recapBtn.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.recapBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.recapBtn.Font = new System.Drawing.Font("EuroRoman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
+            this.recapBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.recapBtn.ForeColor = System.Drawing.Color.White;
             this.recapBtn.Image = ((System.Drawing.Image)(resources.GetObject("recapBtn.Image")));
             this.recapBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -398,7 +409,7 @@
             // 
             this.orderPageBtn.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.orderPageBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.orderPageBtn.Font = new System.Drawing.Font("EuroRoman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
+            this.orderPageBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.orderPageBtn.ForeColor = System.Drawing.Color.White;
             this.orderPageBtn.Image = ((System.Drawing.Image)(resources.GetObject("orderPageBtn.Image")));
             this.orderPageBtn.Location = new System.Drawing.Point(0, 238);
@@ -415,7 +426,7 @@
             // 
             this.catalogBtn.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.catalogBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.catalogBtn.Font = new System.Drawing.Font("EuroRoman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
+            this.catalogBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.catalogBtn.ForeColor = System.Drawing.Color.White;
             this.catalogBtn.Image = ((System.Drawing.Image)(resources.GetObject("catalogBtn.Image")));
             this.catalogBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -447,7 +458,7 @@
             // 
             this.exitBtn.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.exitBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.exitBtn.Font = new System.Drawing.Font("EuroRoman", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
+            this.exitBtn.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.exitBtn.ForeColor = System.Drawing.Color.White;
             this.exitBtn.Image = ((System.Drawing.Image)(resources.GetObject("exitBtn.Image")));
             this.exitBtn.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -464,11 +475,11 @@
             // 
             this.Bovelo.AutoSize = true;
             this.Bovelo.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.Bovelo.Font = new System.Drawing.Font("EuroRoman", 39.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(2)));
+            this.Bovelo.Font = new System.Drawing.Font("Microsoft Sans Serif", 39.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.Bovelo.ForeColor = System.Drawing.Color.White;
             this.Bovelo.Location = new System.Drawing.Point(12, 43);
             this.Bovelo.Name = "Bovelo";
-            this.Bovelo.Size = new System.Drawing.Size(171, 59);
+            this.Bovelo.Size = new System.Drawing.Size(191, 63);
             this.Bovelo.TabIndex = 32;
             this.Bovelo.Text = "Bovelo";
             // 
@@ -485,6 +496,81 @@
             // 
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.sendOrderBtn);
+            this.panel1.Controls.Add(this.label13);
+            this.panel1.Controls.Add(this.label12);
+            this.panel1.Controls.Add(this.label11);
+            this.panel1.Controls.Add(this.adressBox);
+            this.panel1.Controls.Add(this.phoneBox);
+            this.panel1.Controls.Add(this.nameBox);
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1214, 613);
+            this.panel1.TabIndex = 36;
+            // 
+            // nameBox
+            // 
+            this.nameBox.Location = new System.Drawing.Point(486, 146);
+            this.nameBox.Name = "nameBox";
+            this.nameBox.Size = new System.Drawing.Size(100, 20);
+            this.nameBox.TabIndex = 0;
+            // 
+            // phoneBox
+            // 
+            this.phoneBox.Location = new System.Drawing.Point(486, 203);
+            this.phoneBox.Name = "phoneBox";
+            this.phoneBox.Size = new System.Drawing.Size(100, 20);
+            this.phoneBox.TabIndex = 1;
+            // 
+            // adressBox
+            // 
+            this.adressBox.Location = new System.Drawing.Point(487, 256);
+            this.adressBox.Name = "adressBox";
+            this.adressBox.Size = new System.Drawing.Size(100, 20);
+            this.adressBox.TabIndex = 2;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.Location = new System.Drawing.Point(395, 146);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(56, 18);
+            this.label11.TabIndex = 3;
+            this.label11.Text = "Name :";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.Location = new System.Drawing.Point(367, 203);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(113, 18);
+            this.label12.TabIndex = 4;
+            this.label12.Text = "Phone number :";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.Location = new System.Drawing.Point(391, 259);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(62, 18);
+            this.label13.TabIndex = 5;
+            this.label13.Text = "Adress :";
+            // 
+            // sendOrderBtn
+            // 
+            this.sendOrderBtn.Location = new System.Drawing.Point(445, 314);
+            this.sendOrderBtn.Name = "sendOrderBtn";
+            this.sendOrderBtn.Size = new System.Drawing.Size(126, 43);
+            this.sendOrderBtn.TabIndex = 6;
+            this.sendOrderBtn.Text = "Send Order";
+            this.sendOrderBtn.UseVisualStyleBackColor = true;
+            this.sendOrderBtn.Click += new System.EventHandler(this.sendOrderBtn_Click);
             // 
             // Form1
             // 
@@ -510,6 +596,8 @@
             this.panelRecap.PerformLayout();
             this.panelNav.ResumeLayout(false);
             this.panelNav.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -551,5 +639,13 @@
         private System.Windows.Forms.Button exitBtn;
         private System.Windows.Forms.Label priceLabel;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button sendOrderBtn;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.TextBox adressBox;
+        private System.Windows.Forms.TextBox phoneBox;
+        private System.Windows.Forms.TextBox nameBox;
     }
 }
