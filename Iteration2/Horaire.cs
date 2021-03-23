@@ -10,22 +10,28 @@ namespace BOVELO_PlanningList
     {
         string test0;
 
+        string horaireTache0;
+        string dureeTache0;
+
         Détail_et_modification m2 = new Détail_et_modification();
 
-        public string Horaire1 { get { return m2.HoraireTache + " " + m2.DureeTache;  } set { test0 = value; } }
+        public string HoraireTache { get { return horaireTache0;  } set { test0 = value; } }
+        public string DureeTache { get { return dureeTache0; } set { test0 = value; } }
 
-
-
-        public string getHoraire()
+        public Horaire(string a, string b)
         {
-            test0 = m2.HoraireTache + " " + m2.DureeTache;
+            this.horaireTache0 = a;
+            this.dureeTache0 = b;
+        }
+
+        public string getHoraire(int b)
+        {
+            test0 = m2.HoraireTache + " " + b.ToString();
             return test0;
         }
 
-        private void timer1_Tick(int a)
-        {
-            a -= 1;
-        }
+
+
 
     }
 }

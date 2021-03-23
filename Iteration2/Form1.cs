@@ -25,6 +25,12 @@ namespace BOVELO_PlanningList
         bool Connecter = false;
 
         Horaire GT;
+        Monteur a;
+        Planning_Master b;
+
+        ListViewItem element;
+
+        private int DRTache1;
 
         private void button1_Click(object sender, EventArgs e) // connexion bdd
         {
@@ -37,18 +43,55 @@ namespace BOVELO_PlanningList
                     button1.Text = "Se déconnecter";
                     Connecter = true;
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message);
                 }
-            
-                
+
+                string identifiant;
+                string password;
+
+                using (Connexion m = new Connexion())
+                {
+                    identifiant = m.identifiant;
+                    password = m.password;
+
+                    a = new Monteur(identifiant, password);
+                    b = new Planning_Master(identifiant, password);
+
+                    if (m.ShowDialog() == DialogResult.Yes)
+                    {
+                        MySqlCommand cmd = new MySqlCommand("Select FROM Users (userName,Password)", cn);
+                        using (MySqlDataReader Lire = cmd.ExecuteReader())
+                        {
+                            while (Lire.Read())
+                            {
+                                string identDB = Lire["userName"].ToString();
+                                string pwDB = Lire["Password"].ToString();
+
+                                if (identifiant == identDB && password == pwDB)
+                                {
+                                    MessageBox.Show("Bienvenue {0}", identifiant);
+                                }
+                                else
+                                {
+                                    rentrePas();
+                                }
+                            }
+                        }                                                  
+                    }
+                }                
             }else //pour la deco
             {
-                cn.Close();
-                button1.Text = "Se connecter";
-                Connecter = false;
+                rentrePas();
             }
+        }
+
+        public void rentrePas()
+        {
+            cn.Close();
+            button1.Text = "Se connecter";
+            Connecter = false;
         }
 
         private void button2_Click(object sender, EventArgs e) //pour chercher nos lignes de commandes ds la bdd. Deux options s'offre a nous, où on change encore la bdd où alors je fais des SELECT de plusieurs tables. J'ai choissi l'option 1 mais on peut modifier par après.      
@@ -66,9 +109,10 @@ namespace BOVELO_PlanningList
                         string Color = Lire["Color"].ToString();
                         string Size  = Lire["Size"].ToString();
                         string Monteur = Lire["Monteur"].ToString();
-                        string Horaire = Lire["HoraireTache"].ToString() + " durée:" + Lire["DureeTache"].ToString() + " minutes";
+                        string Horaire = Lire["HoraireTache"].ToString();
+                        string DureeTache = Lire["DureeTache"].ToString();
 
-                        listView1.Items.Add(new ListViewItem(new[] { ID, Type, Color, Size, Monteur, Horaire }));
+                        listView1.Items.Add(new ListViewItem(new[] { ID, Type, Color, Size, Monteur, Horaire, DureeTache }));
 
                     } 
 
@@ -109,16 +153,18 @@ namespace BOVELO_PlanningList
                 string Size = element.SubItems[3].Text;
                 string Monteur = element.SubItems[4].Text;
                 string Horaire = element.SubItems[5].Text;
+                string DureeTache = element.SubItems[6].Text;
 
                 using(Détail_et_modification m = new Détail_et_modification()) //On crée notre nouvelle instante modification et detail
                 {
 
-                    GT = new Horaire();
-                    Monteur a = new Monteur(m.Monteur);
+                    GT = new Horaire(m.HoraireTache, m.DureeTache);
+                    a = new Monteur(m.Monteur);
                     
                     m.idBike = idBike;
-                    m.Monteur = Monteur;
-                    GT.Horaire1 = Horaire;
+                    a.getMonteur = Monteur;
+                    GT.HoraireTache = Horaire;
+                    GT.DureeTache = DureeTache;
                     m.Type = Type;
 
                     if(m.ShowDialog() == DialogResult.Yes) 
@@ -131,12 +177,12 @@ namespace BOVELO_PlanningList
                         cmd.Parameters.AddWithValue("@idBike", idBike);  //comme readonly pas de m.ID car je ne fais que afficher
                         cmd.ExecuteNonQuery();
 
-                        a.addMonteur(m.Monteur);
-
                         //je le met directement à jour sans le bouton "actualiser"
                         element.SubItems[1].Text = m.Type;
                         element.SubItems[4].Text = m.Monteur;
-                        element.SubItems[5].Text = GT.Horaire1;
+                        element.SubItems[5].Text = GT.HoraireTache;
+                        element.SubItems[6].Text = GT.DureeTache;
+
                         MessageBox.Show("Modifier");
                     }
                 }
@@ -164,26 +210,33 @@ namespace BOVELO_PlanningList
 
         private void jeCommenceToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //ListViewItem element = listView1.SelectedItems[0]; 
-            //string Horaire = element.SubItems[5].Text;
-        
-            //int DRTache = Int32.Parse(Horaire.Substring(25, 2));
+            this.element = listView1.SelectedItems[0]; //Je selectionne mes variables avec lequels je veux travailler
 
-            //bool res = true;
-            //while (res)
-            //{
-    
-            //    System.Timers.Timer montimer = new System.Timers.Timer(); // Initialise mon compteur
-            //    montimer.Interval = 6000; // Interval en milliseconde 60000 = 1 minutes
-            //    montimer.Start(); // Lance Mon compteur
-            //    montimer.Elapsed += new System.Timers.ElapsedEventHandler(timer1_Elapsed); // Chaque 10 minutes mon évènement se déclenche.
+            string DureeTache = element.SubItems[6].Text;
+            this.DRTache1 = Int32.Parse(DureeTache);
 
-            //    if (DRTache < 1)
-            //    {
-            //        MessageBox.Show("Tache terminée");
-            //        res = false;
-            //    }
-            //}
+            this.timer1.Enabled = true;
+                      
+
+            //    //MySqlCommand cmd = new MySqlCommand("UPDATE Bike SET DureeTache=@DureeTache WHERE idBike=@idBike", cn); //MiseAJourBDD
+            //    //cmd.Parameters.AddWithValue("@DureeTache", DRTache.ToString());
+            //    //cmd.Parameters.AddWithValue("@idBike", idBike);
+        }
+
+        private void TimeIsOn(object sender, EventArgs e)
+        {
+            if (this.DRTache1 > 0)
+            {
+                this.DRTache1--;
+                this.element.SubItems[6].Text = DRTache1.ToString();
+            }
+
+            else
+            {
+                this.timer1.Stop();
+                MessageBox.Show("Time is up, delete this task");
+            }
         }
     }
 }
+

@@ -46,59 +46,60 @@ namespace BOVELO_PlanningList
             if (cn.State == ConnectionState.Closed) { cn.Open(); }
 
             listView5.Items.Clear();
-            string Type = textBox3.Text;
 
-            MySqlCommand cmd2 = new MySqlCommand("INSERT INTO Parts (NumberGuidon, NumberChassis, NumberRoue, Location) VALUES (@NumberGuidon,@NumberChassis,@NumberRoue, @Location)", cn);
-            //cmd2.Parameters.AddWithValue("@idBike", idBike);
+            MySqlCommand cmd2 = new MySqlCommand("SELECT * FROM CommandedParts WHERE idBike=@idBike)", cn);
+            cmd2.Parameters.AddWithValue("@idBike", idBike);
 
-            switch (Type.ToLower())
-            {
-                case "city":
 
-                    Part VeloCity = new Part(1, 1, 2, 2, 5, 2, 5, 2);
 
-                    cmd2.Parameters.AddWithValue("@NumberGuidon", VeloCity.getNombreChassis());
-                    cmd2.Parameters.AddWithValue("@NumberChassis", VeloCity.getnombreGuidon());
-                    cmd2.Parameters.AddWithValue("@NumberRoue", VeloCity.getnombreRoue());
-                    cmd2.Parameters.AddWithValue("@Location", VeloCity.getLocation());
-                    cmd2.ExecuteNonQuery();
-                    cmd2.Parameters.Clear();
+            //switch (Type.ToLower())
+            //{
+            //    case "city":
 
-                    listView5.Items.Add(new ListViewItem(new[] { String.Format("Il faut {0} guidons,/n {1} chassis, /n {2} roue", VeloCity.getNombreChassis(), VeloCity.getnombreGuidon(), VeloCity.getnombreRoue()) }));
-                    break;
+            //        Part VeloCity = new Part(1, 1, 2, 2, 5, 2, 5, 2);
 
-                case "adventure":
+            //        cmd2.Parameters.AddWithValue("@NumberGuidon", VeloCity.getNombreChassis());
+            //        cmd2.Parameters.AddWithValue("@NumberChassis", VeloCity.getnombreGuidon());
+            //        cmd2.Parameters.AddWithValue("@NumberRoue", VeloCity.getnombreRoue());
+            //        cmd2.Parameters.AddWithValue("@Location", VeloCity.getLocation());
+            //        cmd2.ExecuteNonQuery();
+            //        cmd2.Parameters.Clear();
 
-                    Part VeloAdventure = new Part(1, 2, 2, 5, 1, 5, 1, 5);
+            //        listView5.Items.Add(new ListViewItem(new[] { String.Format("Il faut {0} guidons,/n {1} chassis, /n {2} roue", VeloCity.getNombreChassis(), VeloCity.getnombreGuidon(), VeloCity.getnombreRoue()) }));
+            //        break;
 
-                    cmd2.Parameters.AddWithValue("@NumberGuidon", VeloAdventure.getNombreChassis());
-                    cmd2.Parameters.AddWithValue("@NumberChassis", VeloAdventure.getnombreGuidon());
-                    cmd2.Parameters.AddWithValue("@NumberRoue", VeloAdventure.getnombreRoue());
-                    cmd2.Parameters.AddWithValue("@Location", VeloAdventure.getLocation());
-                    cmd2.ExecuteNonQuery();
-                    cmd2.Parameters.Clear();
+            //    case "adventure":
 
-                    listView5.Items.Add(new ListViewItem(new[] { String.Format("Il faut {0} guidons, {1} chassis, {2} roue", VeloAdventure.getNombreChassis(), VeloAdventure.getnombreGuidon(), VeloAdventure.getnombreRoue()) }));
-                    break;
+            //        Part VeloAdventure = new Part(1, 2, 2, 5, 1, 5, 1, 5);
 
-                case "explorer":
+            //        cmd2.Parameters.AddWithValue("@NumberGuidon", VeloAdventure.getNombreChassis());
+            //        cmd2.Parameters.AddWithValue("@NumberChassis", VeloAdventure.getnombreGuidon());
+            //        cmd2.Parameters.AddWithValue("@NumberRoue", VeloAdventure.getnombreRoue());
+            //        cmd2.Parameters.AddWithValue("@Location", VeloAdventure.getLocation());
+            //        cmd2.ExecuteNonQuery();
+            //        cmd2.Parameters.Clear();
 
-                    Part VeloExplorer = new Part(1, 3, 2, 2, 2, 1, 8, 2);
+            //        listView5.Items.Add(new ListViewItem(new[] { String.Format("Il faut {0} guidons, {1} chassis, {2} roue", VeloAdventure.getNombreChassis(), VeloAdventure.getnombreGuidon(), VeloAdventure.getnombreRoue()) }));
+            //        break;
 
-                    cmd2.Parameters.AddWithValue("@NumberGuidon", VeloExplorer.getNombreChassis());
-                    cmd2.Parameters.AddWithValue("@NumberChassis", VeloExplorer.getnombreGuidon());
-                    cmd2.Parameters.AddWithValue("@NumberRoue", VeloExplorer.getnombreRoue());
-                    cmd2.Parameters.AddWithValue("@Location", VeloExplorer.getLocation());
-                    cmd2.ExecuteNonQuery();
-                    cmd2.Parameters.Clear();
+            //    case "explorer":
 
-                    listView5.Items.Add(new ListViewItem(new[] { String.Format("Il faut {0} guidons, {1} chassis, {2} roue", VeloExplorer.getNombreChassis(), VeloExplorer.getnombreGuidon(), VeloExplorer.getnombreRoue()) }));
-                    break;
+            //        Part VeloExplorer = new Part(1, 3, 2, 2, 2, 1, 8, 2);
 
-                default:
-                    MessageBox.Show("hhuhuhuh");
-                    break;
-            }
+            //        cmd2.Parameters.AddWithValue("@NumberGuidon", VeloExplorer.getNombreChassis());
+            //        cmd2.Parameters.AddWithValue("@NumberChassis", VeloExplorer.getnombreGuidon());
+            //        cmd2.Parameters.AddWithValue("@NumberRoue", VeloExplorer.getnombreRoue());
+            //        cmd2.Parameters.AddWithValue("@Location", VeloExplorer.getLocation());
+            //        cmd2.ExecuteNonQuery();
+            //        cmd2.Parameters.Clear();
+
+            //        listView5.Items.Add(new ListViewItem(new[] { String.Format("Il faut {0} guidons, {1} chassis, {2} roue", VeloExplorer.getNombreChassis(), VeloExplorer.getnombreGuidon(), VeloExplorer.getnombreRoue()) }));
+            //        break;
+
+            //    default:
+            //        MessageBox.Show("hhuhuhuh");
+            //        break;
+            //}
         }
 
         private void locationToolStripMenuItem_Click(object sender, EventArgs e)
@@ -125,7 +126,6 @@ namespace BOVELO_PlanningList
 
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
         {
-            // Set title bar to selected date.
             DateTime result = dateTimePicker1.Value;
             this.changement1 = result.ToString();
         }

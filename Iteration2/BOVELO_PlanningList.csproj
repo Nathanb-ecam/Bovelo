@@ -101,6 +101,12 @@
     <Compile Include="AjoutCommande.Designer.cs">
       <DependentUpon>AjoutCommande.cs</DependentUpon>
     </Compile>
+    <Compile Include="Connexion.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Connexion.Designer.cs">
+      <DependentUpon>Connexion.cs</DependentUpon>
+    </Compile>
     <Compile Include="Détail et modification.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -116,10 +122,14 @@
     <Compile Include="Horaire.cs" />
     <Compile Include="Monteur.cs" />
     <Compile Include="Part.cs" />
+    <Compile Include="Planning_Master.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="AjoutCommande.resx">
       <DependentUpon>AjoutCommande.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Connexion.resx">
+      <DependentUpon>Connexion.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Détail et modification.resx">
       <DependentUpon>Détail et modification.cs</DependentUpon>
