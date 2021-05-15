@@ -37,6 +37,5 @@ namespace Bovelo
             get { return price; }
             set { price = value; }
         }
-
     }
 }
