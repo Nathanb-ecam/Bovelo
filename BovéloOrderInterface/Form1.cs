@@ -98,6 +98,8 @@ namespace Bovelo
 
         private void delayBtn_Click(object sender, EventArgs e)
         {
+            Dictionary<string, int> bikesCounter = new Dictionary<string, int>(){ };
+
             panelDelay.Visible = true;
             panelOrder.Visible = false;
             panelRecap.Visible = false;
@@ -106,6 +108,41 @@ namespace Bovelo
             // chercher dans la bdd si vélo en stock puis estimer delay
             //delayEstimater();
 
+
+
+            List<string> commonParts = new List<string>(){"béquille","kitFrein","kitVitesse","kitPédalier","casetteDePignons","catadioptre","chaîne","chambreàAir","dérailleur","disqueDeFrein","fourche","guidon","plateau","roue","selle"};
+            List<string> city_Extra_Parts = new List<string>(){"cadre","pneu","garde-boue","porte-Bagage","éclairage"};
+            List<string> expl_Extra_Parts = new List<string>(){"cadre","pneuLarge","garde-boueLarge","porte-Bagage","éclairage"};
+            List<string> adv_Extra_Parts = new List<string>(){"cadreRenforcé","pneuLarge"};
+            // pieces a verifier dans le stock
+            Dictionary<Bike, List<int>> orderedBikes = order.Bikes;
+            // il faut regarder le modele et la taille des velo de la commande puis regarder s'il y a assez de pieces dans le stock 
+            
+            // boucle pour reordonner le dictionnaire
+            foreach (KeyValuePair<Bike, List<int>> bike in orderedBikes)
+            {
+                string b = bike.Key.Type.Types + bike.Key.Color.Colors + bike.Key.Size.Sizes;
+                
+                if (!bikesCounter.ContainsKey(b))
+                {
+                    bikesCounter.Add((b), bike.Value[0]);
+                }
+                else
+                {
+                    bikesCounter[b] += bike.Value[0];
+                }     
+            }
+
+
+             foreach (KeyValuePair<string, int> bike in bikesCounter)
+            {
+                int number = bike.Value;
+                if (bike.Key.Substring(0,3) =="Cit")
+                {
+                    Console.WriteLine("dkljfeq");
+                }
+            }
+            
         }
 
         // pour ajouter les elements selectiones dans commande
@@ -138,7 +175,7 @@ namespace Bovelo
             foreach (KeyValuePair<Bike, List<int>> bike in orderedBikes)
             {
                 string b = bike.Key.Type.Types + bike.Key.Color.Colors + bike.Key.Size.Sizes;
-
+                
                 if (!bikesCounter.ContainsKey(b))
                 {
                     bikesCounter.Add((b), bike.Value[0]);
