@@ -21,8 +21,10 @@ namespace BOVELO_PlanningList
             InitializeComponent();
         }
 
-        MySqlConnection cn;
+        MySqlConnection cn;      
+
         bool Connecter = false;
+        bool test;
 
         Horaire GT;
         Monteur a;
@@ -34,58 +36,79 @@ namespace BOVELO_PlanningList
 
         private void button1_Click(object sender, EventArgs e) // connexion bdd
         {
-            if(button1.Text == "Se connecter")
+            if (button1.Text == "Se connecter")
             {
-                cn = new MySqlConnection("SERVER=193.191.240.67;user=nick;database=DataBase;port=63307;password=1234");
-                try
-                {
-                    if (cn.State == ConnectionState.Closed) { cn.Open(); }
-                    button1.Text = "Se déconnecter";
-                    Connecter = true;
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message);
-                }
-
                 string identifiant;
                 string password;
 
                 using (Connexion m = new Connexion())
                 {
-                    identifiant = m.identifiant;
-                    password = m.password;
-
-                    a = new Monteur(identifiant, password);
-                    b = new Planning_Master(identifiant, password);
-
                     if (m.ShowDialog() == DialogResult.Yes)
                     {
-                        MySqlCommand cmd = new MySqlCommand("Select FROM Users (userName,Password)", cn);
-                        using (MySqlDataReader Lire = cmd.ExecuteReader())
-                        {
-                            while (Lire.Read())
-                            {
-                                string identDB = Lire["userName"].ToString();
-                                string pwDB = Lire["Password"].ToString();
+                        identifiant = m.identifiant;
+                        password = m.password;
 
-                                if (identifiant == identDB && password == pwDB)
+                        a = new Monteur(identifiant, password);
+                        b = new Planning_Master(identifiant, password);
+
+                        using (cn = new MySqlConnection("SERVER=193.191.240.67;user=nick;database=DataBase;port=63307;password=1234"))
+                        {
+                            try
+                            {
+                                if (cn.State == ConnectionState.Closed) { cn.Open(); }
+                                button1.Text = "Se déconnecter";
+                                Connecter = true;
+                            }
+                            catch (Exception ex)
+                            {
+                                MessageBox.Show(ex.Message);
+                            }
+
+                            MySqlCommand cmd = new MySqlCommand("SELECT * FROM Users", cn);
+                            using (MySqlDataReader Lire = cmd.ExecuteReader())
+                            {
+                                if (Lire.Read())
                                 {
-                                    MessageBox.Show("Bienvenue {0}", identifiant);
-                                }
-                                else
-                                {
-                                    rentrePas();
+                                    string identDB = Lire["userName"].ToString();
+                                    string pwDB = Lire["Password"].ToString();
+
+                                    if (identifiant == identDB && password == pwDB)
+                                    {
+                                        MessageBox.Show("Bienvenue " + identifiant + " !");
+                                        keepOpen();
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("Mauvaise identification, try again");
+                                        rentrePas();
+                                    }
                                 }
                             }
-                        }                                                  
+                        }
                     }
-                }                
-            }else //pour la deco
+                }
+            }
+            else //pour la deco
             {
                 rentrePas();
             }
+        }    
+
+        public void keepOpen()
+        {          
+            cn = new MySqlConnection("SERVER=193.191.240.67;user=nick;database=DataBase;port=63307;password=1234");
+            try
+            {
+                if (cn.State == ConnectionState.Closed) { cn.Open(); }
+                button1.Text = "Se déconnecter";
+                Connecter = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }                     
         }
+
 
         public void rentrePas()
         {
@@ -96,28 +119,26 @@ namespace BOVELO_PlanningList
 
         private void button2_Click(object sender, EventArgs e) //pour chercher nos lignes de commandes ds la bdd. Deux options s'offre a nous, où on change encore la bdd où alors je fais des SELECT de plusieurs tables. J'ai choissi l'option 1 mais on peut modifier par après.      
         {
-            if (Connecter)
+            if(Connecter)
             {
-                listView1.Items.Clear();
-                MySqlCommand cmd = new MySqlCommand("SELECT * FROM Bike ", cn);
-                using(MySqlDataReader Lire = cmd.ExecuteReader())
+                listView1.Items.Clear();                
+                MySqlCommand cmd2 = new MySqlCommand("SELECT * FROM Bike ", cn);
+                using (MySqlDataReader Lire = cmd2.ExecuteReader())
                 {
-                    while (Lire.Read()) 
+                    while (Lire.Read())
                     {
                         string ID = Lire["idBike"].ToString();
-                        string Type  = Lire["Type"].ToString();
+                        string Type = Lire["Type"].ToString();
                         string Color = Lire["Color"].ToString();
-                        string Size  = Lire["Size"].ToString();
+                        string Size = Lire["Size"].ToString();
                         string Monteur = Lire["Monteur"].ToString();
                         string Horaire = Lire["HoraireTache"].ToString();
                         string DureeTache = Lire["DureeTache"].ToString();
 
                         listView1.Items.Add(new ListViewItem(new[] { ID, Type, Color, Size, Monteur, Horaire, DureeTache }));
 
-                    } 
-
-                }
-
+                    }
+                }                            
             }
             else { MessageBox.Show("Vous n'etes pas connecter"); }
         }
