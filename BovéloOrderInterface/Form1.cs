@@ -77,6 +77,17 @@ namespace Bovelo
                 order.AddBike(bike_name);
             }
         }
+        
+        private void orderDatabase(int price, int quantity, int delay, int id_customer, int id_agent)
+        {   
+            MySqlCommand cmd = new MySqlCommand("INSERT INTO Test(Price,Quantity,Delay,AgentID,CustomerID) VALUES (@total_price,@quantity,@delay,@id_customer,@id_agent)", cn);
+            cmd.Parameters.AddWithValue("@total_price", price);
+            cmd.Parameters.AddWithValue("@quantity", quantity);
+            cmd.Parameters.AddWithValue("@delay", delay);
+            cmd.Parameters.AddWithValue("@id_customer", id_customer);
+            cmd.Parameters.AddWithValue("@id_agent", id_agent);
+            cmd.ExecuteNonQuery();
+        }
 
         // les 3 fonctions qui suivent servent juste a determiner la page active
         private void recapBtn_Click(object sender, EventArgs e)
@@ -107,7 +118,6 @@ namespace Bovelo
             panelCatalog.Visible = false;
             // chercher dans la bdd si vélo en stock puis estimer delay
             //delayEstimater();
-
 
 
             List<string> commonParts = new List<string>(){"béquille","kitFrein","kitVitesse","kitPédalier","casetteDePignons","catadioptre","chaîne","chambreàAir","dérailleur","disqueDeFrein","fourche","guidon","plateau","roue","selle"};
@@ -228,7 +238,9 @@ namespace Bovelo
             if (cn.State == ConnectionState.Closed) { cn.Open(); };
             if (order.Bikes.Count != 0)
             {
-                Customer customer = new Customer(nameBox.Text, phoneBox.Text, adressBox.Text);
+                //FIX ID MAKE IT MORE GENERIC
+
+                Customer customer = new Customer(nameBox.Text, phoneBox.Text, adressBox.Text, 1);
               
                 string cust_phone = customer.Phone;
                 string cust_id = "0";
@@ -264,17 +276,11 @@ namespace Bovelo
                     cmd.Parameters.AddWithValue("@price", bike.Type.Price);
                     cmd.Parameters.AddWithValue("@id_assembler", 1);
                     cmd.ExecuteNonQuery();
-                    Console.WriteLine("Count", order.Bikes_list.Count);
+                    
                 }
-                /*
-                MySqlCommand cmd2 = new MySqlCommand("INSERT INTO Order(Price,BikesQuantity,Delay,Customer_idCustomer,Agent_idAgent) VALUES (@total_price,@quantity,@delay,@id_customer,@id_agent)", cn);
-                cmd2.Parameters.AddWithValue("@total_price", Int32.Parse(totalPriceTxt.Text));
-                cmd2.Parameters.AddWithValue("@quantity", order.Bikes_list.Count);
-                cmd2.Parameters.AddWithValue("@delay", 1);
-                cmd2.Parameters.AddWithValue("@id_customer", cust_id);
-                cmd2.Parameters.AddWithValue("@id_agent", agent.Id);
-                cmd2.ExecuteNonQuery();
-                */
+                //Make the Delay more generic 
+
+                orderDatabase(Int32.Parse(totalPriceTxt.Text),(order.Bikes_list).Count,dt.Day,customer.Id,agent.Id); 
                 order.Bikes.Clear();
                 totalPriceTxt.Text = "";
                 recapTxt.Text = "";
