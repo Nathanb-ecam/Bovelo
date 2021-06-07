@@ -13,6 +13,7 @@ namespace Bovelo
         private static int id =0;
         private Agent order_agent;
         private Customer customer;
+
         public Order(Dictionary<Bike, List<int>> bikes)
         {
             id++;

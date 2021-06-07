@@ -32,8 +32,8 @@ namespace Bovelo
             colorBox.SelectedIndex = 0;
             quantityBox.SelectedText = "1";
             // si on souhaite ajouter un velo different
-            c.addBike(new Bike(new Type("Electric"), new Size("26"), new Color("Black"), 100, false), "C:/Users/nathanbuchin/Pictures/Ville/CityRed.png");
-            c.addBike(new Bike(new Type("City"), new Size("26"), new Color("Red"), 100, false), "C:/Users/nathanbuchin/Pictures/Ville/CityRed.png");
+            //c.addBike(new Bike(new Type("Electric"), new Size("26"), new Color("Black"), 100, false), "C:/Users/nathanbuchin/Pictures/Ville/CityRed.png");
+            //c.addBike(new Bike(new Type("City"), new Size("26"), new Color("Red"), 100, false), "C:/Users/nathanbuchin/Pictures/Ville/CityRed.png");
             NewGen_Catalog();
             panelCatalog.Visible = true;
         }
@@ -213,6 +213,7 @@ namespace Bovelo
         // pour vider le panier et recommencer une commande 
         private void resetBtn_Click(object sender, EventArgs e)
         {
+            order.Bikes_list.Clear();
             order.Bikes.Clear();
             totalPriceTxt.Text = "";
             recapTxt.Text = "";
@@ -228,7 +229,7 @@ namespace Bovelo
             if (order.Bikes.Count != 0)
             {
                 Customer customer = new Customer(nameBox.Text, phoneBox.Text, adressBox.Text);
-                //Customer customer = new Customer("Yann","07","Nick");
+              
                 string cust_phone = customer.Phone;
                 string cust_id = "0";
                 MySqlCommand command = new MySqlCommand(String.Format("SELECT * FROM Customer WHERE Phone = {0}",cust_phone), cn);
@@ -263,14 +264,17 @@ namespace Bovelo
                     cmd.Parameters.AddWithValue("@price", bike.Type.Price);
                     cmd.Parameters.AddWithValue("@id_assembler", 1);
                     cmd.ExecuteNonQuery();
+                    Console.WriteLine("Count", order.Bikes_list.Count);
                 }
-                //MySqlCommand cmd2 = new MySqlCommand("INSERT INTO Order(Price,BikesQuantity,Delay,Customer_idCustomer,Agent_idAgent) VALUES (@total_price,@quantity,@delay,@id_customer,@id_agent)", cn);
-                //cmd2.Parameters.AddWithValue("@total_price", Int32.Parse(totalPriceTxt.Text));
-                //cmd2.Parameters.AddWithValue("@quantity", (order.Bikes_list).Count);
-                //cmd2.Parameters.AddWithValue("@delay", 1);
-                //cmd2.Parameters.AddWithValue("@id_customer", cust_id);
-                //cmd2.Parameters.AddWithValue("@id_agent", agent.Id);
-                //cmd2.ExecuteNonQuery();
+                /*
+                MySqlCommand cmd2 = new MySqlCommand("INSERT INTO Order(Price,BikesQuantity,Delay,Customer_idCustomer,Agent_idAgent) VALUES (@total_price,@quantity,@delay,@id_customer,@id_agent)", cn);
+                cmd2.Parameters.AddWithValue("@total_price", Int32.Parse(totalPriceTxt.Text));
+                cmd2.Parameters.AddWithValue("@quantity", order.Bikes_list.Count);
+                cmd2.Parameters.AddWithValue("@delay", 1);
+                cmd2.Parameters.AddWithValue("@id_customer", cust_id);
+                cmd2.Parameters.AddWithValue("@id_agent", agent.Id);
+                cmd2.ExecuteNonQuery();
+                */
                 order.Bikes.Clear();
                 totalPriceTxt.Text = "";
                 recapTxt.Text = "";
