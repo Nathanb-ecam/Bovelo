@@ -43,18 +43,26 @@
             this.sizeBox = new System.Windows.Forms.ComboBox();
             this.modelBox = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.panelCatalog = new System.Windows.Forms.Panel();
-            this.label2 = new System.Windows.Forms.Label();
-            this.panelDelay = new System.Windows.Forms.Panel();
-            this.delayInfobox = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
             this.panelRecap = new System.Windows.Forms.Panel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.sendOrderBtn = new System.Windows.Forms.Button();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.adressBox = new System.Windows.Forms.TextBox();
+            this.phoneBox = new System.Windows.Forms.TextBox();
+            this.nameBox = new System.Windows.Forms.TextBox();
             this.totalPriceTxt = new System.Windows.Forms.Label();
             this.recapTxt = new System.Windows.Forms.Label();
             this.resetBtn = new System.Windows.Forms.Button();
             this.confirmBtn = new System.Windows.Forms.Button();
             this.label10 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
+            this.panelCatalog = new System.Windows.Forms.Panel();
+            this.label2 = new System.Windows.Forms.Label();
+            this.panelDelay = new System.Windows.Forms.Panel();
+            this.delayInfobox = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
             this.delayBtn = new System.Windows.Forms.Button();
             this.recapBtn = new System.Windows.Forms.Button();
             this.orderPageBtn = new System.Windows.Forms.Button();
@@ -65,20 +73,12 @@
             this.Bovelo = new System.Windows.Forms.Label();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.nameBox = new System.Windows.Forms.TextBox();
-            this.phoneBox = new System.Windows.Forms.TextBox();
-            this.adressBox = new System.Windows.Forms.TextBox();
-            this.label11 = new System.Windows.Forms.Label();
-            this.label12 = new System.Windows.Forms.Label();
-            this.label13 = new System.Windows.Forms.Label();
-            this.sendOrderBtn = new System.Windows.Forms.Button();
             this.panelOrder.SuspendLayout();
+            this.panelRecap.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.panelCatalog.SuspendLayout();
             this.panelDelay.SuspendLayout();
-            this.panelRecap.SuspendLayout();
             this.panelNav.SuspendLayout();
-            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelOrder
@@ -96,7 +96,7 @@
             this.panelOrder.Controls.Add(this.modelBox);
             this.panelOrder.Controls.Add(this.label1);
             this.panelOrder.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.panelOrder.Location = new System.Drawing.Point(276, 67);
+            this.panelOrder.Location = new System.Drawing.Point(276, 61);
             this.panelOrder.Name = "panelOrder";
             this.panelOrder.Size = new System.Drawing.Size(1214, 613);
             this.panelOrder.TabIndex = 14;
@@ -235,58 +235,6 @@
             this.label1.TabIndex = 14;
             this.label1.Text = "Bike Models :";
             // 
-            // panelCatalog
-            // 
-            this.panelCatalog.Controls.Add(this.label2);
-            this.panelCatalog.Location = new System.Drawing.Point(276, 67);
-            this.panelCatalog.Name = "panelCatalog";
-            this.panelCatalog.Size = new System.Drawing.Size(1214, 613);
-            this.panelCatalog.TabIndex = 2;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(76)))));
-            this.label2.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(0, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(133, 31);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "Our Bikes";
-            // 
-            // panelDelay
-            // 
-            this.panelDelay.Controls.Add(this.delayInfobox);
-            this.panelDelay.Controls.Add(this.label8);
-            this.panelDelay.Location = new System.Drawing.Point(276, 67);
-            this.panelDelay.Name = "panelDelay";
-            this.panelDelay.Size = new System.Drawing.Size(1214, 613);
-            this.panelDelay.TabIndex = 16;
-            // 
-            // delayInfobox
-            // 
-            this.delayInfobox.AutoSize = true;
-            this.delayInfobox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.delayInfobox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(76)))));
-            this.delayInfobox.Location = new System.Drawing.Point(220, 142);
-            this.delayInfobox.Name = "delayInfobox";
-            this.delayInfobox.Size = new System.Drawing.Size(16, 24);
-            this.delayInfobox.TabIndex = 1;
-            this.delayInfobox.Text = "-";
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(76)))));
-            this.label8.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(0, 0);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(315, 31);
-            this.label8.TabIndex = 0;
-            this.label8.Text = "Order Delay informations";
-            // 
             // panelRecap
             // 
             this.panelRecap.Controls.Add(this.panel1);
@@ -296,11 +244,86 @@
             this.panelRecap.Controls.Add(this.confirmBtn);
             this.panelRecap.Controls.Add(this.label10);
             this.panelRecap.Controls.Add(this.label7);
-            this.panelRecap.Location = new System.Drawing.Point(276, 67);
+            this.panelRecap.Location = new System.Drawing.Point(276, 61);
             this.panelRecap.Name = "panelRecap";
             this.panelRecap.Size = new System.Drawing.Size(1214, 613);
             this.panelRecap.TabIndex = 15;
             this.panelRecap.Paint += new System.Windows.Forms.PaintEventHandler(this.panelRecap_Paint);
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.sendOrderBtn);
+            this.panel1.Controls.Add(this.label13);
+            this.panel1.Controls.Add(this.label12);
+            this.panel1.Controls.Add(this.label11);
+            this.panel1.Controls.Add(this.adressBox);
+            this.panel1.Controls.Add(this.phoneBox);
+            this.panel1.Controls.Add(this.nameBox);
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1214, 613);
+            this.panel1.TabIndex = 36;
+            // 
+            // sendOrderBtn
+            // 
+            this.sendOrderBtn.Location = new System.Drawing.Point(445, 314);
+            this.sendOrderBtn.Name = "sendOrderBtn";
+            this.sendOrderBtn.Size = new System.Drawing.Size(126, 43);
+            this.sendOrderBtn.TabIndex = 6;
+            this.sendOrderBtn.Text = "Send Order";
+            this.sendOrderBtn.UseVisualStyleBackColor = true;
+            this.sendOrderBtn.Click += new System.EventHandler(this.sendOrderBtn_Click);
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.Location = new System.Drawing.Point(391, 259);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(62, 18);
+            this.label13.TabIndex = 5;
+            this.label13.Text = "Adress :";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.Location = new System.Drawing.Point(367, 203);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(113, 18);
+            this.label12.TabIndex = 4;
+            this.label12.Text = "Phone number :";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.Location = new System.Drawing.Point(395, 146);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(56, 18);
+            this.label11.TabIndex = 3;
+            this.label11.Text = "Name :";
+            // 
+            // adressBox
+            // 
+            this.adressBox.Location = new System.Drawing.Point(487, 256);
+            this.adressBox.Name = "adressBox";
+            this.adressBox.Size = new System.Drawing.Size(100, 20);
+            this.adressBox.TabIndex = 2;
+            // 
+            // phoneBox
+            // 
+            this.phoneBox.Location = new System.Drawing.Point(486, 203);
+            this.phoneBox.Name = "phoneBox";
+            this.phoneBox.Size = new System.Drawing.Size(100, 20);
+            this.phoneBox.TabIndex = 1;
+            // 
+            // nameBox
+            // 
+            this.nameBox.Location = new System.Drawing.Point(486, 146);
+            this.nameBox.Name = "nameBox";
+            this.nameBox.Size = new System.Drawing.Size(100, 20);
+            this.nameBox.TabIndex = 0;
             // 
             // totalPriceTxt
             // 
@@ -370,6 +393,59 @@
             this.label7.Size = new System.Drawing.Size(239, 31);
             this.label7.TabIndex = 0;
             this.label7.Text = "Order Recap Page";
+            // 
+            // panelCatalog
+            // 
+            this.panelCatalog.Controls.Add(this.label2);
+            this.panelCatalog.Location = new System.Drawing.Point(276, 67);
+            this.panelCatalog.Name = "panelCatalog";
+            this.panelCatalog.Size = new System.Drawing.Size(1214, 613);
+            this.panelCatalog.TabIndex = 2;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(76)))));
+            this.label2.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(0, 0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(133, 31);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "Our Bikes";
+            // 
+            // panelDelay
+            // 
+            this.panelDelay.Controls.Add(this.delayInfobox);
+            this.panelDelay.Controls.Add(this.label8);
+            this.panelDelay.Location = new System.Drawing.Point(276, 67);
+            this.panelDelay.Name = "panelDelay";
+            this.panelDelay.Size = new System.Drawing.Size(1214, 613);
+            this.panelDelay.TabIndex = 16;
+            // 
+            // delayInfobox
+            // 
+            this.delayInfobox.AutoSize = true;
+            this.delayInfobox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.delayInfobox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(76)))));
+            this.delayInfobox.Location = new System.Drawing.Point(220, 142);
+            this.delayInfobox.Name = "delayInfobox";
+            this.delayInfobox.Size = new System.Drawing.Size(16, 24);
+            this.delayInfobox.TabIndex = 1;
+            this.delayInfobox.Text = "-";
+            this.delayInfobox.Click += new System.EventHandler(this.delayInfobox_Click);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(76)))));
+            this.label8.Dock = System.Windows.Forms.DockStyle.Top;
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(0, 0);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(315, 31);
+            this.label8.TabIndex = 0;
+            this.label8.Text = "Order Delay informations";
             // 
             // delayBtn
             // 
@@ -497,88 +573,13 @@
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.sendOrderBtn);
-            this.panel1.Controls.Add(this.label13);
-            this.panel1.Controls.Add(this.label12);
-            this.panel1.Controls.Add(this.label11);
-            this.panel1.Controls.Add(this.adressBox);
-            this.panel1.Controls.Add(this.phoneBox);
-            this.panel1.Controls.Add(this.nameBox);
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1214, 613);
-            this.panel1.TabIndex = 36;
-            // 
-            // nameBox
-            // 
-            this.nameBox.Location = new System.Drawing.Point(486, 146);
-            this.nameBox.Name = "nameBox";
-            this.nameBox.Size = new System.Drawing.Size(100, 20);
-            this.nameBox.TabIndex = 0;
-            // 
-            // phoneBox
-            // 
-            this.phoneBox.Location = new System.Drawing.Point(486, 203);
-            this.phoneBox.Name = "phoneBox";
-            this.phoneBox.Size = new System.Drawing.Size(100, 20);
-            this.phoneBox.TabIndex = 1;
-            // 
-            // adressBox
-            // 
-            this.adressBox.Location = new System.Drawing.Point(487, 256);
-            this.adressBox.Name = "adressBox";
-            this.adressBox.Size = new System.Drawing.Size(100, 20);
-            this.adressBox.TabIndex = 2;
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label11.Location = new System.Drawing.Point(395, 146);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(56, 18);
-            this.label11.TabIndex = 3;
-            this.label11.Text = "Name :";
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label12.Location = new System.Drawing.Point(367, 203);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(113, 18);
-            this.label12.TabIndex = 4;
-            this.label12.Text = "Phone number :";
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.Location = new System.Drawing.Point(391, 259);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(62, 18);
-            this.label13.TabIndex = 5;
-            this.label13.Text = "Adress :";
-            // 
-            // sendOrderBtn
-            // 
-            this.sendOrderBtn.Location = new System.Drawing.Point(445, 314);
-            this.sendOrderBtn.Name = "sendOrderBtn";
-            this.sendOrderBtn.Size = new System.Drawing.Size(126, 43);
-            this.sendOrderBtn.TabIndex = 6;
-            this.sendOrderBtn.Text = "Send Order";
-            this.sendOrderBtn.UseVisualStyleBackColor = true;
-            this.sendOrderBtn.Click += new System.EventHandler(this.sendOrderBtn_Click);
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1582, 822);
-            this.Controls.Add(this.panelRecap);
             this.Controls.Add(this.panelOrder);
+            this.Controls.Add(this.panelRecap);
             this.Controls.Add(this.panelDelay);
             this.Controls.Add(this.panelCatalog);
             this.Controls.Add(this.flowLayoutPanel1);
@@ -588,16 +589,16 @@
             this.Text = "Bovelo";
             this.panelOrder.ResumeLayout(false);
             this.panelOrder.PerformLayout();
+            this.panelRecap.ResumeLayout(false);
+            this.panelRecap.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.panelCatalog.ResumeLayout(false);
             this.panelCatalog.PerformLayout();
             this.panelDelay.ResumeLayout(false);
             this.panelDelay.PerformLayout();
-            this.panelRecap.ResumeLayout(false);
-            this.panelRecap.PerformLayout();
             this.panelNav.ResumeLayout(false);
             this.panelNav.PerformLayout();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
             this.ResumeLayout(false);
 
         }

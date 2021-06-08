@@ -9,7 +9,6 @@ namespace Bovelo
     class Customer : Person
     {
         private List<Order> order_list = new List<Order>();
-        private int price;
         private int id;
 
         public Customer(string name, string phone, string adress, int id) : base(name,phone,adress)

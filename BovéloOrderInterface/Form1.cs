@@ -11,6 +11,8 @@ using System.IO;
 using System.Resources;
 using MySql.Data.MySqlClient;
 using System.Globalization;
+using System.Data.SqlClient;
+
 
 namespace Bovelo
 {
@@ -18,7 +20,9 @@ namespace Bovelo
     {
         Agent agent = new Agent("Khaled",1,"07","Vilvoorde");
         Order order = new Order(new Dictionary<Bike, List<int>>());
-               
+
+        Dictionary<string, int> minParts = new Dictionary<string, int>() { };
+
         Catalog c = new Catalog();
         MySqlConnection cn = new MySqlConnection("server=193.191.240.67;user=nick;database=mydb;port=63307;password=1234");
 
@@ -36,6 +40,21 @@ namespace Bovelo
             //c.addBike(new Bike(new Type("City"), new Size("26"), new Color("Red"), 100, false), "C:/Users/nathanbuchin/Pictures/Ville/CityRed.png");
             NewGen_Catalog();
             panelCatalog.Visible = true;
+            minParts.Add("bequille", 1);
+            minParts.Add("kitFrein", 1);
+            minParts.Add("kitVitesse", 1);
+            minParts.Add("kidPedalier", 1);
+            minParts.Add("cassettePignons", 1);
+            minParts.Add("catadioptre", 4);
+            minParts.Add("chaine", 1);
+            minParts.Add("chambreAir", 2);
+            minParts.Add("derailleur", 1);
+            minParts.Add("disqueFrein", 2);
+            minParts.Add("fourche", 1);
+            minParts.Add("guidon", 1);
+            minParts.Add("plateau", 1);
+            minParts.Add("roue", 2);
+            minParts.Add("selle", 1);
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -174,6 +193,7 @@ namespace Bovelo
             generate_Recap();
 
         }
+
         private void generate_Recap()
         {
             string recap = "";
@@ -218,11 +238,59 @@ namespace Bovelo
             }
             totalPriceTxt.Text = totalPrice.ToString();
             recapTxt.Text = recap;
+            
+        }
+
+        //Dictionary<string, int>;
+
+        private int bikesAvailable()
+        {
+            if (cn.State == ConnectionState.Closed) { cn.Open(); };
+            MySqlCommand command = new MySqlCommand(String.Format("SELECT * FROM Stock "), cn);
+            MySqlDataReader myReader;
+            myReader = command.ExecuteReader();
+
+            DataTable dataTable = new DataTable();
+            dataTable.Load(myReader);
+
+            int min = int.MaxValue;
+
+            string part = ""; 
+
+            foreach (DataRow row in dataTable.Rows)
+            {
+                //Console.WriteLine(row["name"].ToString(), row["quantity"].ToString());
+
+                int quantity = row.Field<int>("quantity");
+
+                if (quantity < min)
+                {
+                    min = quantity;
+                    part = row["name"].ToString();
+                }   
+            }
+            Console.WriteLine("Part = {0} , Quantity = {1} ", part, min / minParts[part]);
+            return (min % minParts[part]); 
+        }
+
+        private int delayOrder(Order order)
+        {
+            int delay = 3; //3 days minimum
+            //Check how many bikes we can make with our current parts
+
+
+            foreach (KeyValuePair<Bike, List<int>> kvp in order.Bikes)
+            {
+                Console.WriteLine("Type = {0}, Size = {1}, Color= {2}, Value = {3}", kvp.Key.Type.Types, kvp.Key.Color.Colors, kvp.Key.Size.Sizes, kvp.Value[0]);// kvp.Value[0] == always equal 1
+            }
+
+            return delay;
         }
 
         // pour vider le panier et recommencer une commande 
         private void resetBtn_Click(object sender, EventArgs e)
         {
+            bikesAvailable();
             order.Bikes_list.Clear();
             order.Bikes.Clear();
             totalPriceTxt.Text = "";
@@ -234,7 +302,7 @@ namespace Bovelo
         {
            
             DateTime dt = DateTime.Now;
-            dt.AddDays(3);                                      //We add 3 days of delay to the order in the best case.
+            
             if (cn.State == ConnectionState.Closed) { cn.Open(); };
             if (order.Bikes.Count != 0)
             {
@@ -278,9 +346,14 @@ namespace Bovelo
                     cmd.ExecuteNonQuery();
                     
                 }
+
                 //Make the Delay more generic 
 
-                orderDatabase(Int32.Parse(totalPriceTxt.Text),(order.Bikes_list).Count,dt.Day,customer.Id,agent.Id); 
+                orderDatabase(Int32.Parse(totalPriceTxt.Text),(order.Bikes_list).Count,dt.Day,customer.Id,agent.Id);
+                
+                //We add 3 days of delay to the order in the best case.
+                delayInfobox.Text = String.Format("Delivery on {0}", dt.AddDays(3));
+
                 order.Bikes.Clear();
                 totalPriceTxt.Text = "";
                 recapTxt.Text = "";
@@ -382,5 +455,12 @@ namespace Bovelo
        {
            panel1.Visible = true;
        }
+
+        private void delayInfobox_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+       
     }
 }
