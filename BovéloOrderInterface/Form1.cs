@@ -98,8 +98,6 @@ namespace Bovelo
 
         private void delayBtn_Click(object sender, EventArgs e)
         {
-            Dictionary<string, int> bikesCounter = new Dictionary<string, int>(){ };
-
             panelDelay.Visible = true;
             panelOrder.Visible = false;
             panelRecap.Visible = false;
@@ -108,42 +106,46 @@ namespace Bovelo
             // chercher dans la bdd si vélo en stock puis estimer delay
             //delayEstimater();
 
-
-
-            List<string> commonParts = new List<string>(){"béquille","kitFrein","kitVitesse","kitPédalier","casetteDePignons","catadioptre","chaîne","chambreàAir","dérailleur","disqueDeFrein","fourche","guidon","plateau","roue","selle"};
-            List<string> city_Extra_Parts = new List<string>(){"cadre","pneu","garde-boue","porte-Bagage","éclairage"};
-            List<string> expl_Extra_Parts = new List<string>(){"cadre","pneuLarge","garde-boueLarge","porte-Bagage","éclairage"};
-            List<string> adv_Extra_Parts = new List<string>(){"cadreRenforcé","pneuLarge"};
             // pieces a verifier dans le stock
             Dictionary<Bike, List<int>> orderedBikes = order.Bikes;
             // il faut regarder le modele et la taille des velo de la commande puis regarder s'il y a assez de pieces dans le stock 
-            
-            // boucle pour reordonner le dictionnaire
-            foreach (KeyValuePair<Bike, List<int>> bike in orderedBikes)
-            {
-                string b = bike.Key.Type.Types + bike.Key.Color.Colors + bike.Key.Size.Sizes;
-                
-                if (!bikesCounter.ContainsKey(b))
-                {
-                    bikesCounter.Add((b), bike.Value[0]);
-                }
-                else
-                {
-                    bikesCounter[b] += bike.Value[0];
-                }     
-            }
+            CheckStock(orderedBikes);
 
 
-             foreach (KeyValuePair<string, int> bike in bikesCounter)
-            {
-                int number = bike.Value;
-                if (bike.Key.Substring(0,3) =="Cit")
-                {
-                    Console.WriteLine("dkljfeq");
-                }
-            }
             
         }
+
+        private void CheckStock(Dictionary<Bike,List<int>> orderedBikes)
+        {
+            if (cn.State == ConnectionState.Closed) { cn.Open(); };
+            List<string> commonParts = new List<string>(){"bequille","kitFrein","kitVitesse","kitPedalier","casettePignons","catadioptre","chaine","chambreAir","derailleur","disqueFrein","fourche","guidon","plateau","roue","selle"};
+            List<string> city_Extra_Parts = new List<string>(){"cadre","pneu","garde-boue","porte-Bagage","éclairage"};
+            List<string> expl_Extra_Parts = new List<string>(){"cadre","pneuLarge","garde-boueLarge","porte-Bagage","éclairage"};
+            List<string> adv_Extra_Parts = new List<string>(){"cadreRenforcé","pneuLarge"};
+
+            // idée pour la recherche, peut importe le type de velo, il y a une partie de pieces communes a tous qui doit se trouver dns le stock
+           string txt = "3 jours";
+            foreach (KeyValuePair<Bike, List<int>> bike in orderedBikes)
+            {
+                int quantity = bike.Value[0];
+                MySqlCommand cmd = new MySqlCommand("select * from Stock", cn);
+                using (MySqlDataReader reader = cmd.ExecuteReader()){
+                        while (reader.Read()){
+                            string partName = reader["name"].ToString();
+                            int partQuantity = Int32.Parse(reader["quantity"].ToString());
+                            if (quantity > partQuantity)
+                            {
+                                break;
+                                txt = "Pas assez de piecs en stock";
+                            }
+                        }
+                }
+            }
+           delayInfobox.Text = txt;
+           
+        }
+
+
 
         // pour ajouter les elements selectiones dans commande
         private void addBtn_Click(object sender, EventArgs e)
