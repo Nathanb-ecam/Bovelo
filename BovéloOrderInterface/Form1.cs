@@ -241,9 +241,9 @@ namespace Bovelo
             return min;
 
         }
-        private int customBikes()
+        private Dictionary<String, int> customBikes()
         {
-            int max = 0;
+            //int max = 0;
             Dictionary<String, int> availableBikes = new Dictionary<string, int>() { };
             //Check how many of the ordered bikes we can make with our current specific parts
             foreach (KeyValuePair<String, int> kvp in order.RegroupedBikesDict)
@@ -274,53 +274,71 @@ namespace Bovelo
                 }
                 availableBikes[kvp.Key] = min;
             }
-
+            /*
             foreach (KeyValuePair<String, int> kvp in availableBikes)
             {
                 max += kvp.Value;
             }
-            return max;
+            */
+            return availableBikes;
         }
         private int delayOrder(Order order)
         {
             int maxGeneralBikes = bikesAvailable();
-            int maxCustomBikes = customBikes();
+            Dictionary<String, int> maxCustomBikes = customBikes();
             int delay = 3; //3 days minimum
 
-            Console.WriteLine(order.Bikes_list.Count);
+            int bikesMissing = 0;
+            foreach (KeyValuePair<String, int> kvp in maxCustomBikes)
+            {
+                Console.WriteLine(kvp.Key);
+                Console.WriteLine(order.RegroupedBikesDict[kvp.Key]);
+                if (order.RegroupedBikesDict.ContainsKey(kvp.Key))
+                {
+                    if (order.RegroupedBikesDict[kvp.Key] > kvp.Value)
+                    {
+                        bikesMissing += order.RegroupedBikesDict[kvp.Key] - kvp.Value;
+                        
+                    }
+                }
+            }
 
             // Return more days if the not enough stock
 
             // Verify if enough general stock
             if (order.Bikes_list.Count <= maxGeneralBikes)
             {
-                if(order.Bikes_list.Count <= maxCustomBikes)
+                
+                if(bikesMissing ==0)
                 {
                     Console.WriteLine("All parts available");
                 }
                 else
                 {
                     // Buy custom stock
-                    delay += order.Bikes_list.Count - maxCustomBikes;
+                    delay += bikesMissing;
                     Console.WriteLine("Custom parts low");
                 }
+                
+                
             }
             else
             {
                 Console.WriteLine("Low general stock");
                 // Buy general stock
                 delay += order.Bikes_list.Count - maxGeneralBikes;
-
-                if (order.Bikes_list.Count <= maxCustomBikes)
+                
+                if (bikesMissing ==0)
                 {
                     Console.WriteLine("Custom parts available only");
                 }
                 else
                 {
                     // Buy custom stock
-                    delay += order.Bikes_list.Count - maxCustomBikes;
+                    delay += bikesMissing;
                     Console.WriteLine("All parts low");
                 }
+                
             }
             Console.WriteLine(delay);
             return delay;
