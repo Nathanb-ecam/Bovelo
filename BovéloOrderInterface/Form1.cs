@@ -21,8 +21,6 @@ namespace Bovelo
         Agent agent = new Agent("Khaled",1,"07","Vilvoorde");
         Order order = new Order(new Dictionary<Bike, List<int>>());
 
-        Dictionary<string, int> minParts = new Dictionary<string, int>() { };
-
         Catalog c = new Catalog();
         MySqlConnection cn = new MySqlConnection("server=193.191.240.67;user=nick;database=mydb;port=63307;password=1234");
 
@@ -40,21 +38,7 @@ namespace Bovelo
             //c.addBike(new Bike(new Type("City"), new Size("26"), new Color("Red"), 100, false), "C:/Users/nathanbuchin/Pictures/Ville/CityRed.png");
             NewGen_Catalog();
             panelCatalog.Visible = true;
-            minParts.Add("bequille", 1);
-            minParts.Add("kitFrein", 1);
-            minParts.Add("kitVitesse", 1);
-            minParts.Add("kidPedalier", 1);
-            minParts.Add("cassettePignons", 1);
-            minParts.Add("catadioptre", 4);
-            minParts.Add("chaine", 1);
-            minParts.Add("chambreAir", 2);
-            minParts.Add("derailleur", 1);
-            minParts.Add("disqueFrein", 2);
-            minParts.Add("fourche", 1);
-            minParts.Add("guidon", 1);
-            minParts.Add("plateau", 1);
-            minParts.Add("roue", 2);
-            minParts.Add("selle", 1);
+
         }
 
         private void label1_Click(object sender, EventArgs e)
@@ -163,7 +147,7 @@ namespace Bovelo
             }
 
 
-             foreach (KeyValuePair<string, int> bike in bikesCounter)
+            foreach (KeyValuePair<string, int> bike in bikesCounter)
             {
                 int number = bike.Value;
                 if (bike.Key.Substring(0,3) =="Cit")
@@ -198,26 +182,10 @@ namespace Bovelo
         {
             string recap = "";
             int totalPrice = 0;
-            Dictionary<string, int> bikesCounter = new Dictionary<string, int>(){ };
             Dictionary<Bike, List<int>> orderedBikes = order.Bikes;
 
-            // boucle pour reordonner le dictionnaire
-            foreach (KeyValuePair<Bike, List<int>> bike in orderedBikes)
-            {
-                string b = bike.Key.Type.Types + bike.Key.Color.Colors + bike.Key.Size.Sizes;
-                
-                if (!bikesCounter.ContainsKey(b))
-                {
-                    bikesCounter.Add((b), bike.Value[0]);
-                }
-                else
-                {
-                    bikesCounter[b] += bike.Value[0];
-                }     
-            }
-
             // on parcourir le dictionnaire trier pour afficher le recap
-            foreach (KeyValuePair<string, int> bike in bikesCounter)
+            foreach (KeyValuePair<string, int> bike in order.RegroupedBikesDict)
             {
                 if (bike.Key.Substring(0, 3) == "Cit")
                 {
@@ -245,23 +213,23 @@ namespace Bovelo
 
         private int bikesAvailable()
         {
-            if (cn.State == ConnectionState.Closed) { cn.Open(); };
-            MySqlCommand command = new MySqlCommand(String.Format("SELECT * FROM Stock "), cn);
-            MySqlDataReader myReader;
-            myReader = command.ExecuteReader();
+            //We first check how many bike we can make using the general stock
 
-            DataTable dataTable = new DataTable();
-            dataTable.Load(myReader);
+            if (cn.State == ConnectionState.Closed) { cn.Open(); };
+            MySqlCommand commandStock= new MySqlCommand("SELECT * FROM Stock ", cn);
+            MySqlDataReader myReaderStock;
+            myReaderStock = commandStock.ExecuteReader();
+
+            DataTable dataTableStock = new DataTable();
+            dataTableStock.Load(myReaderStock);
 
             int min = int.MaxValue;
-
+            int quantity = 0;
             string part = ""; 
 
-            foreach (DataRow row in dataTable.Rows)
+            foreach (DataRow row in dataTableStock.Rows)
             {
-                //Console.WriteLine(row["name"].ToString(), row["quantity"].ToString());
-
-                int quantity = row.Field<int>("quantity");
+                quantity = row.Field<int>("quantity") / row.Field<int>("min");
 
                 if (quantity < min)
                 {
@@ -269,30 +237,99 @@ namespace Bovelo
                     part = row["name"].ToString();
                 }   
             }
-            Console.WriteLine("Part = {0} , Quantity = {1} ", part, min / minParts[part]);
-            return (min % minParts[part]); 
+            //We return the max number of bikes that we can make
+            return min;
+
         }
-
-        private int delayOrder(Order order)
+        private int customBikes()
         {
-            int delay = 3; //3 days minimum
-            //Check how many bikes we can make with our current parts
-
-
-            foreach (KeyValuePair<Bike, List<int>> kvp in order.Bikes)
+            int max = 0;
+            Dictionary<String, int> availableBikes = new Dictionary<string, int>() { };
+            //Check how many of the ordered bikes we can make with our current specific parts
+            foreach (KeyValuePair<String, int> kvp in order.RegroupedBikesDict)
             {
-                Console.WriteLine("Type = {0}, Size = {1}, Color= {2}, Value = {3}", kvp.Key.Type.Types, kvp.Key.Color.Colors, kvp.Key.Size.Sizes, kvp.Value[0]);// kvp.Value[0] == always equal 1
+                string s = kvp.Key;
+                string[] subs = s.Split(',');
+
+                if (cn.State == ConnectionState.Closed) { cn.Open(); };
+                MySqlCommand command = new MySqlCommand(String.Format("SELECT * FROM {0}Stock WHERE (Color = '{1}' AND Size = '{2}') OR (Size IS NULL) OR (Color IS NULL AND Size = '{2}')", subs[0], subs[2], subs[1]), cn);
+                MySqlDataReader myReader;
+                myReader = command.ExecuteReader();
+
+                DataTable dataTable = new DataTable();
+                dataTable.Load(myReader);
+
+                int min = int.MaxValue;
+                int quantity = 0;
+                string bike = subs[0];
+
+                foreach (DataRow row in dataTable.Rows)
+                {
+                    quantity = row.Field<int>("quantity");
+
+                    if (quantity < min)
+                    {
+                        min = quantity;
+                    }
+                }
+                availableBikes[kvp.Key] = min;
             }
 
+            foreach (KeyValuePair<String, int> kvp in availableBikes)
+            {
+                max += kvp.Value;
+            }
+            return max;
+        }
+        private int delayOrder(Order order)
+        {
+            int maxGeneralBikes = bikesAvailable();
+            int maxCustomBikes = customBikes();
+            int delay = 3; //3 days minimum
+
+            Console.WriteLine(order.Bikes_list.Count);
+
+            // Return more days if the not enough stock
+
+            // Verify if enough general stock
+            if (order.Bikes_list.Count <= maxGeneralBikes)
+            {
+                if(order.Bikes_list.Count <= maxCustomBikes)
+                {
+                    Console.WriteLine("All parts available");
+                }
+                else
+                {
+                    // Buy custom stock
+                    delay += order.Bikes_list.Count - maxCustomBikes;
+                    Console.WriteLine("Custom parts low");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Low general stock");
+                // Buy general stock
+                delay += order.Bikes_list.Count - maxGeneralBikes;
+
+                if (order.Bikes_list.Count <= maxCustomBikes)
+                {
+                    Console.WriteLine("Custom parts available only");
+                }
+                else
+                {
+                    // Buy custom stock
+                    delay += order.Bikes_list.Count - maxCustomBikes;
+                    Console.WriteLine("All parts low");
+                }
+            }
+            Console.WriteLine(delay);
             return delay;
         }
 
         // pour vider le panier et recommencer une commande 
         private void resetBtn_Click(object sender, EventArgs e)
         {
-            bikesAvailable();
-            order.Bikes_list.Clear();
-            order.Bikes.Clear();
+            order.reset();
             totalPriceTxt.Text = "";
             recapTxt.Text = "";
         }
@@ -347,14 +384,14 @@ namespace Bovelo
                     
                 }
 
-                //Make the Delay more generic 
+                //Send order to database 
 
                 orderDatabase(Int32.Parse(totalPriceTxt.Text),(order.Bikes_list).Count,dt.Day,customer.Id,agent.Id);
                 
                 //We add 3 days of delay to the order in the best case.
-                delayInfobox.Text = String.Format("Delivery on {0}", dt.AddDays(3));
+                delayInfobox.Text = String.Format("Delivery on {0}", dt.AddDays(delayOrder(order)));
 
-                order.Bikes.Clear();
+                order.reset();
                 totalPriceTxt.Text = "";
                 recapTxt.Text = "";
             }
@@ -425,13 +462,10 @@ namespace Bovelo
             }
         }
 
-
-
         private void exitBtn_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
-
 
         // fonction qui est executee lorsqu'on clique sur une image du catalogue
         private void btn_Click(object sender, EventArgs e)
@@ -443,15 +477,11 @@ namespace Bovelo
             colorBox.SelectedItem = elems[1];
         }
 
-
-       
-
-
         private void panelRecap_Paint(object sender, PaintEventArgs e)
         {
 
         }
-       private void confirmBtn_Click(object sender, EventArgs e)
+        private void confirmBtn_Click(object sender, EventArgs e)
        {
            panel1.Visible = true;
        }
@@ -460,7 +490,6 @@ namespace Bovelo
         {
             
         }
-
-       
+ 
     }
 }
