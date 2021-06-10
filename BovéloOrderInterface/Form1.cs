@@ -124,25 +124,6 @@ namespace Bovelo
             List<string> adv_Extra_Parts = new List<string>(){"cadreRenforcé","pneuLarge"};
 
             // idée pour la recherche, peut importe le type de velo, il y a une partie de pieces communes a tous qui doit se trouver dns le stock
-           string txt = "3 jours";
-            foreach (KeyValuePair<Bike, List<int>> bike in orderedBikes)
-            {
-                int quantity = bike.Value[0];
-                MySqlCommand cmd = new MySqlCommand("select * from Stock", cn);
-                using (MySqlDataReader reader = cmd.ExecuteReader()){
-                        while (reader.Read()){
-                            string partName = reader["name"].ToString();
-                            int partQuantity = Int32.Parse(reader["quantity"].ToString());
-                            if (quantity > partQuantity)
-                            {
-                                break;
-                                txt = "Pas assez de piecs en stock";
-                            }
-                        }
-                }
-            }
-           delayInfobox.Text = txt;
-           
         }
 
 
