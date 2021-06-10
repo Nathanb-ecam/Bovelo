@@ -75,3 +75,4 @@ C:\Users\shop\Desktop\Prjt_GL\Code\IT2_Clone\Iteration2\obj\Debug\BOVELO_Plannin
 C:\Users\shop\Desktop\Prjt_GL\Code\IT2_Clone\Iteration2\obj\Debug\BOVELO_PlanningList.exe
 C:\Users\shop\Desktop\Prjt_GL\Code\IT2_Clone\Iteration2\obj\Debug\BOVELO_PlanningList.pdb
 C:\Users\shop\Desktop\Prjt_GL\Code\IT2_Clone\Iteration2\obj\Debug\BOVELO_PlanningList.Connexion.resources
+C:\Users\nathanbuchin\source\repos\Bovelo\Iteration2\obj\Debug\BOVELO_PlanningList.Connexion.resources
