@@ -107,7 +107,7 @@
             this.priceLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.priceLabel.Location = new System.Drawing.Point(769, 368);
             this.priceLabel.Name = "priceLabel";
-            this.priceLabel.Size = new System.Drawing.Size(15, 22);
+            this.priceLabel.Size = new System.Drawing.Size(10, 15);
             this.priceLabel.TabIndex = 30;
             this.priceLabel.Text = " ";
             // 
@@ -117,7 +117,7 @@
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label9.Location = new System.Drawing.Point(673, 366);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(118, 22);
+            this.label9.Size = new System.Drawing.Size(81, 15);
             this.label9.TabIndex = 29;
             this.label9.Text = "Item(s) price :";
             // 
@@ -129,7 +129,7 @@
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.Location = new System.Drawing.Point(0, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(371, 47);
+            this.label6.Size = new System.Drawing.Size(243, 31);
             this.label6.TabIndex = 28;
             this.label6.Text = "Bovelo Order Page";
             // 
@@ -152,7 +152,7 @@
             // 
             this.quantityBox.Location = new System.Drawing.Point(486, 345);
             this.quantityBox.Name = "quantityBox";
-            this.quantityBox.Size = new System.Drawing.Size(100, 26);
+            this.quantityBox.Size = new System.Drawing.Size(100, 20);
             this.quantityBox.TabIndex = 23;
             this.quantityBox.TextChanged += new System.EventHandler(this.quantityBox_TextChanged);
             // 
@@ -162,7 +162,7 @@
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.Location = new System.Drawing.Point(417, 345);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(80, 25);
+            this.label5.Size = new System.Drawing.Size(54, 16);
             this.label5.TabIndex = 22;
             this.label5.Text = "quantity";
             // 
@@ -172,10 +172,10 @@
             this.colorBox.Items.AddRange(new object[] {
             "Red",
             "Blue",
-            "Black"});
+            "Green"});
             this.colorBox.Location = new System.Drawing.Point(231, 355);
             this.colorBox.Name = "colorBox";
-            this.colorBox.Size = new System.Drawing.Size(121, 28);
+            this.colorBox.Size = new System.Drawing.Size(121, 21);
             this.colorBox.TabIndex = 21;
             this.colorBox.Text = "Red";
             // 
@@ -185,7 +185,7 @@
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.Location = new System.Drawing.Point(99, 351);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(110, 37);
+            this.label4.Size = new System.Drawing.Size(74, 25);
             this.label4.TabIndex = 20;
             this.label4.Text = "Colors";
             // 
@@ -195,7 +195,7 @@
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.Location = new System.Drawing.Point(100, 306);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(96, 37);
+            this.label3.Size = new System.Drawing.Size(66, 25);
             this.label3.TabIndex = 19;
             this.label3.Text = "Size :";
             // 
@@ -207,7 +207,7 @@
             "28\""});
             this.sizeBox.Location = new System.Drawing.Point(231, 310);
             this.sizeBox.Name = "sizeBox";
-            this.sizeBox.Size = new System.Drawing.Size(121, 28);
+            this.sizeBox.Size = new System.Drawing.Size(121, 21);
             this.sizeBox.TabIndex = 18;
             this.sizeBox.Text = "26\"";
             // 
@@ -220,7 +220,7 @@
             "Explorer"});
             this.modelBox.Location = new System.Drawing.Point(231, 271);
             this.modelBox.Name = "modelBox";
-            this.modelBox.Size = new System.Drawing.Size(121, 28);
+            this.modelBox.Size = new System.Drawing.Size(121, 21);
             this.modelBox.TabIndex = 15;
             this.modelBox.Text = "City";
             this.modelBox.SelectedIndexChanged += new System.EventHandler(this.label1_Click);
@@ -231,7 +231,7 @@
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.Location = new System.Drawing.Point(88, 267);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(207, 37);
+            this.label1.Size = new System.Drawing.Size(142, 25);
             this.label1.TabIndex = 14;
             this.label1.Text = "Bike Models :";
             // 
@@ -280,7 +280,7 @@
             this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label13.Location = new System.Drawing.Point(391, 259);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(100, 29);
+            this.label13.Size = new System.Drawing.Size(62, 18);
             this.label13.TabIndex = 5;
             this.label13.Text = "Adress :";
             // 
@@ -290,7 +290,7 @@
             this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label12.Location = new System.Drawing.Point(367, 203);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(183, 29);
+            this.label12.Size = new System.Drawing.Size(113, 18);
             this.label12.TabIndex = 4;
             this.label12.Text = "Phone number :";
             // 
@@ -300,7 +300,7 @@
             this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label11.Location = new System.Drawing.Point(395, 146);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(90, 29);
+            this.label11.Size = new System.Drawing.Size(56, 18);
             this.label11.TabIndex = 3;
             this.label11.Text = "Name :";
             // 
@@ -308,21 +308,21 @@
             // 
             this.adressBox.Location = new System.Drawing.Point(487, 256);
             this.adressBox.Name = "adressBox";
-            this.adressBox.Size = new System.Drawing.Size(100, 26);
+            this.adressBox.Size = new System.Drawing.Size(100, 20);
             this.adressBox.TabIndex = 2;
             // 
             // phoneBox
             // 
             this.phoneBox.Location = new System.Drawing.Point(486, 203);
             this.phoneBox.Name = "phoneBox";
-            this.phoneBox.Size = new System.Drawing.Size(100, 26);
+            this.phoneBox.Size = new System.Drawing.Size(100, 20);
             this.phoneBox.TabIndex = 1;
             // 
             // nameBox
             // 
             this.nameBox.Location = new System.Drawing.Point(486, 146);
             this.nameBox.Name = "nameBox";
-            this.nameBox.Size = new System.Drawing.Size(100, 26);
+            this.nameBox.Size = new System.Drawing.Size(100, 20);
             this.nameBox.TabIndex = 0;
             // 
             // totalPriceTxt
@@ -331,7 +331,7 @@
             this.totalPriceTxt.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.totalPriceTxt.Location = new System.Drawing.Point(571, 314);
             this.totalPriceTxt.Name = "totalPriceTxt";
-            this.totalPriceTxt.Size = new System.Drawing.Size(0, 29);
+            this.totalPriceTxt.Size = new System.Drawing.Size(0, 20);
             this.totalPriceTxt.TabIndex = 35;
             // 
             // recapTxt
@@ -341,7 +341,7 @@
             this.recapTxt.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(76)))));
             this.recapTxt.Location = new System.Drawing.Point(452, 194);
             this.recapTxt.Name = "recapTxt";
-            this.recapTxt.Size = new System.Drawing.Size(0, 37);
+            this.recapTxt.Size = new System.Drawing.Size(0, 25);
             this.recapTxt.TabIndex = 34;
             // 
             // resetBtn
@@ -378,7 +378,7 @@
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label10.Location = new System.Drawing.Point(484, 310);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(107, 37);
+            this.label10.Size = new System.Drawing.Size(72, 25);
             this.label10.TabIndex = 29;
             this.label10.Text = "Total :";
             // 
@@ -390,7 +390,7 @@
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.Location = new System.Drawing.Point(0, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(364, 47);
+            this.label7.Size = new System.Drawing.Size(239, 31);
             this.label7.TabIndex = 0;
             this.label7.Text = "Order Recap Page";
             // 
@@ -410,7 +410,7 @@
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.Location = new System.Drawing.Point(0, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(202, 47);
+            this.label2.Size = new System.Drawing.Size(133, 31);
             this.label2.TabIndex = 0;
             this.label2.Text = "Our Bikes";
             // 
@@ -430,7 +430,7 @@
             this.delayInfobox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(76)))));
             this.delayInfobox.Location = new System.Drawing.Point(220, 142);
             this.delayInfobox.Name = "delayInfobox";
-            this.delayInfobox.Size = new System.Drawing.Size(25, 33);
+            this.delayInfobox.Size = new System.Drawing.Size(16, 24);
             this.delayInfobox.TabIndex = 1;
             this.delayInfobox.Text = "-";
             this.delayInfobox.Click += new System.EventHandler(this.delayInfobox_Click);
@@ -443,7 +443,7 @@
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.Location = new System.Drawing.Point(0, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(481, 47);
+            this.label8.Size = new System.Drawing.Size(315, 31);
             this.label8.TabIndex = 0;
             this.label8.Text = "Order Delay informations";
             // 
@@ -555,7 +555,7 @@
             this.Bovelo.ForeColor = System.Drawing.Color.White;
             this.Bovelo.Location = new System.Drawing.Point(12, 43);
             this.Bovelo.Name = "Bovelo";
-            this.Bovelo.Size = new System.Drawing.Size(283, 93);
+            this.Bovelo.Size = new System.Drawing.Size(191, 63);
             this.Bovelo.TabIndex = 32;
             this.Bovelo.Text = "Bovelo";
             // 
@@ -576,7 +576,7 @@
             // 
             // Form1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1582, 822);
             this.Controls.Add(this.panelOrder);

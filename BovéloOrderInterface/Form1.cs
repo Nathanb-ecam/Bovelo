@@ -48,7 +48,7 @@ namespace Bovelo
         private void Price_Changed()
         {
             int price = 0;
-            if (quantityBox.Text != "")
+            if (quantityBox.Text.Length > 0)
             {
                 if (modelBox.Text == "City")
                 {
@@ -241,38 +241,98 @@ namespace Bovelo
             return min;
 
         }
-        private Dictionary<String, int> customBikes()
+
+        private int tables(DataTable dataTable, string[] subs)
         {
-            //int max = 0;
-            Dictionary<String, int> availableBikes = new Dictionary<string, int>() { };
+            int missingBikes = 0;
+            foreach (DataRow row in dataTable.Rows)
+            {
+                string color = row.Field<String>("Color");
+                string size = row.Field<String>("Size");
+                int quantity = row.Field<int>("quantity");
+                int min = row.Field<int>("min");
+
+                if (quantity > min)
+                {
+                    if ((color == subs[2] && size == subs[1]) || (size is null) || (color is null && size == subs[1]) || (color == "Black" && size == subs[1]))
+                    {
+                        row["quantity"] = quantity - 1;
+
+                    }
+                }
+                else
+                {
+                    Console.WriteLine(row["name"]);
+                    missingBikes = 1;
+                }
+
+            }
+            return missingBikes;
+        }
+        private int customBikes()
+        {
+            int bikesMissing = 0;
             //Check how many of the ordered bikes we can make with our current specific parts
+
+            DataTable cityTable = new DataTable();
+            DataTable explorerTable = new DataTable();
+            DataTable adventureTable = new DataTable();
+
             foreach (KeyValuePair<String, int> kvp in order.RegroupedBikesDict)
             {
                 string s = kvp.Key;
                 string[] subs = s.Split(',');
 
                 if (cn.State == ConnectionState.Closed) { cn.Open(); };
-                MySqlCommand command = new MySqlCommand(String.Format("SELECT * FROM {0}Stock WHERE (Color = '{1}' AND Size = '{2}') OR (Size IS NULL) OR (Color IS NULL AND Size = '{2}')", subs[0], subs[2], subs[1]), cn);
+
+                MySqlCommand command = new MySqlCommand(String.Format("SELECT * FROM {0}Stock", subs[0]), cn);
                 MySqlDataReader myReader;
                 myReader = command.ExecuteReader();
-
                 DataTable dataTable = new DataTable();
                 dataTable.Load(myReader);
 
-                int min = int.MaxValue;
-                int quantity = 0;
-                string bike = subs[0];
-
-                foreach (DataRow row in dataTable.Rows)
+                //Make it more generic later
+                foreach (int value in Enumerable.Range(1, kvp.Value))
                 {
-                    quantity = row.Field<int>("quantity");
-
-                    if (quantity < min)
+                    if (subs[0] == "City")
                     {
-                        min = quantity;
+                        if (cityTable.Rows.Count == 0)
+                        {
+                            cityTable = dataTable.Copy();
+                            bikesMissing = tables(cityTable, subs);
+                        }
+                        else
+                        {
+                            bikesMissing += tables(cityTable, subs);
+                        }
+                    }
+                    else if (subs[0] == "Explrer")
+                    {
+                        if (explorerTable.Rows.Count == 0)
+                        {
+                            explorerTable = dataTable.Copy();
+                            bikesMissing = tables(explorerTable, subs);
+                        }
+                        else
+                        {
+                            bikesMissing += tables(explorerTable, subs);
+                        }
+                        
+                    }
+                    else if (subs[0] == "Adventure")
+                    {
+                        if (adventureTable.Rows.Count == 0)
+                        {
+                            adventureTable = dataTable.Copy();
+                            bikesMissing = tables(adventureTable, subs);
+                        }
+                        else
+                        {
+                            bikesMissing += tables(adventureTable, subs);
+                        }
+
                     }
                 }
-                availableBikes[kvp.Key] = min;
             }
             /*
             foreach (KeyValuePair<String, int> kvp in availableBikes)
@@ -280,43 +340,28 @@ namespace Bovelo
                 max += kvp.Value;
             }
             */
-            return availableBikes;
+            return bikesMissing;
         }
         private int delayOrder(Order order)
         {
             int maxGeneralBikes = bikesAvailable();
-            Dictionary<String, int> maxCustomBikes = customBikes();
-            int delay = 3; //3 days minimum
+            int missingCustomBikes = customBikes();
 
-            int bikesMissing = 0;
-            foreach (KeyValuePair<String, int> kvp in maxCustomBikes)
-            {
-                Console.WriteLine(kvp.Key);
-                Console.WriteLine(order.RegroupedBikesDict[kvp.Key]);
-                if (order.RegroupedBikesDict.ContainsKey(kvp.Key))
-                {
-                    if (order.RegroupedBikesDict[kvp.Key] > kvp.Value)
-                    {
-                        bikesMissing += order.RegroupedBikesDict[kvp.Key] - kvp.Value;
-                        
-                    }
-                }
-            }
+            int delay = 3; //3 days minimum
 
             // Return more days if the not enough stock
 
             // Verify if enough general stock
             if (order.Bikes_list.Count <= maxGeneralBikes)
             {
-                
-                if(bikesMissing ==0)
+                if(missingCustomBikes == 0)
                 {
                     Console.WriteLine("All parts available");
                 }
                 else
                 {
                     // Buy custom stock
-                    delay += bikesMissing;
+                    delay += missingCustomBikes;
                     Console.WriteLine("Custom parts low");
                 }
                 
@@ -328,14 +373,14 @@ namespace Bovelo
                 // Buy general stock
                 delay += order.Bikes_list.Count - maxGeneralBikes;
                 
-                if (bikesMissing ==0)
+                if (missingCustomBikes == 0)
                 {
                     Console.WriteLine("Custom parts available only");
                 }
                 else
                 {
                     // Buy custom stock
-                    delay += bikesMissing;
+                    delay += missingCustomBikes;
                     Console.WriteLine("All parts low");
                 }
                 
