@@ -96,7 +96,7 @@
             this.panelOrder.Controls.Add(this.modelBox);
             this.panelOrder.Controls.Add(this.label1);
             this.panelOrder.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
-            this.panelOrder.Location = new System.Drawing.Point(276, 61);
+            this.panelOrder.Location = new System.Drawing.Point(276, 64);
             this.panelOrder.Name = "panelOrder";
             this.panelOrder.Size = new System.Drawing.Size(1214, 613);
             this.panelOrder.TabIndex = 14;
@@ -266,9 +266,9 @@
             // 
             // sendOrderBtn
             // 
-            this.sendOrderBtn.Location = new System.Drawing.Point(445, 314);
+            this.sendOrderBtn.Location = new System.Drawing.Point(457, 338);
             this.sendOrderBtn.Name = "sendOrderBtn";
-            this.sendOrderBtn.Size = new System.Drawing.Size(126, 43);
+            this.sendOrderBtn.Size = new System.Drawing.Size(141, 52);
             this.sendOrderBtn.TabIndex = 6;
             this.sendOrderBtn.Text = "Send Order";
             this.sendOrderBtn.UseVisualStyleBackColor = true;
