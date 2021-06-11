@@ -45,6 +45,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.panelRecap = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.messagefinal = new System.Windows.Forms.Label();
             this.delaytxt = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
             this.sendOrderBtn = new System.Windows.Forms.Button();
@@ -72,12 +73,19 @@
             this.Bovelo = new System.Windows.Forms.Label();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.messagefinal = new System.Windows.Forms.Label();
+            this.orderPageMsg = new System.Windows.Forms.Label();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.user = new System.Windows.Forms.TextBox();
+            this.password = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.connect = new System.Windows.Forms.Button();
             this.panelOrder.SuspendLayout();
             this.panelRecap.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panelCatalog.SuspendLayout();
             this.panelNav.SuspendLayout();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelOrder
@@ -236,6 +244,7 @@
             // 
             // panelRecap
             // 
+            this.panelRecap.Controls.Add(this.orderPageMsg);
             this.panelRecap.Controls.Add(this.panel1);
             this.panelRecap.Controls.Add(this.totalPriceTxt);
             this.panelRecap.Controls.Add(this.recapTxt);
@@ -265,6 +274,15 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(1214, 619);
             this.panel1.TabIndex = 36;
+            // 
+            // messagefinal
+            // 
+            this.messagefinal.AutoSize = true;
+            this.messagefinal.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
+            this.messagefinal.Location = new System.Drawing.Point(485, 472);
+            this.messagefinal.Name = "messagefinal";
+            this.messagefinal.Size = new System.Drawing.Size(0, 31);
+            this.messagefinal.TabIndex = 9;
             // 
             // delaytxt
             // 
@@ -450,7 +468,7 @@
             this.delayBtn.Padding = new System.Windows.Forms.Padding(5, 10, 2, 10);
             this.delayBtn.Size = new System.Drawing.Size(197, 78);
             this.delayBtn.TabIndex = 26;
-            this.delayBtn.Text = "      Delay";
+            this.delayBtn.Text = "      Checkout";
             this.delayBtn.UseVisualStyleBackColor = false;
             this.delayBtn.Click += new System.EventHandler(this.delayBtn_Click);
             // 
@@ -564,20 +582,77 @@
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
-            // messagefinal
+            // orderPageMsg
             // 
-            this.messagefinal.AutoSize = true;
-            this.messagefinal.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
-            this.messagefinal.Location = new System.Drawing.Point(485, 472);
-            this.messagefinal.Name = "messagefinal";
-            this.messagefinal.Size = new System.Drawing.Size(0, 31);
-            this.messagefinal.TabIndex = 9;
+            this.orderPageMsg.AutoSize = true;
+            this.orderPageMsg.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
+            this.orderPageMsg.Location = new System.Drawing.Point(437, 484);
+            this.orderPageMsg.Name = "orderPageMsg";
+            this.orderPageMsg.Size = new System.Drawing.Size(0, 31);
+            this.orderPageMsg.TabIndex = 37;
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.connect);
+            this.panel2.Controls.Add(this.label15);
+            this.panel2.Controls.Add(this.label8);
+            this.panel2.Controls.Add(this.password);
+            this.panel2.Controls.Add(this.user);
+            this.panel2.Location = new System.Drawing.Point(276, 61);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(1214, 619);
+            this.panel2.TabIndex = 31;
+            // 
+            // user
+            // 
+            this.user.Location = new System.Drawing.Point(477, 203);
+            this.user.Name = "user";
+            this.user.Size = new System.Drawing.Size(233, 20);
+            this.user.TabIndex = 0;
+            // 
+            // password
+            // 
+            this.password.Location = new System.Drawing.Point(477, 271);
+            this.password.Name = "password";
+            this.password.Size = new System.Drawing.Size(233, 20);
+            this.password.TabIndex = 1;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.label8.Location = new System.Drawing.Point(412, 205);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(45, 17);
+            this.label8.TabIndex = 2;
+            this.label8.Text = "Agent";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.label15.Location = new System.Drawing.Point(402, 272);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(69, 17);
+            this.label15.TabIndex = 3;
+            this.label15.Text = "Password";
+            // 
+            // connect
+            // 
+            this.connect.Location = new System.Drawing.Point(791, 216);
+            this.connect.Name = "connect";
+            this.connect.Size = new System.Drawing.Size(137, 58);
+            this.connect.TabIndex = 4;
+            this.connect.Text = "Connect";
+            this.connect.UseVisualStyleBackColor = true;
+            this.connect.Click += new System.EventHandler(this.connect_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1582, 822);
+            this.Controls.Add(this.panel2);
             this.Controls.Add(this.panelOrder);
             this.Controls.Add(this.panelRecap);
             this.Controls.Add(this.panelCatalog);
@@ -596,6 +671,8 @@
             this.panelCatalog.PerformLayout();
             this.panelNav.ResumeLayout(false);
             this.panelNav.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -645,5 +722,12 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.Label delaytxt;
         private System.Windows.Forms.Label messagefinal;
+        private System.Windows.Forms.Label orderPageMsg;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Label label15;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TextBox password;
+        private System.Windows.Forms.TextBox user;
+        private System.Windows.Forms.Button connect;
     }
 }

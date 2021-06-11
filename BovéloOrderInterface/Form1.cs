@@ -18,7 +18,7 @@ namespace Bovelo
 {
     public partial class Form1 : Form
     {
-        Agent agent = new Agent("Khaled",1,"07","Vilvoorde");
+        Agent agent;
         Order order = new Order(new Dictionary<Bike, List<int>>());
 
         int delay;
@@ -29,21 +29,19 @@ namespace Bovelo
         DataTable adventureTable = new DataTable();
         DataTable partsToOrderTable = new DataTable();
 
-        Catalog c = new Catalog();
+        Catalog c= new Catalog(Directory.GetParent(System.Environment.CurrentDirectory).Parent.FullName);
+
         MySqlConnection cn = new MySqlConnection("server=193.191.240.67;user=nick;database=mydb;port=63307;password=1234");
 
         public Form1()
         {
             InitializeComponent();
-            
+
             modelBox.SelectedIndex = 0;
             priceLabel.Text = 100.ToString();
             sizeBox.SelectedIndex = 0;
             colorBox.SelectedIndex = 0;
             quantityBox.SelectedText = "1";
-            // si on souhaite ajouter un velo different
-            //c.addBike(new Bike(new Type("Electric"), new Size("26"), new Color("Black"), 100, false), "C:/Users/nathanbuchin/Pictures/Ville/CityRed.png");
-            //c.addBike(new Bike(new Type("City"), new Size("26"), new Color("Red"), 100, false), "C:/Users/nathanbuchin/Pictures/Ville/CityRed.png");
             NewGen_Catalog();
             panelCatalog.Visible = true;
             panelRecap.Visible = false;
@@ -52,6 +50,10 @@ namespace Bovelo
 
         }
 
+        private void connection()
+        {
+            Agent tempAgent = new Agent("Khaled", 1, "07", "Vilvoorde");
+        } 
         private void label1_Click(object sender, EventArgs e)
         {
             Price_Changed();
@@ -109,6 +111,7 @@ namespace Bovelo
         // les 3 fonctions qui suivent servent juste a determiner la page active
         private void recapBtn_Click(object sender, EventArgs e)
         {
+            Console.WriteLine(AppDomain.CurrentDomain.BaseDirectory);
             panelRecap.Visible = true;
             panelOrder.Visible = false;
 
@@ -118,7 +121,6 @@ namespace Bovelo
         private void orderPageBtn_Click(object sender, EventArgs e)
         {
             panelOrder.Visible = true;
-
             panelRecap.Visible = false;
             panelCatalog.Visible = false;
             panel1.Visible = false;
@@ -126,11 +128,12 @@ namespace Bovelo
 
         private void delayBtn_Click(object sender, EventArgs e)
         {
+            messagefinal.Text = "";
             panel1.Visible = true;
             panelRecap.Visible = true;
             panelOrder.Visible = false;
-
             panelCatalog.Visible = false;
+
         }
 
         // pour ajouter les elements selectiones dans commande
@@ -357,12 +360,6 @@ namespace Bovelo
                     }
                 }
             }
-            /*
-            foreach (KeyValuePair<String, int> kvp in availableBikes)
-            {
-                max += kvp.Value;
-            }
-            */
             return bikesMissing;
         }
 
@@ -509,11 +506,11 @@ namespace Bovelo
             }
             else if (order.Bikes.Count == 0)
             {
-                Console.WriteLine("Please choose articles first :)");
+                messagefinal.Text = "Please choose articles first :)";
             }
             else
             {
-                Console.WriteLine("Complete the cases");
+                messagefinal.Text = "Complete the cases";
             }
         }
 
@@ -596,13 +593,17 @@ namespace Bovelo
         }
         private void confirmBtn_Click(object sender, EventArgs e)
         {
-            DateTime dt = DateTime.Now;
-            //We estimate the time
-            delay = delayOrder(order);
-            string s = dt.AddDays(delay).ToString();
-            string[] subs = s.Split(' ');
-            delaytxt.Text = String.Format("Delivery on {0}",subs[0]);
-            panel1.Visible = true;
+            if(order.Bikes_list.Count != 0)
+            {
+                DateTime dt = DateTime.Now;
+                //We estimate the time
+                delay = delayOrder(order);
+                string s = dt.AddDays(delay).ToString();
+                string[] subs = s.Split(' ');
+                delaytxt.Text = String.Format("Delivery on {0}", subs[0]);
+                panel1.Visible = true;
+            }
+            
         }
 
         private void delayInfobox_Click(object sender, EventArgs e)
@@ -613,6 +614,15 @@ namespace Bovelo
         private void delaytxt_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void connect_Click(object sender, EventArgs e)
+        {
+            if(user.Text.Length != 0 && password.Text.Length != 0)
+            {
+                Console.WriteLine("zd");
+                panel2.Visible = false;
+            }
         }
     }
 }
