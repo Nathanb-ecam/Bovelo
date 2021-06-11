@@ -20,6 +20,7 @@ namespace Bovelo
     {
         Agent agent;
         Order order = new Order(new Dictionary<Bike, List<int>>());
+        Customer customer;
 
         int delay;
 
@@ -49,11 +50,6 @@ namespace Bovelo
             panel1.Visible = false;
 
         }
-
-        private void connection()
-        {
-            Agent tempAgent = new Agent("Khaled", 1, "07", "Vilvoorde");
-        } 
         private void label1_Click(object sender, EventArgs e)
         {
             Price_Changed();
@@ -99,7 +95,7 @@ namespace Bovelo
         
         private void orderDatabase(int price, int quantity, int delay, int id_customer, int id_agent)
         {   
-            MySqlCommand cmd = new MySqlCommand("INSERT INTO Test(Price,Quantity,Delay,AgentID,CustomerID) VALUES (@total_price,@quantity,@delay,@id_customer,@id_agent)", cn);
+            MySqlCommand cmd = new MySqlCommand("INSERT INTO Test(Price,Quantity,Delay,AgentID,CustomerID) VALUES (@total_price,@quantity,@delay,@id_agent,@id_customer)", cn);
             cmd.Parameters.AddWithValue("@total_price", price);
             cmd.Parameters.AddWithValue("@quantity", quantity);
             cmd.Parameters.AddWithValue("@delay", delay);
@@ -111,7 +107,6 @@ namespace Bovelo
         // les 3 fonctions qui suivent servent juste a determiner la page active
         private void recapBtn_Click(object sender, EventArgs e)
         {
-            Console.WriteLine(AppDomain.CurrentDomain.BaseDirectory);
             panelRecap.Visible = true;
             panelOrder.Visible = false;
 
@@ -202,7 +197,7 @@ namespace Bovelo
             //We first check how many bike we can make using the general stock
 
             if (cn.State == ConnectionState.Closed) { cn.Open(); };
-
+            
             MySqlCommand commandStock= new MySqlCommand("SELECT * FROM Stock ", cn);
             MySqlDataReader myReaderStock;
             myReaderStock = commandStock.ExecuteReader();
@@ -436,7 +431,6 @@ namespace Bovelo
                 }
                 
             }
-            Console.WriteLine(delay);
             return delay;
         }
 
@@ -455,24 +449,28 @@ namespace Bovelo
             if (cn.State == ConnectionState.Closed) { cn.Open(); };
             if (order.Bikes.Count != 0 && nameBox.Text.Length != 0 && phoneBox.Text.Length != 0 && adressBox.Text.Length != 0)
             {
-                //FIX ID MAKE IT MORE GENERIC
-                Customer customer = new Customer(nameBox.Text, phoneBox.Text, adressBox.Text, 1);
-              
-                string cust_phone = customer.Phone;
                 string cust_id = "0";
-                MySqlCommand command = new MySqlCommand(String.Format("SELECT * FROM Customer WHERE Phone = {0}",cust_phone), cn);
+                MySqlCommand command = new MySqlCommand(String.Format("SELECT * FROM Customer WHERE Phone = {0}", phoneBox.Text), cn);
                 DataTable data = new DataTable();
                 data.Load(command.ExecuteReader());
                 if (data.Rows.Count != 0)
-                {
-                    foreach(DataRow row in data.Rows)
+                { 
+                    foreach (DataRow row in data.Rows)
                     {
+                        string name = row.Field<String>("Name");
+                        string phone = row.Field<String>("Phone");
+                        string adress = row.Field<String>("Adress");
+
                         cust_id = (row["idCustomer"]).ToString();
+                        Customer tempCustomer = new Customer(name, phone, adress);
+                        customer = tempCustomer;
                     }
 
                 }
                 else
                 {
+                    Customer tempCustomer = new Customer(nameBox.Text, phoneBox.Text, adressBox.Text);
+                    customer = tempCustomer;
                     MySqlCommand cmd0 = new MySqlCommand("INSERT INTO Customer(Name,Phone,Adress) VALUES (@name,@phone,@adress)", cn);
                     cmd0.Parameters.AddWithValue("@name", customer.Name);
                     cmd0.Parameters.AddWithValue("@phone", customer.Phone);
@@ -497,8 +495,12 @@ namespace Bovelo
 
                 // Update the tables
                 updateDatabaseTables();
-                //Send order to database 
-                orderDatabase(Int32.Parse(totalPriceTxt.Text), (order.Bikes_list).Count, delay, customer.Id, agent.Id);
+                //Send order to database
+                orderDatabase(Int32.Parse(totalPriceTxt.Text), order.Bikes_list.Count, delay, customer.Id, agent.Id);
+                // Update agent table
+                MySqlCommand cmdAgent = new MySqlCommand(String.Format("UPDATE Agent SET OrdersDone = OrdersDone+1 WHERE idAgent = {0}", agent.Id), cn);
+                cmdAgent.ExecuteReader();
+                cn.Close();
                 order.reset();
                 totalPriceTxt.Text = "";
                 recapTxt.Text = "";
@@ -553,7 +555,6 @@ namespace Bovelo
 
                 //image du velo
                 PictureBox b = new PictureBox();
-                Console.WriteLine(item.Value);
                 b.Image = new Bitmap(item.Value);
                 b.SizeMode = PictureBoxSizeMode.Zoom;
                 b.Size = new System.Drawing.Size(375, 225);
@@ -620,8 +621,45 @@ namespace Bovelo
         {
             if(user.Text.Length != 0 && password.Text.Length != 0)
             {
-                Console.WriteLine("zd");
-                panel2.Visible = false;
+                if (cn.State == ConnectionState.Closed) { cn.Open(); };
+                MySqlCommand command = new MySqlCommand("SELECT * FROM Agent", cn);
+                DataTable data = new DataTable();
+                data.Load(command.ExecuteReader());
+                if (data.Rows.Count != 0)
+                {
+                    foreach (DataRow row in data.Rows)
+                    {
+                        string userDB = row.Field<string>("user");
+                        string passwordDB = row.Field<string>("password");
+                        string nameDB = row.Field<string>("Name");
+                        string phoneDB = row.Field<string>("Phone");
+                        int idDB = row.Field<int>("idAgent");
+
+                        if (userDB == user.Text && passwordDB == password.Text) 
+                        {
+                            Agent tempAgent = new Agent(nameDB, idDB, phoneDB, "idk");
+                            agent = tempAgent;
+                            Console.WriteLine("Connected");
+                            panel2.Visible = false;
+                        }
+                        else if (userDB == user.Text && passwordDB != password.Text)
+                        {
+                            Console.WriteLine("Wrong password");
+                        }
+                        else
+                        {
+                            Console.WriteLine("Wrong user");
+                        }
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("No agent in the database");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Complete the cases");
             }
         }
     }
