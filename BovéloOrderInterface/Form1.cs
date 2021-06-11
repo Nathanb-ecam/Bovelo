@@ -21,10 +21,13 @@ namespace Bovelo
         Agent agent = new Agent("Khaled",1,"07","Vilvoorde");
         Order order = new Order(new Dictionary<Bike, List<int>>());
 
+        int delay;
+
         DataTable stockTable = new DataTable();
         DataTable cityTable = new DataTable();
         DataTable explorerTable = new DataTable();
         DataTable adventureTable = new DataTable();
+        DataTable partsToOrderTable = new DataTable();
 
         Catalog c = new Catalog();
         MySqlConnection cn = new MySqlConnection("server=193.191.240.67;user=nick;database=mydb;port=63307;password=1234");
@@ -43,6 +46,9 @@ namespace Bovelo
             //c.addBike(new Bike(new Type("City"), new Size("26"), new Color("Red"), 100, false), "C:/Users/nathanbuchin/Pictures/Ville/CityRed.png");
             NewGen_Catalog();
             panelCatalog.Visible = true;
+            panelRecap.Visible = false;
+            panelOrder.Visible = false;
+            panel1.Visible = false;
 
         }
 
@@ -105,14 +111,14 @@ namespace Bovelo
         {
             panelRecap.Visible = true;
             panelOrder.Visible = false;
-            panelDelay.Visible = false;
+
             panelCatalog.Visible = false;
             panel1.Visible = false;
         }
         private void orderPageBtn_Click(object sender, EventArgs e)
         {
             panelOrder.Visible = true;
-            panelDelay.Visible = false;
+
             panelRecap.Visible = false;
             panelCatalog.Visible = false;
             panel1.Visible = false;
@@ -120,50 +126,11 @@ namespace Bovelo
 
         private void delayBtn_Click(object sender, EventArgs e)
         {
-            Dictionary<string, int> bikesCounter = new Dictionary<string, int>(){ };
-
-            panelDelay.Visible = true;
+            panel1.Visible = true;
+            panelRecap.Visible = true;
             panelOrder.Visible = false;
-            panelRecap.Visible = false;
-            panel1.Visible = false;
+
             panelCatalog.Visible = false;
-            // chercher dans la bdd si vélo en stock puis estimer delay
-            //delayEstimater();
-
-
-            List<string> commonParts = new List<string>(){"béquille","kitFrein","kitVitesse","kitPédalier","casetteDePignons","catadioptre","chaîne","chambreàAir","dérailleur","disqueDeFrein","fourche","guidon","plateau","roue","selle"};
-            List<string> city_Extra_Parts = new List<string>(){"cadre","pneu","garde-boue","porte-Bagage","éclairage"};
-            List<string> expl_Extra_Parts = new List<string>(){"cadre","pneuLarge","garde-boueLarge","porte-Bagage","éclairage"};
-            List<string> adv_Extra_Parts = new List<string>(){"cadreRenforcé","pneuLarge"};
-            // pieces a verifier dans le stock
-            Dictionary<Bike, List<int>> orderedBikes = order.Bikes;
-            // il faut regarder le modele et la taille des velo de la commande puis regarder s'il y a assez de pieces dans le stock 
-            
-            // boucle pour reordonner le dictionnaire
-            foreach (KeyValuePair<Bike, List<int>> bike in orderedBikes)
-            {
-                string b = bike.Key.Type.Types + bike.Key.Color.Colors + bike.Key.Size.Sizes;
-                
-                if (!bikesCounter.ContainsKey(b))
-                {
-                    bikesCounter.Add((b), bike.Value[0]);
-                }
-                else
-                {
-                    bikesCounter[b] += bike.Value[0];
-                }     
-            }
-
-
-            foreach (KeyValuePair<string, int> bike in bikesCounter)
-            {
-                int number = bike.Value;
-                if (bike.Key.Substring(0,3) =="Cit")
-                {
-                    Console.WriteLine("dkljfeq");
-                }
-            }
-            
         }
 
         // pour ajouter les elements selectiones dans commande
@@ -190,7 +157,6 @@ namespace Bovelo
         {
             string recap = "";
             int totalPrice = 0;
-            Dictionary<Bike, List<int>> orderedBikes = order.Bikes;
 
             // on parcourir le dictionnaire trier pour afficher le recap
             foreach (KeyValuePair<string, int> bike in order.RegroupedBikesDict)
@@ -217,29 +183,44 @@ namespace Bovelo
             
         }
 
-        //Dictionary<string, int>;
+        private void resetAllTables()
+        {
+            stockTable.Reset();
+            partsToOrderTable.Reset();
+            cityTable.Reset();
+            explorerTable.Reset();
+            adventureTable.Reset();
+        }
 
         private int bikesAvailable()
         {
             stockTable.Reset();
+            partsToOrderTable.Reset();
             //We first check how many bike we can make using the general stock
 
             if (cn.State == ConnectionState.Closed) { cn.Open(); };
+
             MySqlCommand commandStock= new MySqlCommand("SELECT * FROM Stock ", cn);
             MySqlDataReader myReaderStock;
             myReaderStock = commandStock.ExecuteReader();
-
             DataTable dataTableStock = new DataTable();
             dataTableStock.Load(myReaderStock);
-
             stockTable = dataTableStock.Copy();
 
+            MySqlCommand commandParts = new MySqlCommand("SELECT * FROM PartsToOrder ", cn);
+            MySqlDataReader myReaderParts;
+            myReaderParts = commandParts.ExecuteReader();
+            DataTable dataTableParts = new DataTable();
+            dataTableParts.Load(myReaderParts);
+            partsToOrderTable = dataTableParts.Copy();
+
             int min = int.MaxValue;
-            int quantity = 0;
+            int quantity;
             foreach (int value in Enumerable.Range(1, order.Bikes_list.Count))
             {
                 foreach (DataRow row in stockTable.Rows)
                 {
+                    DataRow new_row;
                     quantity = row.Field<int>("quantity") / row.Field<int>("min");
 
                     if (quantity < min)
@@ -254,14 +235,16 @@ namespace Bovelo
                     }
                     else
                     {
-                        MySqlCommand cmd0 = new MySqlCommand("INSERT INTO PartsToOrder(name,quantity,Color,Size,min,Type) VALUES (@name,@quantity,@color,@size,@min,@type)", cn);
-                        cmd0.Parameters.AddWithValue("@name", row["name"]);
-                        cmd0.Parameters.AddWithValue("@quantity", row["quantity"]);
-                        cmd0.Parameters.AddWithValue("@color", "General");
-                        cmd0.Parameters.AddWithValue("@size", "General");
-                        cmd0.Parameters.AddWithValue("@min", row["min"]);
-                        cmd0.Parameters.AddWithValue("@type", "General");
-                        cmd0.ExecuteNonQuery();
+                        new_row = partsToOrderTable.NewRow();
+
+                        new_row["name"] = row["name"];
+                        new_row["quantity"] = row["quantity"];
+                        new_row["Color"] = "General";
+                        new_row["Size"] = "General";
+                        new_row["min"] = row["min"];
+                        new_row["Type"] = "General";
+
+                        partsToOrderTable.Rows.Add(new_row);
                     }
 
                 }
@@ -281,6 +264,7 @@ namespace Bovelo
                 string size = row.Field<String>("Size");
                 int quantity = row.Field<int>("quantity");
                 int min = row.Field<int>("min");
+                DataRow new_row;
 
                 if (quantity > min)
                 {
@@ -292,14 +276,16 @@ namespace Bovelo
                 }
                 else
                 {
-                    MySqlCommand cmd0 = new MySqlCommand("INSERT INTO PartsToOrder(name,quantity,Color,Size,min,Type) VALUES (@name,@quantity,@color,@size,@min,@type)", cn);
-                    cmd0.Parameters.AddWithValue("@name", row["name"]);
-                    cmd0.Parameters.AddWithValue("@quantity", row["quantity"]);
-                    cmd0.Parameters.AddWithValue("@color", row["Color"]);
-                    cmd0.Parameters.AddWithValue("@size", row["Size"]);
-                    cmd0.Parameters.AddWithValue("@min", row["min"]);
-                    cmd0.Parameters.AddWithValue("@type", subs[0]);
-                    cmd0.ExecuteNonQuery();
+                    new_row = partsToOrderTable.NewRow(); 
+
+                    new_row["name"] = row["name"];
+                    new_row["quantity"] = row["quantity"];
+                    new_row["Color"] = row["Color"];
+                    new_row["Size"] = row["Size"];
+                    new_row["min"] = row["min"];
+                    new_row["Type"] = subs[0];
+
+                    partsToOrderTable.Rows.Add(new_row);
                     missingBikes = 1;
                 }
 
@@ -380,7 +366,7 @@ namespace Bovelo
             return bikesMissing;
         }
 
-        private void updateDatabase()
+        private void updateDatabaseTables()
         {
             if (cn.State == ConnectionState.Closed) { cn.Open(); };
 
@@ -404,6 +390,10 @@ namespace Bovelo
             MySqlCommandBuilder scmb = new MySqlCommandBuilder(stock);
             stock.Update(stockTable);
 
+            string pQuery = "Select * from PartsToOrder";
+            MySqlDataAdapter parts = new MySqlDataAdapter(pQuery, cn);
+            MySqlCommandBuilder pcmb = new MySqlCommandBuilder(parts);
+            parts.Update(partsToOrderTable);
 
         }
         private int delayOrder(Order order)
@@ -464,9 +454,7 @@ namespace Bovelo
         // pour confirmer une commande 
         private void sendOrderBtn_Click(object sender, EventArgs e)
         {
-           
-            DateTime dt = DateTime.Now;
-            
+
             if (cn.State == ConnectionState.Closed) { cn.Open(); };
             if (order.Bikes.Count != 0 && nameBox.Text.Length != 0 && phoneBox.Text.Length != 0 && adressBox.Text.Length != 0)
             {
@@ -510,17 +498,14 @@ namespace Bovelo
                     
                 }
 
+                // Update the tables
+                updateDatabaseTables();
                 //Send order to database 
-
-                orderDatabase(Int32.Parse(totalPriceTxt.Text),(order.Bikes_list).Count,dt.Day,customer.Id,agent.Id);
-                
-                //We add 3 days of delay to the order in the best case.
-                delayInfobox.Text = String.Format("Delivery on {0}", dt.AddDays(delayOrder(order)));
-                // doit retirer la commande de la bdd
-                updateDatabase();
+                orderDatabase(Int32.Parse(totalPriceTxt.Text), (order.Bikes_list).Count, delay, customer.Id, agent.Id);
                 order.reset();
                 totalPriceTxt.Text = "";
                 recapTxt.Text = "";
+                messagefinal.Text = String.Format("Thank you {0} for your order :)", order.Customer.Name);
             }
             else if (order.Bikes.Count == 0)
             {
@@ -536,7 +521,6 @@ namespace Bovelo
         {
             panelCatalog.Visible = true;
             panelOrder.Visible = false;
-            panelDelay.Visible = false;
             panelRecap.Visible = false;
 
         }
@@ -612,12 +596,23 @@ namespace Bovelo
         }
         private void confirmBtn_Click(object sender, EventArgs e)
         {
-           panel1.Visible = true;
+            DateTime dt = DateTime.Now;
+            //We estimate the time
+            delay = delayOrder(order);
+            string s = dt.AddDays(delay).ToString();
+            string[] subs = s.Split(' ');
+            delaytxt.Text = String.Format("Delivery on {0}",subs[0]);
+            panel1.Visible = true;
         }
 
         private void delayInfobox_Click(object sender, EventArgs e)
         {
             
+        }
+
+        private void delaytxt_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

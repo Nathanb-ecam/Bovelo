@@ -13,7 +13,6 @@ namespace Bovelo
         private Type type;
         private Size size;
         private Color color;
-        private Parts partsList;
         private double price;
         private bool increment; // pour choisir si il faut incrementer l'id ou pas 
         private static int id = 0;

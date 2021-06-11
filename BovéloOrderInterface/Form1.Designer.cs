@@ -45,6 +45,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.panelRecap = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.delaytxt = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
             this.sendOrderBtn = new System.Windows.Forms.Button();
             this.label13 = new System.Windows.Forms.Label();
             this.label12 = new System.Windows.Forms.Label();
@@ -60,9 +62,6 @@
             this.label7 = new System.Windows.Forms.Label();
             this.panelCatalog = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
-            this.panelDelay = new System.Windows.Forms.Panel();
-            this.delayInfobox = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
             this.delayBtn = new System.Windows.Forms.Button();
             this.recapBtn = new System.Windows.Forms.Button();
             this.orderPageBtn = new System.Windows.Forms.Button();
@@ -73,11 +72,11 @@
             this.Bovelo = new System.Windows.Forms.Label();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.messagefinal = new System.Windows.Forms.Label();
             this.panelOrder.SuspendLayout();
             this.panelRecap.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panelCatalog.SuspendLayout();
-            this.panelDelay.SuspendLayout();
             this.panelNav.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -98,7 +97,7 @@
             this.panelOrder.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             this.panelOrder.Location = new System.Drawing.Point(276, 64);
             this.panelOrder.Name = "panelOrder";
-            this.panelOrder.Size = new System.Drawing.Size(1214, 613);
+            this.panelOrder.Size = new System.Drawing.Size(1214, 616);
             this.panelOrder.TabIndex = 14;
             // 
             // priceLabel
@@ -246,12 +245,15 @@
             this.panelRecap.Controls.Add(this.label7);
             this.panelRecap.Location = new System.Drawing.Point(276, 61);
             this.panelRecap.Name = "panelRecap";
-            this.panelRecap.Size = new System.Drawing.Size(1214, 613);
+            this.panelRecap.Size = new System.Drawing.Size(1214, 619);
             this.panelRecap.TabIndex = 15;
             this.panelRecap.Paint += new System.Windows.Forms.PaintEventHandler(this.panelRecap_Paint);
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.messagefinal);
+            this.panel1.Controls.Add(this.delaytxt);
+            this.panel1.Controls.Add(this.label14);
             this.panel1.Controls.Add(this.sendOrderBtn);
             this.panel1.Controls.Add(this.label13);
             this.panel1.Controls.Add(this.label12);
@@ -261,8 +263,29 @@
             this.panel1.Controls.Add(this.nameBox);
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1214, 613);
+            this.panel1.Size = new System.Drawing.Size(1214, 619);
             this.panel1.TabIndex = 36;
+            // 
+            // delaytxt
+            // 
+            this.delaytxt.AutoSize = true;
+            this.delaytxt.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F);
+            this.delaytxt.Location = new System.Drawing.Point(478, 65);
+            this.delaytxt.Name = "delaytxt";
+            this.delaytxt.Size = new System.Drawing.Size(62, 29);
+            this.delaytxt.TabIndex = 8;
+            this.delaytxt.Text = "TBD";
+            this.delaytxt.Click += new System.EventHandler(this.delaytxt_Click);
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F);
+            this.label14.Location = new System.Drawing.Point(365, 65);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(92, 29);
+            this.label14.TabIndex = 7;
+            this.label14.Text = "Delay : ";
             // 
             // sendOrderBtn
             // 
@@ -414,39 +437,6 @@
             this.label2.TabIndex = 0;
             this.label2.Text = "Our Bikes";
             // 
-            // panelDelay
-            // 
-            this.panelDelay.Controls.Add(this.delayInfobox);
-            this.panelDelay.Controls.Add(this.label8);
-            this.panelDelay.Location = new System.Drawing.Point(276, 67);
-            this.panelDelay.Name = "panelDelay";
-            this.panelDelay.Size = new System.Drawing.Size(1214, 613);
-            this.panelDelay.TabIndex = 16;
-            // 
-            // delayInfobox
-            // 
-            this.delayInfobox.AutoSize = true;
-            this.delayInfobox.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.delayInfobox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(76)))));
-            this.delayInfobox.Location = new System.Drawing.Point(220, 142);
-            this.delayInfobox.Name = "delayInfobox";
-            this.delayInfobox.Size = new System.Drawing.Size(16, 24);
-            this.delayInfobox.TabIndex = 1;
-            this.delayInfobox.Text = "-";
-            this.delayInfobox.Click += new System.EventHandler(this.delayInfobox_Click);
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(51)))), ((int)(((byte)(51)))), ((int)(((byte)(76)))));
-            this.label8.Dock = System.Windows.Forms.DockStyle.Top;
-            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(0, 0);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(315, 31);
-            this.label8.TabIndex = 0;
-            this.label8.Text = "Order Delay informations";
-            // 
             // delayBtn
             // 
             this.delayBtn.FlatAppearance.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
@@ -574,6 +564,15 @@
             this.contextMenuStrip1.Name = "contextMenuStrip1";
             this.contextMenuStrip1.Size = new System.Drawing.Size(61, 4);
             // 
+            // messagefinal
+            // 
+            this.messagefinal.AutoSize = true;
+            this.messagefinal.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F);
+            this.messagefinal.Location = new System.Drawing.Point(485, 472);
+            this.messagefinal.Name = "messagefinal";
+            this.messagefinal.Size = new System.Drawing.Size(0, 31);
+            this.messagefinal.TabIndex = 9;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -581,7 +580,6 @@
             this.ClientSize = new System.Drawing.Size(1582, 822);
             this.Controls.Add(this.panelOrder);
             this.Controls.Add(this.panelRecap);
-            this.Controls.Add(this.panelDelay);
             this.Controls.Add(this.panelCatalog);
             this.Controls.Add(this.flowLayoutPanel1);
             this.Controls.Add(this.panelNav);
@@ -596,8 +594,6 @@
             this.panel1.PerformLayout();
             this.panelCatalog.ResumeLayout(false);
             this.panelCatalog.PerformLayout();
-            this.panelDelay.ResumeLayout(false);
-            this.panelDelay.PerformLayout();
             this.panelNav.ResumeLayout(false);
             this.panelNav.PerformLayout();
             this.ResumeLayout(false);
@@ -621,8 +617,6 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panelRecap;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Panel panelDelay;
-        private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Button orderPageBtn;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Button confirmBtn;
@@ -637,7 +631,6 @@
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.Label recapTxt;
         private System.Windows.Forms.Label totalPriceTxt;
-        private System.Windows.Forms.Label delayInfobox;
         private System.Windows.Forms.Button exitBtn;
         private System.Windows.Forms.Label priceLabel;
         private System.Windows.Forms.Label label9;
@@ -649,5 +642,8 @@
         private System.Windows.Forms.TextBox adressBox;
         private System.Windows.Forms.TextBox phoneBox;
         private System.Windows.Forms.TextBox nameBox;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.Label delaytxt;
+        private System.Windows.Forms.Label messagefinal;
     }
 }

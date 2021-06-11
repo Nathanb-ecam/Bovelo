@@ -25,6 +25,11 @@ namespace Bovelo
         {
             get { return bikes; }
         }
+
+        public Customer Customer
+        {
+            get { return customer; }
+        }
         public void SetCustomer(Customer customer)
         {
             this.customer = customer;
