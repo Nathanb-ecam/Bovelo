@@ -18,13 +18,12 @@ namespace Iteration3
         {
             InitializeComponent();
             if (cn.State == ConnectionState.Closed) { cn.Open(); };
-            Stock();
         }
 
 
-        private void Stock()
+        private void ShowTable(string table)
         {
-            MySqlCommand command = new MySqlCommand(String.Format("SELECT * FROM TestStock"), cn);
+            MySqlCommand command = new MySqlCommand(String.Format("SELECT * FROM {0}",table), cn);
             MySqlDataReader reader = command.ExecuteReader();
             DataTable dt = new DataTable();
             dt.Load(reader);
@@ -60,9 +59,9 @@ namespace Iteration3
                 string name = row["name"].ToString();
                 int quantity = Int32.Parse(row["quantity"].ToString());
                 string type = row["Type"].ToString();
-                int size = Int32.Parse(row["size"].ToString());
+                string size = row["Size"].ToString();
                 string color = row["Color"].ToString();
-                MySqlCommand cmd = new MySqlCommand(String.Format("Update {0}TestStock SET name = @name, quantity=@quantity where name=@name and color=@color and size=@size and type=@type",type), cn);
+                MySqlCommand cmd = new MySqlCommand(String.Format("Update {0}Stock SET name = @name, quantity=@quantity where name=@name and color=@color and size=@size and type=@type or name=@name and color=@color and size=null",type), cn);
                 cmd.Parameters.AddWithValue("@name", name);
                 cmd.Parameters.AddWithValue("@quantity", quantity);
                 cmd.Parameters.AddWithValue("@type", type);
@@ -72,5 +71,26 @@ namespace Iteration3
 
             }
         }
+
+        private void Stock_Click(object sender, EventArgs e)
+        {
+            ShowTable((sender as Button).Name);
+        }
+
+        private void applyBtn_Click(object sender, EventArgs e)
+        {
+            string model = modelBox.Text;
+            int quantity = Convert.ToInt32(quantityBox.Value);
+            Console.WriteLine(model);
+            Console.WriteLine(quantity);
+
+            IncreaseQuantity(model,quantity);
+        }
+        private void IncreaseQuantity(string m, int q)
+        {
+            MySqlCommand cmd = new MySqlCommand(String.Format("Update {0}Stock SET quantity= quantity+{1}", m,q), cn);
+            //cmd.Parameters.AddWithValue("@quantity", q);
+            cmd.ExecuteNonQuery();
+        }   
     }
-}
+}                                                 
