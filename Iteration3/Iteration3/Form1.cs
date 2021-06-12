@@ -14,19 +14,27 @@ namespace Iteration3
     public partial class Form1 : Form
     {
         MySqlConnection cn = new MySqlConnection("server=193.191.240.67;user=nick;database=mydb;port=63307;password=1234");
-        DataTable StockTable = new DataTable("");
+        DataTable StockTable = new DataTable("General");
         DataTable CityTable = new DataTable("City");
         DataTable ExplorerTable = new DataTable("Explorer");
         DataTable AdventureTable = new DataTable("Adventure");
         DataTable PartsToOrderTable = new DataTable("PartsToOrder");
-
         List<DataTable> listDataTables= new List<DataTable>();
-        
         public Form1()
         {
             InitializeComponent();
             if (cn.State == ConnectionState.Closed) { cn.Open(); };
-            Stock(PartsToOrderTable);
+            copyTables(listDataTables);
+            if (PartsToOrderTable.Rows.Count != 0)
+            {
+                stockGrid.DataSource = PartsToOrderTable;
+                info.Text = "Please make sure to order the minimal stock";
+            }
+            else
+            {
+                info.Text = "All necessary parts are available";
+            }
+            user.Text = "thierry";
         }
 
         private void connect_Click(object sender, EventArgs e)
@@ -51,11 +59,11 @@ namespace Iteration3
                         }
                         else if (userDB == user.Text && passwordDB != password.Text)
                         {
-                            connectTxt.Text = "Wrong password";
+                            connectTxt.Text = "Wrong password : Try again";
                         }
                         else
                         {
-                            connectTxt.Text = "Wrong user";
+                            connectTxt.Text = "Wrong user: Try again";
                         }
                     }
                 }
@@ -69,112 +77,245 @@ namespace Iteration3
                 connectTxt.Text = "Complete all the cases";
             }
         }
-        private DataTable Stock(DataTable table)
+        private DataTable StockRender(DataTable table)
         {
             MySqlCommand command = new MySqlCommand(String.Format("SELECT * FROM {0}Stock", table.TableName), cn);
             MySqlDataReader reader = command.ExecuteReader();
             DataTable dt = new DataTable();
             dt.Load(reader);
-            stockGrid.DataSource = dt;
             return dt;
         }
         private void copyTables(List<DataTable> listDt )
         {
             listDt.Clear();
+            
+            StockTable = StockRender(StockTable).Copy();
+            StockTable.TableName = "General";
+            CityTable = StockRender(CityTable).Copy();
+            CityTable.TableName = "City";
+            ExplorerTable = StockRender(ExplorerTable).Copy();
+            ExplorerTable.TableName = "Explorer";
+            AdventureTable = StockRender(AdventureTable).Copy();
+            AdventureTable.TableName = "Adventure";
+            PartsToOrderTable = StockRender(PartsToOrderTable).Copy();
+            PartsToOrderTable.TableName = "PartsToOrder";
 
             listDt.Add(StockTable);
             listDt.Add(CityTable);
             listDt.Add(ExplorerTable);
             listDt.Add(AdventureTable);
             listDt.Add(PartsToOrderTable);
-
-            StockTable = Stock(StockTable);
-            CityTable = Stock(CityTable);
-            ExplorerTable = Stock(ExplorerTable);
-            AdventureTable = Stock(AdventureTable);
-            PartsToOrderTable = Stock(PartsToOrderTable);
         }
         private void refillMinimum()
         {
             copyTables(listDataTables);
-            foreach (DataRow row in PartsToOrderTable.Rows)
+            if(PartsToOrderTable.Rows.Count != 0)
             {
-                string name = row.Field<string>("name");
-                string type = row.Field<string>("Type");
-                string color = row.Field<string>("Color");
-                string size = row.Field<string>("Size");
-
-                foreach(DataTable table in listDataTables)
+                foreach (DataRow row in PartsToOrderTable.Rows)
                 {
-                    if (type == table.TableName)
+                    string name = row.Field<string>("name");
+                    string type = row.Field<string>("Type");
+                    string color = row.Field<string>("Color");
+                    string size = row.Field<string>("Size");
+                    int quantity = row.Field<int>("quantity");
+
+                    foreach (DataTable table in listDataTables)
                     {
-                        foreach (DataRow rowT in table.Rows)
+                        if (table.TableName != "PartsToOrder" && type == table.TableName)
                         {
-                            //rowCity["quantity"] += row[]
-                            Console.WriteLine(rowT["quantity"]);
+                            foreach (DataRow rowT in table.Rows)
+                            {
+                                string nameT = rowT.Field<string>("name");
+                                string typeT = table.TableName;
+                                int quantityT = rowT.Field<int>("quantity");
+
+                                if (typeT != "General")
+                                {
+                                    string colorT = rowT.Field<string>("Color");
+                                    string sizeT = rowT.Field<string>("Size");
+                                    if (name == nameT && type == typeT && color == colorT && size == sizeT)
+                                    {
+                                        rowT["quantity"] = quantityT + quantity;
+                                    }
+                                }
+                                else 
+                                { 
+                                    rowT["quantity"] = quantityT + quantity;
+                                }
+
+                            }
                         }
 
                     }
                 }
+                info.Text = "You ordered the minimal stock required";
+            }
+            else
+            {
+                PartsToOrderTable.Reset();
+                info.Text = "No need to order anything";
+            }
+        }
+        private void refillMedium()
+        {
+            refillMinimum();
+            foreach (DataTable table in listDataTables)
+            {
+                foreach (DataRow rowT in table.Rows)
+                {
+                    int quantityT = rowT.Field<int>("quantity");
+                    rowT["quantity"] = quantityT + 20;
+                }
+            }
+            generalList.Value = 20;
+            cityList.Value = 20;
+            explorerList.Value = 20;
+            adventureList.Value = 20;
+            info.Text = "You will order 20 parts of everyting";
+        }
+        private void refillLarge()
+        {
+            refillMinimum();
+            foreach (DataTable table in listDataTables)
+            {
+                foreach (DataRow rowT in table.Rows)
+                {
+                    int quantityT = rowT.Field<int>("quantity");
+                    rowT["quantity"] = quantityT + 50;
+                }
+            }
+            generalList.Value = 50;
+            cityList.Value = 50;
+            explorerList.Value = 50;
+            adventureList.Value = 50;
+            info.Text = "You will order 50 parts of everyting";
+        }
+
+        private void refillAllStocks()
+        {
+            refillMinimum();
+
+            Dictionary<string, decimal> dictValues = new Dictionary<string, decimal>();
+
+            decimal general = generalList.Value;
+            decimal city = cityList.Value;
+            decimal explorer = explorerList.Value;
+            decimal adventure = adventureList.Value;
+            string msg = "You will order the minimum stock and in addition for all parts : \n";
+
+            dictValues["General"] = general;
+            dictValues["City"] = city;
+            dictValues["Explorer"] = explorer;
+            dictValues["Adventure"] = adventure;
+
+            foreach (DataTable table in listDataTables)
+            {
+                if (dictValues.ContainsKey(table.TableName))
+                {
+                    foreach (DataRow rowT in table.Rows)
+                    {
+                        int quantityT = rowT.Field<int>("quantity");
+                        rowT["quantity"] = quantityT + dictValues[table.TableName];
+                    }
+                    msg += String.Format("\t{0} : {1} /", table.TableName, dictValues[table.TableName]);
+                }
+            }
+            info.Text = msg;
+        }
+        private void confirm_Click(object sender, EventArgs e)
+        {
+            foreach(DataTable table in listDataTables)
+            {
+                if (table.TableName != "PartsToOrder")
+                {
+                    string Query = String.Format("Select * from {0}Stock", table.TableName);
+                    MySqlDataAdapter adapter = new MySqlDataAdapter(Query, cn);
+                    MySqlCommandBuilder cmd = new MySqlCommandBuilder(adapter);
+                    adapter.Update(table);
+                }
+                else
+                {
+                    MySqlCommand cmd = new MySqlCommand(String.Format("TRUNCATE TABLE {0}Stock", table.TableName), cn);
+                    cmd.ExecuteNonQuery();
+                }
+                table.Reset();
+            }
+            info.Text = "Order done";
+        }
+
+        private void reset_Click(object sender, EventArgs e)
+        {
+            foreach (DataTable table in listDataTables)
+            {
+                table.Reset();
             }
 
+            listDataTables.Clear();
+            info.Text = "";
+            generalList.Value = 0 ;
+            cityList.Value = 0;
+            explorerList.Value = 0;
+            adventureList.Value = 0;
         }
         private void general_Click(object sender, EventArgs e)
         {
-            Stock(StockTable);
+            stockGrid.DataSource = StockTable;
         }
 
         private void city_Click(object sender, EventArgs e)
         {
-            Stock(CityTable);
+            stockGrid.DataSource = CityTable;
         }
 
         private void explorer_Click(object sender, EventArgs e)
         {
-            Stock(ExplorerTable);
+            stockGrid.DataSource = ExplorerTable;
         }
 
         private void adventure_Click(object sender, EventArgs e)
         {
-            Stock(AdventureTable);
+            stockGrid.DataSource = AdventureTable;
         }
         private void refillMin_Click(object sender, EventArgs e)
         {
             refillMinimum();
+            stockGrid.DataSource = PartsToOrderTable;
         }
+
         private void refillAll_Click(object sender, EventArgs e)
         {
-            decimal general = generalList.Value;
-            decimal city = cityList.Value;
-            decimal explorer = explorerList.Value;
-            decimal adventure  = adventureList.Value;
-
-            Console.WriteLine(general);
+            refillAllStocks();
+            stockGrid.DataSource = StockTable;
         }
-        private void confirm_Click(object sender, EventArgs e)
+
+        private void mediumRefill_Click(object sender, EventArgs e)
         {
-            MySqlCommand command = new MySqlCommand(String.Format("SELECT * FROM PartsToOrder"), cn);
-            MySqlDataReader reader = command.ExecuteReader();
-            DataTable dt = new DataTable();
-            dt.Load(reader);
-
-            if (dt.Rows.Count != 0)
-            {
-                foreach (DataRow row in dt.Rows)
-                {
-
-                }
-            }
-            else
-            {
-                Console.WriteLine("Already filled");
-            }
-
-            StockTable.Reset();
-            CityTable.Reset();
-            ExplorerTable.Reset();
-            AdventureTable.Reset();
+            refillMedium();
+            stockGrid.DataSource = StockTable;
         }
 
+        private void largeRefill_Click(object sender, EventArgs e)
+        {
+            refillLarge();
+            stockGrid.DataSource = StockTable;
+
+        }
+
+        private void disconnect_Click(object sender, EventArgs e)
+        {
+            connectionPanel.Visible = true;
+            password.Text = "";
+
+        }
+
+        private void refresh_Click(object sender, EventArgs e)
+        {
+            copyTables(listDataTables);
+            stockGrid.DataSource = StockTable;
+            generalList.Value = 0;
+            cityList.Value = 0;
+            explorerList.Value = 0;
+            adventureList.Value = 0;
+        }
     }
 }

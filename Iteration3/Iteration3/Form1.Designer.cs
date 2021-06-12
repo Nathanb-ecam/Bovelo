@@ -48,6 +48,12 @@
             this.confirm = new System.Windows.Forms.Button();
             this.refillAll = new System.Windows.Forms.Button();
             this.refillMin = new System.Windows.Forms.Button();
+            this.info = new System.Windows.Forms.Label();
+            this.reset = new System.Windows.Forms.Button();
+            this.largeRefill = new System.Windows.Forms.Button();
+            this.mediumRefill = new System.Windows.Forms.Button();
+            this.disconnect = new System.Windows.Forms.Button();
+            this.refresh = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.stockGrid)).BeginInit();
             this.connectionPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.generalList)).BeginInit();
@@ -85,7 +91,7 @@
             this.connectionPanel.Controls.Add(this.label1);
             this.connectionPanel.Location = new System.Drawing.Point(0, 0);
             this.connectionPanel.Name = "connectionPanel";
-            this.connectionPanel.Size = new System.Drawing.Size(122, 83);
+            this.connectionPanel.Size = new System.Drawing.Size(800, 457);
             this.connectionPanel.TabIndex = 3;
             // 
             // connectTxt
@@ -215,9 +221,9 @@
             // confirm
             // 
             this.confirm.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            this.confirm.Location = new System.Drawing.Point(652, 302);
+            this.confirm.Location = new System.Drawing.Point(662, 385);
             this.confirm.Name = "confirm";
-            this.confirm.Size = new System.Drawing.Size(124, 47);
+            this.confirm.Size = new System.Drawing.Size(96, 34);
             this.confirm.TabIndex = 22;
             this.confirm.Text = "Confirm";
             this.confirm.UseVisualStyleBackColor = false;
@@ -225,33 +231,100 @@
             // 
             // refillAll
             // 
-            this.refillAll.Location = new System.Drawing.Point(652, 208);
+            this.refillAll.Location = new System.Drawing.Point(662, 315);
             this.refillAll.Name = "refillAll";
-            this.refillAll.Size = new System.Drawing.Size(124, 47);
+            this.refillAll.Size = new System.Drawing.Size(96, 34);
             this.refillAll.TabIndex = 23;
-            this.refillAll.Text = "Refill All";
+            this.refillAll.Text = "Custom";
             this.refillAll.UseVisualStyleBackColor = true;
             this.refillAll.Click += new System.EventHandler(this.refillAll_Click);
             // 
             // refillMin
             // 
-            this.refillMin.Location = new System.Drawing.Point(652, 112);
+            this.refillMin.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(128)))));
+            this.refillMin.Location = new System.Drawing.Point(662, 112);
             this.refillMin.Name = "refillMin";
-            this.refillMin.Size = new System.Drawing.Size(124, 48);
+            this.refillMin.Size = new System.Drawing.Size(96, 33);
             this.refillMin.TabIndex = 24;
-            this.refillMin.Text = "Refill minimum";
-            this.refillMin.UseVisualStyleBackColor = true;
+            this.refillMin.Text = "Minimum";
+            this.refillMin.UseVisualStyleBackColor = false;
             this.refillMin.Click += new System.EventHandler(this.refillMin_Click);
+            // 
+            // info
+            // 
+            this.info.AutoSize = true;
+            this.info.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.info.Location = new System.Drawing.Point(180, 385);
+            this.info.Name = "info";
+            this.info.Size = new System.Drawing.Size(0, 17);
+            this.info.TabIndex = 25;
+            // 
+            // reset
+            // 
+            this.reset.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.reset.Location = new System.Drawing.Point(12, 385);
+            this.reset.Name = "reset";
+            this.reset.Size = new System.Drawing.Size(96, 34);
+            this.reset.TabIndex = 26;
+            this.reset.Text = "Reset";
+            this.reset.UseVisualStyleBackColor = false;
+            this.reset.Click += new System.EventHandler(this.reset_Click);
+            // 
+            // largeRefill
+            // 
+            this.largeRefill.Location = new System.Drawing.Point(662, 245);
+            this.largeRefill.Name = "largeRefill";
+            this.largeRefill.Size = new System.Drawing.Size(96, 34);
+            this.largeRefill.TabIndex = 27;
+            this.largeRefill.Text = "Large";
+            this.largeRefill.UseVisualStyleBackColor = true;
+            this.largeRefill.Click += new System.EventHandler(this.largeRefill_Click);
+            // 
+            // mediumRefill
+            // 
+            this.mediumRefill.Location = new System.Drawing.Point(662, 175);
+            this.mediumRefill.Name = "mediumRefill";
+            this.mediumRefill.Size = new System.Drawing.Size(96, 34);
+            this.mediumRefill.TabIndex = 28;
+            this.mediumRefill.Text = "Medium";
+            this.mediumRefill.UseVisualStyleBackColor = true;
+            this.mediumRefill.Click += new System.EventHandler(this.mediumRefill_Click);
+            // 
+            // disconnect
+            // 
+            this.disconnect.Location = new System.Drawing.Point(12, 20);
+            this.disconnect.Name = "disconnect";
+            this.disconnect.Size = new System.Drawing.Size(96, 34);
+            this.disconnect.TabIndex = 29;
+            this.disconnect.Text = "Disconnect";
+            this.disconnect.UseVisualStyleBackColor = true;
+            this.disconnect.Click += new System.EventHandler(this.disconnect_Click);
+            // 
+            // refresh
+            // 
+            this.refresh.Location = new System.Drawing.Point(662, 20);
+            this.refresh.Name = "refresh";
+            this.refresh.Size = new System.Drawing.Size(96, 34);
+            this.refresh.TabIndex = 30;
+            this.refresh.Text = "Refresh";
+            this.refresh.UseVisualStyleBackColor = true;
+            this.refresh.Click += new System.EventHandler(this.refresh_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.connectionPanel);
+            this.Controls.Add(this.refresh);
+            this.Controls.Add(this.disconnect);
+            this.Controls.Add(this.mediumRefill);
+            this.Controls.Add(this.largeRefill);
+            this.Controls.Add(this.reset);
+            this.Controls.Add(this.info);
             this.Controls.Add(this.refillMin);
             this.Controls.Add(this.refillAll);
             this.Controls.Add(this.confirm);
-            this.Controls.Add(this.connectionPanel);
             this.Controls.Add(this.adventureList);
             this.Controls.Add(this.explorerList);
             this.Controls.Add(this.cityList);
@@ -298,6 +371,12 @@
         private System.Windows.Forms.Button confirm;
         private System.Windows.Forms.Button refillAll;
         private System.Windows.Forms.Button refillMin;
+        private System.Windows.Forms.Label info;
+        private System.Windows.Forms.Button reset;
+        private System.Windows.Forms.Button largeRefill;
+        private System.Windows.Forms.Button mediumRefill;
+        private System.Windows.Forms.Button disconnect;
+        private System.Windows.Forms.Button refresh;
     }
 }
 

@@ -48,6 +48,7 @@ namespace Bovelo
             panelRecap.Visible = false;
             panelOrder.Visible = false;
             panel1.Visible = false;
+            user.Text = "khaled";
 
         }
         private void label1_Click(object sender, EventArgs e)
@@ -200,7 +201,7 @@ namespace Bovelo
 
             if (cn.State == ConnectionState.Closed) { cn.Open(); };
             
-            MySqlCommand commandStock= new MySqlCommand("SELECT * FROM Stock ", cn);
+            MySqlCommand commandStock= new MySqlCommand("SELECT * FROM GeneralStock ", cn);
             MySqlDataReader myReaderStock;
             myReaderStock = commandStock.ExecuteReader();
             DataTable dataTableStock = new DataTable();
@@ -216,17 +217,22 @@ namespace Bovelo
 
             int min = int.MaxValue;
             int quantity;
+
+            foreach (DataRow row in stockTable.Rows)
+            {
+                quantity = row.Field<int>("quantity") / row.Field<int>("min");
+                if (quantity < min)
+                {
+                    min = quantity;
+                }
+            }
+
             foreach (int value in Enumerable.Range(1, order.Bikes_list.Count))
             {
                 foreach (DataRow row in stockTable.Rows)
                 {
                     DataRow new_row;
-                    quantity = row.Field<int>("quantity") / row.Field<int>("min");
-
-                    if (quantity < min)
-                    {
-                        min = quantity;
-                    }
+                    
                     if (row.Field<int>("quantity") > row.Field<int>("min"))
                     {
                     
@@ -238,7 +244,7 @@ namespace Bovelo
                         new_row = partsToOrderTable.NewRow();
 
                         new_row["name"] = row["name"];
-                        new_row["quantity"] = row["quantity"];
+                        new_row["quantity"] = row["min"];
                         new_row["Color"] = "General";
                         new_row["Size"] = "General";
                         new_row["min"] = row["min"];
@@ -279,7 +285,7 @@ namespace Bovelo
                     new_row = partsToOrderTable.NewRow(); 
 
                     new_row["name"] = row["name"];
-                    new_row["quantity"] = row["quantity"];
+                    new_row["quantity"] = 1;
                     new_row["Color"] = row["Color"];
                     new_row["Size"] = row["Size"];
                     new_row["min"] = row["min"];
@@ -379,7 +385,7 @@ namespace Bovelo
             MySqlCommandBuilder ccmb = new MySqlCommandBuilder(city);
             city.Update(cityTable);
 
-            string sQuery = "Select * from Stock";
+            string sQuery = "Select * from GeneralStock";
             MySqlDataAdapter stock = new MySqlDataAdapter(sQuery, cn);
             MySqlCommandBuilder scmb = new MySqlCommandBuilder(stock);
             stock.Update(stockTable);
@@ -394,6 +400,8 @@ namespace Bovelo
         {
             int maxGeneralBikes = bikesAvailable();
             int missingCustomBikes = customBikes();
+
+            Console.WriteLine(maxGeneralBikes);
 
             int delay = 3; //3 days minimum
 
@@ -440,6 +448,7 @@ namespace Bovelo
         private void resetBtn_Click(object sender, EventArgs e)
         {
             order.reset();
+            resetAllTables();
             totalPriceTxt.Text = "";
             recapTxt.Text = "";
         }
