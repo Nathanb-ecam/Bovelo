@@ -109,9 +109,9 @@ namespace Bovelo
         {
             panelRecap.Visible = true;
             panelOrder.Visible = false;
-
             panelCatalog.Visible = false;
             panel1.Visible = false;
+            messagefinal.Text = "";
         }
         private void orderPageBtn_Click(object sender, EventArgs e)
         {
@@ -119,6 +119,7 @@ namespace Bovelo
             panelRecap.Visible = false;
             panelCatalog.Visible = false;
             panel1.Visible = false;
+            messagefinal.Text = "";
         }
 
         private void delayBtn_Click(object sender, EventArgs e)
@@ -128,6 +129,7 @@ namespace Bovelo
             panelRecap.Visible = true;
             panelOrder.Visible = false;
             panelCatalog.Visible = false;
+            messagefinal.Text = "";
 
         }
 
@@ -445,42 +447,16 @@ namespace Bovelo
         // pour confirmer une commande 
         private void sendOrderBtn_Click(object sender, EventArgs e)
         {
-
+            
             if (cn.State == ConnectionState.Closed) { cn.Open(); };
             if (order.Bikes.Count != 0 && nameBox.Text.Length != 0 && phoneBox.Text.Length != 0 && adressBox.Text.Length != 0)
             {
-                string cust_id = "0";
-                MySqlCommand command = new MySqlCommand(String.Format("SELECT * FROM Customer WHERE Phone = {0}", phoneBox.Text), cn);
-                DataTable data = new DataTable();
-                data.Load(command.ExecuteReader());
-                if (data.Rows.Count != 0)
-                { 
-                    foreach (DataRow row in data.Rows)
-                    {
-                        string name = row.Field<String>("Name");
-                        string phone = row.Field<String>("Phone");
-                        string adress = row.Field<String>("Adress");
-
-                        cust_id = (row["idCustomer"]).ToString();
-                        Customer tempCustomer = new Customer(name, phone, adress);
-                        customer = tempCustomer;
-                    }
-
-                }
-                else
-                {
-                    Customer tempCustomer = new Customer(nameBox.Text, phoneBox.Text, adressBox.Text);
-                    customer = tempCustomer;
-                    MySqlCommand cmd0 = new MySqlCommand("INSERT INTO Customer(Name,Phone,Adress) VALUES (@name,@phone,@adress)", cn);
-                    cmd0.Parameters.AddWithValue("@name", customer.Name);
-                    cmd0.Parameters.AddWithValue("@phone", customer.Phone);
-                    cmd0.Parameters.AddWithValue("@adress", customer.Adress);
-                    cmd0.ExecuteNonQuery();
-                    cust_id = cmd0.LastInsertedId.ToString();
-                }
-
+                messagefinal.Text = "Sending order ...";
+                customerTable();
+                //We associate a customer for our order.
                 order.SetCustomer(customer);
-                order.Add_Agent(agent);                         //We associate an agent for our order.
+                //We associate an agent for our order.
+                order.Add_Agent(agent);                        
                 foreach (Bike bike in order.Bikes_list)
                 {
                     MySqlCommand cmd = new MySqlCommand("INSERT INTO Bike(Color,Type,Size,Assembler_idAssembler,Price) VALUES (@color,@type,@size,@id_assembler,@price)", cn);
@@ -504,7 +480,8 @@ namespace Bovelo
                 order.reset();
                 totalPriceTxt.Text = "";
                 recapTxt.Text = "";
-                messagefinal.Text = String.Format("Thank you {0} for your order :)", order.Customer.Name);
+                messagefinal.Text = "Thank you for your order :)";
+                delaytxt.Text = "";
             }
             else if (order.Bikes.Count == 0)
             {
@@ -516,6 +493,39 @@ namespace Bovelo
             }
         }
 
+        private void customerTable()
+        {
+            string cust_id = "0";
+            MySqlCommand command = new MySqlCommand(String.Format("SELECT * FROM Customer WHERE Phone = {0}", phoneBox.Text), cn);
+            DataTable data = new DataTable();
+            data.Load(command.ExecuteReader());
+            if (data.Rows.Count != 0)
+            {
+                foreach (DataRow row in data.Rows)
+                {
+                    string name = row.Field<String>("Name");
+                    string phone = row.Field<String>("Phone");
+                    string adress = row.Field<String>("Adress");
+
+                    cust_id = (row["idCustomer"]).ToString();
+                    Customer tempCustomer = new Customer(name, phone, adress);
+                    customer = tempCustomer;
+                }
+
+            }
+            else
+            {
+                Customer tempCustomer = new Customer(nameBox.Text, phoneBox.Text, adressBox.Text);
+                customer = tempCustomer;
+                MySqlCommand cmd0 = new MySqlCommand("INSERT INTO Customer(Name,Phone,Adress) VALUES (@name,@phone,@adress)", cn);
+                cmd0.Parameters.AddWithValue("@name", customer.Name);
+                cmd0.Parameters.AddWithValue("@phone", customer.Phone);
+                cmd0.Parameters.AddWithValue("@adress", customer.Adress);
+                cmd0.ExecuteNonQuery();
+                cust_id = cmd0.LastInsertedId.ToString();
+            }
+
+        }
         private void catalogBtn_Click(object sender, EventArgs e)
         {
             panelCatalog.Visible = true;
@@ -573,11 +583,6 @@ namespace Bovelo
             }
         }
 
-        private void exitBtn_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
-
         // fonction qui est executee lorsqu'on clique sur une image du catalogue
         private void btn_Click(object sender, EventArgs e)
         {
@@ -607,19 +612,9 @@ namespace Bovelo
             
         }
 
-        private void delayInfobox_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void delaytxt_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void connect_Click(object sender, EventArgs e)
         {
-            if(user.Text.Length != 0 && password.Text.Length != 0)
+            if (user.Text.Length != 0 && password.Text.Length != 0)
             {
                 if (cn.State == ConnectionState.Closed) { cn.Open(); };
                 MySqlCommand command = new MySqlCommand("SELECT * FROM Agent", cn);
@@ -644,22 +639,48 @@ namespace Bovelo
                         }
                         else if (userDB == user.Text && passwordDB != password.Text)
                         {
-                            Console.WriteLine("Wrong password");
+                            connectTxt.Text = "Wrong password";
                         }
                         else
                         {
-                            Console.WriteLine("Wrong user");
+                            connectTxt.Text = "Wrong user";
                         }
                     }
                 }
                 else
                 {
-                    Console.WriteLine("No agent in the database");
+                    connectTxt.Text = "No agent in the database";
                 }
             }
             else
             {
-                Console.WriteLine("Complete the cases");
+                connectTxt.Text = "Complete all the cases";
+            }
+        }
+        private void exitBtn_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void emptyCheckout_Click(object sender, EventArgs e)
+        {
+            nameBox.Text = "";
+            phoneBox.Text = "";
+            adressBox.Text = "";
+            messagefinal.Text = "";
+        }
+
+        private void phoneBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if(e.Handled =!char.IsDigit(e.KeyChar))
+            {
+                errorProvider1.SetError(errorPhone, "Numeric Valuer Only");
+                errorPhone.Text = "Numeric Valuer Only";
+            }
+            else
+            {
+                errorProvider1.SetError(errorPhone, "");
+                errorPhone.Text = "";
             }
         }
     }
