@@ -11,33 +11,45 @@ using System.IO;
 using System.Resources;
 using MySql.Data.MySqlClient;
 using System.Globalization;
+using System.Data.SqlClient;
+
 
 namespace Bovelo
 {
     public partial class Form1 : Form
     {
-        Agent agent = new Agent("Khaled",1,"07","Vilvoorde");
+        Agent agent;
         Order order = new Order(new Dictionary<Bike, List<int>>());
-               
-        Catalog c = new Catalog();
+        Customer customer;
+
+        int delay;
+
+        DataTable stockTable = new DataTable();
+        DataTable cityTable = new DataTable();
+        DataTable explorerTable = new DataTable();
+        DataTable adventureTable = new DataTable();
+        DataTable partsToOrderTable = new DataTable();
+
+        Catalog c= new Catalog(Directory.GetParent(System.Environment.CurrentDirectory).Parent.FullName);
+
         MySqlConnection cn = new MySqlConnection("server=193.191.240.67;user=nick;database=mydb;port=63307;password=1234");
 
         public Form1()
         {
             InitializeComponent();
-            
+
             modelBox.SelectedIndex = 0;
             priceLabel.Text = 100.ToString();
             sizeBox.SelectedIndex = 0;
             colorBox.SelectedIndex = 0;
             quantityBox.SelectedText = "1";
-            // si on souhaite ajouter un velo different
-            c.addBike(new Bike(new Type("Electric"), new Size("26"), new Color("Black"), 100, false), "C:/Users/nathanbuchin/Pictures/Ville/CityRed.png");
-            c.addBike(new Bike(new Type("City"), new Size("26"), new Color("Red"), 100, false), "C:/Users/nathanbuchin/Pictures/Ville/CityRed.png");
             NewGen_Catalog();
             panelCatalog.Visible = true;
-        }
+            panelRecap.Visible = false;
+            panelOrder.Visible = false;
+            panel1.Visible = false;
 
+        }
         private void label1_Click(object sender, EventArgs e)
         {
             Price_Changed();
@@ -45,7 +57,7 @@ namespace Bovelo
         private void Price_Changed()
         {
             int price = 0;
-            if (quantityBox.Text != "")
+            try
             {
                 if (modelBox.Text == "City")
                 {
@@ -61,7 +73,10 @@ namespace Bovelo
                 }
                 priceLabel.Text = price.ToString();
             }
-
+            catch
+            {
+                Console.WriteLine("Format incorect");
+            }
         }
         private void quantityBox_TextChanged(object sender, EventArgs e)
         {
@@ -77,56 +92,46 @@ namespace Bovelo
                 order.AddBike(bike_name);
             }
         }
+        
+        private void orderDatabase(int price, int quantity, int delay, int id_customer, int id_agent)
+        {   
+            MySqlCommand cmd = new MySqlCommand("INSERT INTO Test(Price,Quantity,Delay,AgentID,CustomerID) VALUES (@total_price,@quantity,@delay,@id_agent,@id_customer)", cn);
+            cmd.Parameters.AddWithValue("@total_price", price);
+            cmd.Parameters.AddWithValue("@quantity", quantity);
+            cmd.Parameters.AddWithValue("@delay", delay);
+            cmd.Parameters.AddWithValue("@id_customer", id_customer);
+            cmd.Parameters.AddWithValue("@id_agent", id_agent);
+            cmd.ExecuteNonQuery();
+        }
 
         // les 3 fonctions qui suivent servent juste a determiner la page active
         private void recapBtn_Click(object sender, EventArgs e)
         {
             panelRecap.Visible = true;
             panelOrder.Visible = false;
-            panelDelay.Visible = false;
             panelCatalog.Visible = false;
             panel1.Visible = false;
+            messagefinal.Text = "";
         }
         private void orderPageBtn_Click(object sender, EventArgs e)
         {
             panelOrder.Visible = true;
-            panelDelay.Visible = false;
             panelRecap.Visible = false;
             panelCatalog.Visible = false;
             panel1.Visible = false;
+            messagefinal.Text = "";
         }
 
         private void delayBtn_Click(object sender, EventArgs e)
         {
-            panelDelay.Visible = true;
+            messagefinal.Text = "";
+            panel1.Visible = true;
+            panelRecap.Visible = true;
             panelOrder.Visible = false;
-            panelRecap.Visible = false;
-            panel1.Visible = false;
             panelCatalog.Visible = false;
-            // chercher dans la bdd si vélo en stock puis estimer delay
-            //delayEstimater();
+            messagefinal.Text = "";
 
-            // pieces a verifier dans le stock
-            Dictionary<Bike, List<int>> orderedBikes = order.Bikes;
-            // il faut regarder le modele et la taille des velo de la commande puis regarder s'il y a assez de pieces dans le stock 
-            CheckStock(orderedBikes);
-
-
-            
         }
-
-        private void CheckStock(Dictionary<Bike,List<int>> orderedBikes)
-        {
-            if (cn.State == ConnectionState.Closed) { cn.Open(); };
-            List<string> commonParts = new List<string>(){"bequille","kitFrein","kitVitesse","kitPedalier","casettePignons","catadioptre","chaine","chambreAir","derailleur","disqueFrein","fourche","guidon","plateau","roue","selle"};
-            List<string> city_Extra_Parts = new List<string>(){"cadre","pneu","garde-boue","porte-Bagage","éclairage"};
-            List<string> expl_Extra_Parts = new List<string>(){"cadre","pneuLarge","garde-boueLarge","porte-Bagage","éclairage"};
-            List<string> adv_Extra_Parts = new List<string>(){"cadreRenforcé","pneuLarge"};
-
-            // idée pour la recherche, peut importe le type de velo, il y a une partie de pieces communes a tous qui doit se trouver dns le stock
-        }
-
-
 
         // pour ajouter les elements selectiones dans commande
         private void addBtn_Click(object sender, EventArgs e)
@@ -147,30 +152,14 @@ namespace Bovelo
             generate_Recap();
 
         }
+
         private void generate_Recap()
         {
             string recap = "";
             int totalPrice = 0;
-            Dictionary<string, int> bikesCounter = new Dictionary<string, int>(){ };
-            Dictionary<Bike, List<int>> orderedBikes = order.Bikes;
-
-            // boucle pour reordonner le dictionnaire
-            foreach (KeyValuePair<Bike, List<int>> bike in orderedBikes)
-            {
-                string b = bike.Key.Type.Types + bike.Key.Color.Colors + bike.Key.Size.Sizes;
-                
-                if (!bikesCounter.ContainsKey(b))
-                {
-                    bikesCounter.Add((b), bike.Value[0]);
-                }
-                else
-                {
-                    bikesCounter[b] += bike.Value[0];
-                }     
-            }
 
             // on parcourir le dictionnaire trier pour afficher le recap
-            foreach (KeyValuePair<string, int> bike in bikesCounter)
+            foreach (KeyValuePair<string, int> bike in order.RegroupedBikesDict)
             {
                 if (bike.Key.Substring(0, 3) == "Cit")
                 {
@@ -191,12 +180,266 @@ namespace Bovelo
             }
             totalPriceTxt.Text = totalPrice.ToString();
             recapTxt.Text = recap;
+            
+        }
+
+        private void resetAllTables()
+        {
+            stockTable.Reset();
+            partsToOrderTable.Reset();
+            cityTable.Reset();
+            explorerTable.Reset();
+            adventureTable.Reset();
+        }
+
+        private int bikesAvailable()
+        {
+            stockTable.Reset();
+            partsToOrderTable.Reset();
+            //We first check how many bike we can make using the general stock
+
+            if (cn.State == ConnectionState.Closed) { cn.Open(); };
+            
+            MySqlCommand commandStock= new MySqlCommand("SELECT * FROM Stock ", cn);
+            MySqlDataReader myReaderStock;
+            myReaderStock = commandStock.ExecuteReader();
+            DataTable dataTableStock = new DataTable();
+            dataTableStock.Load(myReaderStock);
+            stockTable = dataTableStock.Copy();
+
+            MySqlCommand commandParts = new MySqlCommand("SELECT * FROM PartsToOrder ", cn);
+            MySqlDataReader myReaderParts;
+            myReaderParts = commandParts.ExecuteReader();
+            DataTable dataTableParts = new DataTable();
+            dataTableParts.Load(myReaderParts);
+            partsToOrderTable = dataTableParts.Copy();
+
+            int min = int.MaxValue;
+            int quantity;
+            foreach (int value in Enumerable.Range(1, order.Bikes_list.Count))
+            {
+                foreach (DataRow row in stockTable.Rows)
+                {
+                    DataRow new_row;
+                    quantity = row.Field<int>("quantity") / row.Field<int>("min");
+
+                    if (quantity < min)
+                    {
+                        min = quantity;
+                    }
+                    if (row.Field<int>("quantity") > row.Field<int>("min"))
+                    {
+                    
+                        row["quantity"] = row.Field<int>("quantity") - 1;
+
+                    }
+                    else
+                    {
+                        new_row = partsToOrderTable.NewRow();
+
+                        new_row["name"] = row["name"];
+                        new_row["quantity"] = row["quantity"];
+                        new_row["Color"] = "General";
+                        new_row["Size"] = "General";
+                        new_row["min"] = row["min"];
+                        new_row["Type"] = "General";
+
+                        partsToOrderTable.Rows.Add(new_row);
+                    }
+
+                }
+            }
+
+            //We return the max number of bikes that we can make
+            return min;
+
+        }
+
+        private int tables(DataTable dataTable, string[] subs)
+        {
+            int missingBikes = 0;
+            foreach (DataRow row in dataTable.Rows)
+            {
+                string color = row.Field<String>("Color");
+                string size = row.Field<String>("Size");
+                int quantity = row.Field<int>("quantity");
+                int min = row.Field<int>("min");
+                DataRow new_row;
+
+                if (quantity > min)
+                {
+                    if ((color == subs[2] && size == subs[1]) || (size is null) || (color is null && size == subs[1]) || (color == "Black" && size == subs[1]))
+                    {
+                        row["quantity"] = quantity - 1;
+
+                    }
+                }
+                else
+                {
+                    new_row = partsToOrderTable.NewRow(); 
+
+                    new_row["name"] = row["name"];
+                    new_row["quantity"] = row["quantity"];
+                    new_row["Color"] = row["Color"];
+                    new_row["Size"] = row["Size"];
+                    new_row["min"] = row["min"];
+                    new_row["Type"] = subs[0];
+
+                    partsToOrderTable.Rows.Add(new_row);
+                    missingBikes = 1;
+                }
+
+            }
+            return missingBikes;
+        }
+        private int customBikes()
+        {
+            int bikesMissing = 0;
+            //Check how many of the ordered bikes we can make with our current specific parts
+
+            cityTable.Reset();
+            explorerTable.Reset();
+            adventureTable.Reset();
+
+            foreach (KeyValuePair<String, int> kvp in order.RegroupedBikesDict)
+            {
+                string s = kvp.Key;
+                string[] subs = s.Split(',');
+
+                if (cn.State == ConnectionState.Closed) { cn.Open(); };
+
+                MySqlCommand command = new MySqlCommand(String.Format("SELECT * FROM {0}Stock", subs[0]), cn);
+                MySqlDataReader myReader;
+                myReader = command.ExecuteReader();
+                DataTable dataTable = new DataTable();
+                dataTable.Load(myReader);
+
+                //Make it more generic later
+                foreach (int value in Enumerable.Range(1, kvp.Value))
+                {
+                    if (subs[0] == "City")
+                    {
+                        if (cityTable.Rows.Count == 0)
+                        {
+                            cityTable = dataTable.Copy();
+                            bikesMissing = tables(cityTable, subs);
+                        }
+                        else
+                        {
+                            bikesMissing += tables(cityTable, subs);
+                        }
+                    }
+                    else if (subs[0] == "Explorer")
+                    {
+                        if (explorerTable.Rows.Count == 0)
+                        {
+                            explorerTable = dataTable.Copy();
+                            bikesMissing = tables(explorerTable, subs);
+                        }
+                        else
+                        {
+                            bikesMissing += tables(explorerTable, subs);
+                        }
+                        
+                    }
+                    else if (subs[0] == "Adventure")
+                    {
+                        if (adventureTable.Rows.Count == 0)
+                        {
+                            adventureTable = dataTable.Copy();
+                            bikesMissing = tables(adventureTable, subs);
+                        }
+                        else
+                        {
+                            bikesMissing += tables(adventureTable, subs);
+                        }
+
+                    }
+                }
+            }
+            return bikesMissing;
+        }
+
+        private void updateDatabaseTables()
+        {
+            if (cn.State == ConnectionState.Closed) { cn.Open(); };
+
+            string eQuery = "Select * from ExplorerStock";
+            MySqlDataAdapter explorer = new MySqlDataAdapter(eQuery, cn);
+            MySqlCommandBuilder ecmb = new MySqlCommandBuilder(explorer);
+            explorer.Update(explorerTable);
+
+            string aQuery = "Select * from AdventureStock";
+            MySqlDataAdapter adventure = new MySqlDataAdapter(aQuery, cn);
+            MySqlCommandBuilder acmb = new MySqlCommandBuilder(adventure);
+            adventure.Update(adventureTable);
+
+            string cQuery = "Select * from CityStock";
+            MySqlDataAdapter city = new MySqlDataAdapter(cQuery, cn);
+            MySqlCommandBuilder ccmb = new MySqlCommandBuilder(city);
+            city.Update(cityTable);
+
+            string sQuery = "Select * from Stock";
+            MySqlDataAdapter stock = new MySqlDataAdapter(sQuery, cn);
+            MySqlCommandBuilder scmb = new MySqlCommandBuilder(stock);
+            stock.Update(stockTable);
+
+            string pQuery = "Select * from PartsToOrder";
+            MySqlDataAdapter parts = new MySqlDataAdapter(pQuery, cn);
+            MySqlCommandBuilder pcmb = new MySqlCommandBuilder(parts);
+            parts.Update(partsToOrderTable);
+
+        }
+        private int delayOrder(Order order)
+        {
+            int maxGeneralBikes = bikesAvailable();
+            int missingCustomBikes = customBikes();
+
+            int delay = 3; //3 days minimum
+
+            // Return more days if the not enough stock
+
+            // Verify if enough general stock
+            if (order.Bikes_list.Count <= maxGeneralBikes)
+            {
+                if(missingCustomBikes == 0)
+                {
+                    Console.WriteLine("All parts available");
+                }
+                else
+                {
+                    // Buy custom stock
+                    delay += missingCustomBikes;
+                    Console.WriteLine("Custom parts low");
+                }
+                
+                
+            }
+            else
+            {
+                Console.WriteLine("Low general stock");
+                // Buy general stock
+                delay += order.Bikes_list.Count - maxGeneralBikes;
+                
+                if (missingCustomBikes == 0)
+                {
+                    Console.WriteLine("Custom parts available only");
+                }
+                else
+                {
+                    // Buy custom stock
+                    delay += missingCustomBikes;
+                    Console.WriteLine("All parts low");
+                }
+                
+            }
+            return delay;
         }
 
         // pour vider le panier et recommencer une commande 
         private void resetBtn_Click(object sender, EventArgs e)
         {
-            order.Bikes.Clear();
+            order.reset();
             totalPriceTxt.Text = "";
             recapTxt.Text = "";
         }
@@ -204,39 +447,16 @@ namespace Bovelo
         // pour confirmer une commande 
         private void sendOrderBtn_Click(object sender, EventArgs e)
         {
-           
-            DateTime dt = DateTime.Now;
-            dt.AddDays(3);                                      //We add 3 days of delay to the order in the best case.
+            
             if (cn.State == ConnectionState.Closed) { cn.Open(); };
-            if (order.Bikes.Count != 0)
+            if (order.Bikes.Count != 0 && nameBox.Text.Length != 0 && phoneBox.Text.Length != 0 && adressBox.Text.Length != 0)
             {
-                Customer customer = new Customer(nameBox.Text, phoneBox.Text, adressBox.Text);
-                //Customer customer = new Customer("Yann","07","Nick");
-                string cust_phone = customer.Phone;
-                string cust_id = "0";
-                MySqlCommand command = new MySqlCommand(String.Format("SELECT * FROM Customer WHERE Phone = {0}",cust_phone), cn);
-                DataTable data = new DataTable();
-                data.Load(command.ExecuteReader());
-                if (data.Rows.Count != 0)
-                {
-                    foreach(DataRow row in data.Rows)
-                    {
-                        cust_id = (row["idCustomer"]).ToString();
-                    }
-
-                }
-                else
-                {
-                    MySqlCommand cmd0 = new MySqlCommand("INSERT INTO Customer(Name,Phone,Adress) VALUES (@name,@phone,@adress)", cn);
-                    cmd0.Parameters.AddWithValue("@name", customer.Name);
-                    cmd0.Parameters.AddWithValue("@phone", customer.Phone);
-                    cmd0.Parameters.AddWithValue("@adress", customer.Adress);
-                    cmd0.ExecuteNonQuery();
-                    cust_id = cmd0.LastInsertedId.ToString();
-                }
-
+                messagefinal.Text = "Sending order ...";
+                customerTable();
+                //We associate a customer for our order.
                 order.SetCustomer(customer);
-                order.Add_Agent(agent);                         //We associate an agent for our order.
+                //We associate an agent for our order.
+                order.Add_Agent(agent);                        
                 foreach (Bike bike in order.Bikes_list)
                 {
                     MySqlCommand cmd = new MySqlCommand("INSERT INTO Bike(Color,Type,Size,Assembler_idAssembler,Price) VALUES (@color,@type,@size,@id_assembler,@price)", cn);
@@ -246,31 +466,70 @@ namespace Bovelo
                     cmd.Parameters.AddWithValue("@price", bike.Type.Price);
                     cmd.Parameters.AddWithValue("@id_assembler", 1);
                     cmd.ExecuteNonQuery();
+                    
                 }
-                //MySqlCommand cmd2 = new MySqlCommand("INSERT INTO Order(Price,BikesQuantity,Delay,Customer_idCustomer,Agent_idAgent) VALUES (@total_price,@quantity,@delay,@id_customer,@id_agent)", cn);
-                //cmd2.Parameters.AddWithValue("@total_price", Int32.Parse(totalPriceTxt.Text));
-                //cmd2.Parameters.AddWithValue("@quantity", (order.Bikes_list).Count);
-                //cmd2.Parameters.AddWithValue("@delay", 1);
-                //cmd2.Parameters.AddWithValue("@id_customer", cust_id);
-                //cmd2.Parameters.AddWithValue("@id_agent", agent.Id);
-                //cmd2.ExecuteNonQuery();
-                order.Bikes.Clear();
+
+                // Update the tables
+                updateDatabaseTables();
+                //Send order to database
+                orderDatabase(Int32.Parse(totalPriceTxt.Text), order.Bikes_list.Count, delay, customer.Id, agent.Id);
+                // Update agent table
+                MySqlCommand cmdAgent = new MySqlCommand(String.Format("UPDATE Agent SET OrdersDone = OrdersDone+1 WHERE idAgent = {0}", agent.Id), cn);
+                cmdAgent.ExecuteReader();
+                cn.Close();
+                order.reset();
                 totalPriceTxt.Text = "";
                 recapTxt.Text = "";
+                messagefinal.Text = "Thank you for your order :)";
+                delaytxt.Text = "";
+            }
+            else if (order.Bikes.Count == 0)
+            {
+                messagefinal.Text = "Please choose articles first :)";
             }
             else
             {
-                Console.WriteLine("Please choose articles first :)");
+                messagefinal.Text = "Complete the cases";
             }
-
-            // doit retirer la commande de la bdd
         }
 
+        private void customerTable()
+        {
+            string cust_id = "0";
+            MySqlCommand command = new MySqlCommand(String.Format("SELECT * FROM Customer WHERE Phone = {0}", phoneBox.Text), cn);
+            DataTable data = new DataTable();
+            data.Load(command.ExecuteReader());
+            if (data.Rows.Count != 0)
+            {
+                foreach (DataRow row in data.Rows)
+                {
+                    string name = row.Field<String>("Name");
+                    string phone = row.Field<String>("Phone");
+                    string adress = row.Field<String>("Adress");
+
+                    cust_id = (row["idCustomer"]).ToString();
+                    Customer tempCustomer = new Customer(name, phone, adress);
+                    customer = tempCustomer;
+                }
+
+            }
+            else
+            {
+                Customer tempCustomer = new Customer(nameBox.Text, phoneBox.Text, adressBox.Text);
+                customer = tempCustomer;
+                MySqlCommand cmd0 = new MySqlCommand("INSERT INTO Customer(Name,Phone,Adress) VALUES (@name,@phone,@adress)", cn);
+                cmd0.Parameters.AddWithValue("@name", customer.Name);
+                cmd0.Parameters.AddWithValue("@phone", customer.Phone);
+                cmd0.Parameters.AddWithValue("@adress", customer.Adress);
+                cmd0.ExecuteNonQuery();
+                cust_id = cmd0.LastInsertedId.ToString();
+            }
+
+        }
         private void catalogBtn_Click(object sender, EventArgs e)
         {
             panelCatalog.Visible = true;
             panelOrder.Visible = false;
-            panelDelay.Visible = false;
             panelRecap.Visible = false;
 
         }
@@ -306,7 +565,6 @@ namespace Bovelo
 
                 //image du velo
                 PictureBox b = new PictureBox();
-                Console.WriteLine(item.Value);
                 b.Image = new Bitmap(item.Value);
                 b.SizeMode = PictureBoxSizeMode.Zoom;
                 b.Size = new System.Drawing.Size(375, 225);
@@ -325,14 +583,6 @@ namespace Bovelo
             }
         }
 
-
-
-        private void exitBtn_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
-
-
         // fonction qui est executee lorsqu'on clique sur une image du catalogue
         private void btn_Click(object sender, EventArgs e)
         {
@@ -343,17 +593,95 @@ namespace Bovelo
             colorBox.SelectedItem = elems[1];
         }
 
-
-       
-
-
         private void panelRecap_Paint(object sender, PaintEventArgs e)
         {
 
         }
-       private void confirmBtn_Click(object sender, EventArgs e)
-       {
-           panel1.Visible = true;
-       }
+        private void confirmBtn_Click(object sender, EventArgs e)
+        {
+            if(order.Bikes_list.Count != 0)
+            {
+                DateTime dt = DateTime.Now;
+                //We estimate the time
+                delay = delayOrder(order);
+                string s = dt.AddDays(delay).ToString();
+                string[] subs = s.Split(' ');
+                delaytxt.Text = String.Format("Delivery on {0}", subs[0]);
+                panel1.Visible = true;
+            }
+            
+        }
+
+        private void connect_Click(object sender, EventArgs e)
+        {
+            if (user.Text.Length != 0 && password.Text.Length != 0)
+            {
+                if (cn.State == ConnectionState.Closed) { cn.Open(); };
+                MySqlCommand command = new MySqlCommand("SELECT * FROM Agent", cn);
+                DataTable data = new DataTable();
+                data.Load(command.ExecuteReader());
+                if (data.Rows.Count != 0)
+                {
+                    foreach (DataRow row in data.Rows)
+                    {
+                        string userDB = row.Field<string>("user");
+                        string passwordDB = row.Field<string>("password");
+                        string nameDB = row.Field<string>("Name");
+                        string phoneDB = row.Field<string>("Phone");
+                        int idDB = row.Field<int>("idAgent");
+
+                        if (userDB == user.Text && passwordDB == password.Text) 
+                        {
+                            Agent tempAgent = new Agent(nameDB, idDB, phoneDB, "idk");
+                            agent = tempAgent;
+                            Console.WriteLine("Connected");
+                            panel2.Visible = false;
+                        }
+                        else if (userDB == user.Text && passwordDB != password.Text)
+                        {
+                            connectTxt.Text = "Wrong password";
+                        }
+                        else
+                        {
+                            connectTxt.Text = "Wrong user";
+                        }
+                    }
+                }
+                else
+                {
+                    connectTxt.Text = "No agent in the database";
+                }
+            }
+            else
+            {
+                connectTxt.Text = "Complete all the cases";
+            }
+        }
+        private void exitBtn_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void emptyCheckout_Click(object sender, EventArgs e)
+        {
+            nameBox.Text = "";
+            phoneBox.Text = "";
+            adressBox.Text = "";
+            messagefinal.Text = "";
+        }
+
+        private void phoneBox_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if(e.Handled =!char.IsDigit(e.KeyChar))
+            {
+                errorProvider1.SetError(errorPhone, "Numeric Valuer Only");
+                errorPhone.Text = "Numeric Valuer Only";
+            }
+            else
+            {
+                errorProvider1.SetError(errorPhone, "");
+                errorPhone.Text = "";
+            }
+        }
     }
 }

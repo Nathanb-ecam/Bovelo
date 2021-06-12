@@ -9,13 +9,20 @@ namespace Bovelo
     class Customer : Person
     {
         private List<Order> order_list = new List<Order>();
+        private static int id = 0;
 
         public Customer(string name, string phone, string adress) : base(name,phone,adress)
         {
             this.name = name;
             this.phone = phone;
             this.adress = adress;
+            id++;
 
+        }
+        public int Id
+        {
+            get { return id; }
+            
         }
 
         public void AddOrder(Order order)
