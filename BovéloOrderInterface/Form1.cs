@@ -49,6 +49,7 @@ namespace Bovelo
             panelOrder.Visible = false;
             panel1.Visible = false;
 
+
         }
         private void label1_Click(object sender, EventArgs e)
         {
@@ -107,11 +108,17 @@ namespace Bovelo
         // les 3 fonctions qui suivent servent juste a determiner la page active
         private void recapBtn_Click(object sender, EventArgs e)
         {
+            recapTxt.Clear();
+            recapTxt.Columns.Add("Model", 100, HorizontalAlignment.Center);
+            recapTxt.Columns.Add("Color", 100, HorizontalAlignment.Center);
+            recapTxt.Columns.Add("Size", 100, HorizontalAlignment.Center);
+            recapTxt.Columns.Add("Quantity", 100, HorizontalAlignment.Center);
             panelRecap.Visible = true;
             panelOrder.Visible = false;
             panelCatalog.Visible = false;
             panel1.Visible = false;
             messagefinal.Text = "";
+            generate_Recap();
         }
         private void orderPageBtn_Click(object sender, EventArgs e)
         {
@@ -149,18 +156,17 @@ namespace Bovelo
             {
                 orderBikeBuilder(t, s, c, quantity);
             }
-            generate_Recap();
-
         }
 
         private void generate_Recap()
         {
-            string recap = "";
+          
             int totalPrice = 0;
-
             // on parcourir le dictionnaire trier pour afficher le recap
             foreach (KeyValuePair<string, int> bike in order.RegroupedBikesDict)
             {
+                Console.WriteLine(bike);
+
                 if (bike.Key.Substring(0, 3) == "Cit")
                 {
                     totalPrice += (bike.Value * 100);
@@ -175,12 +181,13 @@ namespace Bovelo
                 }
                 if (bike.Value != 0)
                 {
-                    recap += String.Format("Vélo : {0}, quantité : {1} piece(s) \n", bike.Key, bike.Value);
-                }
+                    string[] subs = bike.Key.Split(new char[] { ',' });
+                    string[] row = { subs[0], subs[1], subs[2], bike.Value.ToString() };
+                    var listViewItem = new ListViewItem(row);
+                    recapTxt.Items.Add(listViewItem);
+                }                            
             }
             totalPriceTxt.Text = totalPrice.ToString();
-            recapTxt.Text = recap;
-            
         }
 
         private void resetAllTables()
@@ -207,7 +214,7 @@ namespace Bovelo
             dataTableStock.Load(myReaderStock);
             stockTable = dataTableStock.Copy();
 
-            MySqlCommand commandParts = new MySqlCommand("SELECT * FROM PartsToOrder ", cn);
+            MySqlCommand commandParts = new MySqlCommand("SELECT * FROM PartsToOrderStock ", cn);
             MySqlDataReader myReaderParts;
             myReaderParts = commandParts.ExecuteReader();
             DataTable dataTableParts = new DataTable();
@@ -441,7 +448,7 @@ namespace Bovelo
         {
             order.reset();
             totalPriceTxt.Text = "";
-            recapTxt.Text = "";
+            recapTxt.Clear();
         }
 
         // pour confirmer une commande 
@@ -479,7 +486,7 @@ namespace Bovelo
                 cn.Close();
                 order.reset();
                 totalPriceTxt.Text = "";
-                recapTxt.Text = "";
+                recapTxt.Clear();
                 messagefinal.Text = "Thank you for your order :)";
                 delaytxt.Text = "";
             }

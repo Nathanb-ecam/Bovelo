@@ -114,3 +114,4 @@ C:\Users\khale\Source\Repos\Bovelo\Iteration2\obj\Debug\BOVELO_PlanningList.cspr
 C:\Users\khale\Source\Repos\Bovelo\Iteration2\obj\Debug\BOVELO_PlanningList.csproj.CopyComplete
 C:\Users\khale\Source\Repos\Bovelo\Iteration2\obj\Debug\BOVELO_PlanningList.exe
 C:\Users\khale\Source\Repos\Bovelo\Iteration2\obj\Debug\BOVELO_PlanningList.pdb
+C:\Users\nathanbuchin\Source\Repos\Bovelo\Iteration2\obj\Debug\BOVELO_PlanningList.Connexion.resources
