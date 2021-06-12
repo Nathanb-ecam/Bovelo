@@ -207,7 +207,7 @@ namespace Bovelo
             dataTableStock.Load(myReaderStock);
             stockTable = dataTableStock.Copy();
 
-            MySqlCommand commandParts = new MySqlCommand("SELECT * FROM PartsToOrder ", cn);
+            MySqlCommand commandParts = new MySqlCommand("SELECT * FROM PartsToOrderStock ", cn);
             MySqlDataReader myReaderParts;
             myReaderParts = commandParts.ExecuteReader();
             DataTable dataTableParts = new DataTable();
@@ -384,7 +384,7 @@ namespace Bovelo
             MySqlCommandBuilder scmb = new MySqlCommandBuilder(stock);
             stock.Update(stockTable);
 
-            string pQuery = "Select * from PartsToOrder";
+            string pQuery = "Select * from PartsToOrderStock";
             MySqlDataAdapter parts = new MySqlDataAdapter(pQuery, cn);
             MySqlCommandBuilder pcmb = new MySqlCommandBuilder(parts);
             parts.Update(partsToOrderTable);

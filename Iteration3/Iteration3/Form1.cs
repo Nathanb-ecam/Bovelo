@@ -14,63 +14,167 @@ namespace Iteration3
     public partial class Form1 : Form
     {
         MySqlConnection cn = new MySqlConnection("server=193.191.240.67;user=nick;database=mydb;port=63307;password=1234");
+        DataTable StockTable = new DataTable("");
+        DataTable CityTable = new DataTable("City");
+        DataTable ExplorerTable = new DataTable("Explorer");
+        DataTable AdventureTable = new DataTable("Adventure");
+        DataTable PartsToOrderTable = new DataTable("PartsToOrder");
+
+        List<DataTable> listDataTables= new List<DataTable>();
+        
         public Form1()
         {
             InitializeComponent();
             if (cn.State == ConnectionState.Closed) { cn.Open(); };
-            Stock();
+            Stock(PartsToOrderTable);
         }
 
-
-        private void Stock()
+        private void connect_Click(object sender, EventArgs e)
         {
-            MySqlCommand command = new MySqlCommand(String.Format("SELECT * FROM TestStock"), cn);
+            if (user.Text.Length != 0 && password.Text.Length != 0)
+            {
+                if (cn.State == ConnectionState.Closed) { cn.Open(); };
+                MySqlCommand command = new MySqlCommand("SELECT * FROM Manager", cn);
+                DataTable data = new DataTable();
+                data.Load(command.ExecuteReader());
+                if (data.Rows.Count != 0)
+                {
+                    foreach (DataRow row in data.Rows)
+                    {
+                        string userDB = row.Field<string>("user");
+                        string passwordDB = row.Field<string>("password");
+
+                        if (userDB == user.Text && passwordDB == password.Text)
+                        {
+                            Console.WriteLine("Connected");
+                            connectionPanel.Visible = false;
+                        }
+                        else if (userDB == user.Text && passwordDB != password.Text)
+                        {
+                            connectTxt.Text = "Wrong password";
+                        }
+                        else
+                        {
+                            connectTxt.Text = "Wrong user";
+                        }
+                    }
+                }
+                else
+                {
+                    connectTxt.Text = "No agent in the database";
+                }
+            }
+            else
+            {
+                connectTxt.Text = "Complete all the cases";
+            }
+        }
+        private DataTable Stock(DataTable table)
+        {
+            MySqlCommand command = new MySqlCommand(String.Format("SELECT * FROM {0}Stock", table.TableName), cn);
             MySqlDataReader reader = command.ExecuteReader();
             DataTable dt = new DataTable();
             dt.Load(reader);
-            // here we want to filter the cases and propose quantity values to help the manager by adding a new colum 'suggestion'
-            DataColumn c = new DataColumn();
-            c.DataType = typeof(Int32);
-            c.ColumnName = "Suggestion";
-            dt.Columns.Add(c);
-
-            foreach (DataRow row in dt.Rows)
-            {
-                // ... A CHANGER ...
-                int quantity = Int32.Parse(row["quantity"].ToString());
-                int min = Int32.Parse(row["min"].ToString());
-                if (quantity < min)
-                {
-                    row["Suggestion"] = (min-quantity).ToString();
-                    
-                }            
-            }
-
-            // we display the grid with the values
             stockGrid.DataSource = dt;
+            return dt;
         }
+        private void copyTables(List<DataTable> listDt )
+        {
+            listDt.Clear();
 
-        private void refillBtn_Click(object sender, EventArgs e)
-        {      
-            // this part updates Stock table with the values entered
-            DataTable dt = (DataTable)stockGrid.DataSource;
-            foreach (DataRow row in dt.Rows)
+            listDt.Add(StockTable);
+            listDt.Add(CityTable);
+            listDt.Add(ExplorerTable);
+            listDt.Add(AdventureTable);
+            listDt.Add(PartsToOrderTable);
 
+            StockTable = Stock(StockTable);
+            CityTable = Stock(CityTable);
+            ExplorerTable = Stock(ExplorerTable);
+            AdventureTable = Stock(AdventureTable);
+            PartsToOrderTable = Stock(PartsToOrderTable);
+        }
+        private void refillMinimum()
+        {
+            copyTables(listDataTables);
+            foreach (DataRow row in PartsToOrderTable.Rows)
             {
-                string name = row["name"].ToString();
-                int quantity = Int32.Parse(row["quantity"].ToString());
-                string type = row["Type"].ToString();
-                int size = Int32.Parse(row["size"].ToString());
-                string color = row["Color"].ToString();
-                MySqlCommand cmd = new MySqlCommand(String.Format("Update {0}TestStock SET name = @name, quantity=@quantity where name=@name and color=@color and size=@size and type=@type",type), cn);
-                cmd.Parameters.AddWithValue("@name", name);
-                cmd.Parameters.AddWithValue("@quantity", quantity);
-                cmd.Parameters.AddWithValue("@type", type);
-                cmd.Parameters.AddWithValue("@size", size);
-                cmd.Parameters.AddWithValue("@color", color);
-                cmd.ExecuteNonQuery();
+                string name = row.Field<string>("name");
+                string type = row.Field<string>("Type");
+                string color = row.Field<string>("Color");
+                string size = row.Field<string>("Size");
 
+                foreach(DataTable table in listDataTables)
+                {
+                    if (type == table.TableName)
+                    {
+                        foreach (DataRow rowT in table.Rows)
+                        {
+                            //rowCity["quantity"] += row[]
+                            Console.WriteLine(rowT["quantity"]);
+                        }
+
+                    }
+                }
             }
+
         }
+        private void general_Click(object sender, EventArgs e)
+        {
+            Stock(StockTable);
+        }
+
+        private void city_Click(object sender, EventArgs e)
+        {
+            Stock(CityTable);
+        }
+
+        private void explorer_Click(object sender, EventArgs e)
+        {
+            Stock(ExplorerTable);
+        }
+
+        private void adventure_Click(object sender, EventArgs e)
+        {
+            Stock(AdventureTable);
+        }
+        private void refillMin_Click(object sender, EventArgs e)
+        {
+            refillMinimum();
+        }
+        private void refillAll_Click(object sender, EventArgs e)
+        {
+            decimal general = generalList.Value;
+            decimal city = cityList.Value;
+            decimal explorer = explorerList.Value;
+            decimal adventure  = adventureList.Value;
+
+            Console.WriteLine(general);
+        }
+        private void confirm_Click(object sender, EventArgs e)
+        {
+            MySqlCommand command = new MySqlCommand(String.Format("SELECT * FROM PartsToOrder"), cn);
+            MySqlDataReader reader = command.ExecuteReader();
+            DataTable dt = new DataTable();
+            dt.Load(reader);
+
+            if (dt.Rows.Count != 0)
+            {
+                foreach (DataRow row in dt.Rows)
+                {
+
+                }
+            }
+            else
+            {
+                Console.WriteLine("Already filled");
+            }
+
+            StockTable.Reset();
+            CityTable.Reset();
+            ExplorerTable.Reset();
+            AdventureTable.Reset();
+        }
+
     }
 }
