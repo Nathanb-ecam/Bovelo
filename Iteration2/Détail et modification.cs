@@ -15,6 +15,7 @@ namespace BOVELO_PlanningList
     public partial class Détail_et_modification : Form
     {
         string changement1;
+        bool Connecter;
         
         //Nos get/setter pour nos modif
         public string idBike { get { return textBox4.Text; } set { textBox4.Text = value; } } //j'ai mis en readonly, on modifie pas l'id d'une commande
@@ -104,6 +105,7 @@ namespace BOVELO_PlanningList
 
         private void locationToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            keepOpen();
             if (listView5.SelectedItems.Count > 0) //pas selectioner le vide
                                                    //pour afficher la localité des pieces selectioner
             {
@@ -128,6 +130,22 @@ namespace BOVELO_PlanningList
         {
             DateTime result = dateTimePicker1.Value;
             this.changement1 = result.ToString();
+     
+        }
+
+        public void keepOpen()
+        {
+            cn = new MySqlConnection("SERVER=193.191.240.67;user=nick;database=DataBase;port=63307;password=1234");
+            try
+            {
+                if (cn.State == ConnectionState.Closed) { cn.Open(); }
+                button1.Text = "Se déconnecter";
+                Connecter = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

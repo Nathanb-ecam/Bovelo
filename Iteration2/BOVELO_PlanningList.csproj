@@ -95,6 +95,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AdventureParts.cs" />
+    <Compile Include="CityParts.cs" />
+    <Compile Include="CommonParts.cs" />
     <Compile Include="AjoutCommande.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -113,6 +116,7 @@
     <Compile Include="Détail et modification.Designer.cs">
       <DependentUpon>Détail et modification.cs</DependentUpon>
     </Compile>
+    <Compile Include="ExplorerParts.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -121,10 +125,10 @@
     </Compile>
     <Compile Include="Horaire.cs" />
     <Compile Include="Monteur.cs" />
-    <Compile Include="Part.cs" />
     <Compile Include="Planning_Master.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SizeParts.cs" />
     <EmbeddedResource Include="AjoutCommande.resx">
       <DependentUpon>AjoutCommande.cs</DependentUpon>
     </EmbeddedResource>

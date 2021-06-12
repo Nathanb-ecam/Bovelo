@@ -67,7 +67,7 @@ namespace BOVELO_PlanningList
                             MySqlCommand cmd = new MySqlCommand("SELECT * FROM Users", cn);
                             using (MySqlDataReader Lire = cmd.ExecuteReader())
                             {
-                                if (Lire.Read())
+                                if(Lire.Read())
                                 {
                                     string identDB = Lire["userName"].ToString();
                                     string pwDB = Lire["Password"].ToString();
@@ -79,7 +79,7 @@ namespace BOVELO_PlanningList
                                     }
                                     else
                                     {
-                                        Console.WriteLine("Mauvaise identification, try again");
+                                        MessageBox.Show("Mauvaise identification, try again");
                                         rentrePas();
                                     }
                                 }
@@ -145,6 +145,7 @@ namespace BOVELO_PlanningList
 
         private void jaiFinisMaTacheToolStripMenuItem_Click(object sender, EventArgs e) //j'ai finis ma tache donc je la supprime de la bdd
         {
+            List<string> info = new List<string>();
             if (Connecter)
             {
                 if(listView1.SelectedItems.Count > 0) //je peux pas selectioner du vide
@@ -153,17 +154,178 @@ namespace BOVELO_PlanningList
 
                     string idBike = element.SubItems[0].Text;
 
-                    MySqlCommand cmd = new MySqlCommand("DELETE FROM Bike WHERE idBike = @idBike", cn);
-                    cmd.Parameters.AddWithValue("@idBike", idBike);
-                    cmd.ExecuteNonQuery();
+                    var command = new MySqlCommand("SELECT Type, Color, Size From Bike WHERE idBike = @idBike", cn);
+                    command.Parameters.AddWithValue("@idBike", idBike);
+                    //var reader = command.ExecuteReader();
+                    using (MySqlDataReader Lire = command.ExecuteReader())
+                    {
+                        while (Lire.Read())
+                        {
+                            string Type = Lire["Type"].ToString();
+                            string Color = Lire["Color"].ToString();
+                            string Size = Lire["Size"].ToString();
+                            //MessageBox.Show(Type + " " + Color + " " + Size);    
+                            info.Add(Type);
+                            info.Add(Color);
+                            info.Add(Size);
+                        }
+                    }
 
+                    command.CommandText = "DELETE FROM Bike WHERE idBike = @idBike";                    
+                    command.ExecuteNonQuery();
                     element.Remove();
                     MessageBox.Show("Supprimé");
+
+                    //Supprimer mon stock  
+                    Stock(info[0], info[1], info[2]);
+
+                    
                 }
             }
+        }       
+
+        public void Stock(string Type, string Color, string Size)
+        {
+            //C'est immonde mais je sais pas comment faire plus proprement
+
+            CommonParts a = new CommonParts();
+            List<string> composant1 = a.getList_Nbr1();
+            List<string> composant2 = a.getList_Nbr2();
+            List<string> composant4 = a.getList_Nbr4();
+
+            CityParts b = new CityParts();
+            List<string> composantCity1 = b.getList_Nbr1();
+            List<string> composantCity2 = b.getList_Nbr2();
+            List<string> composantCity1_SSCT = b.getList_Nbr1_SSCT();
+
+            ExplorerParts c = new ExplorerParts();
+            List<string> composantExplo1 = c.getList_Nbr1();
+            List<string> composantExplo2 = c.getList_Nbr2();
+            List<string> composantExplo1_SSCT = c.getList_Nbr1_SSCT();
+
+            AdventureParts d = new AdventureParts();
+            List<string> composantAdventure1 = d.getList_Nbr1();
+            List<string> composantAdventure2 = d.getList_Nbr2();
+
+            SizeParts e = new SizeParts();
+            List<string> composantSize1 = e.getList_Nbr1();
+            List<string> composantSize2 = e.getList_Nbr2();
+
+
+            //Common Parts
+            foreach (string i in composant1)
+            {
+                MySqlCommand command = new MySqlCommand("UPDATE Stock SET Quantity = Quantity - 1 WHERE Name = @Name", cn);                
+                command.Parameters.AddWithValue("@Name", i);                
+                command.ExecuteNonQuery();                
+            }
+
+            foreach (string i in composant2)
+            {
+                MySqlCommand command = new MySqlCommand("UPDATE Stock SET Quantity = Quantity - 2 WHERE Name = @Name", cn);
+                command.Parameters.AddWithValue("@Name", i);
+                command.ExecuteNonQuery();
+            }
+
+            foreach (string i in composant4)
+            {
+                MySqlCommand command = new MySqlCommand("UPDATE Stock SET Quantity = Quantity - 4 WHERE Name = @Name", cn);
+                command.Parameters.AddWithValue("@Name", i);
+                command.ExecuteNonQuery();
+            }
+
+            //City Parts
+            if ("city" == Type.ToLower())
+            {
+                foreach(string i in composantCity1)
+                {
+                    MySqlCommand command = new MySqlCommand("UPDATE Stock SET Quantity = Quantity - 1 WHERE (Name=@Name AND Size=@Size AND Color=@Color)", cn);
+                    command.Parameters.AddWithValue("@Name", i);
+                    command.Parameters.AddWithValue("@Size", Size);
+                    command.Parameters.AddWithValue("@Color", Color);
+                    command.ExecuteNonQuery();
+                }
+                foreach (string i in composantCity2)
+                {
+                    MySqlCommand command = new MySqlCommand("UPDATE Stock SET Quantity = Quantity - 2 WHERE (Name=@Name AND Size=@Size)", cn);
+                    command.Parameters.AddWithValue("@Name", i);
+                    command.Parameters.AddWithValue("@Size", Size);                    
+                    command.ExecuteNonQuery();
+                }
+                foreach (string i in composantCity1_SSCT)
+                {
+                    MySqlCommand command = new MySqlCommand("UPDATE Stock SET Quantity = Quantity - 1 WHERE Name=@Name", cn);
+                    command.Parameters.AddWithValue("@Name", i);                    
+                    command.ExecuteNonQuery();
+                }
+            }
+
+            //Explorer Parts
+            if ("explorer" == Type.ToLower())
+            {
+                foreach (string i in composantExplo1)
+                {
+                    MySqlCommand command = new MySqlCommand("UPDATE Stock SET Quantity = Quantity - 1 WHERE (Name=@Name AND Size=@Size AND Color=@Color)", cn);
+                    command.Parameters.AddWithValue("@Name", i);
+                    command.Parameters.AddWithValue("@Size", Size);
+                    command.Parameters.AddWithValue("@Color", Color);
+                    command.ExecuteNonQuery();
+                }
+                foreach (string i in composantExplo2)
+                {
+                    MySqlCommand command = new MySqlCommand("UPDATE Stock SET Quantity = Quantity - 2 WHERE (Name=@Name AND Size=@Size)", cn);
+                    command.Parameters.AddWithValue("@Name", i);
+                    command.Parameters.AddWithValue("@Size", Size);
+                    command.ExecuteNonQuery();
+                }
+                foreach (string i in composantExplo1_SSCT)
+                {
+                    MySqlCommand command = new MySqlCommand("UPDATE Stock SET Quantity = Quantity - 1 WHERE Name=@Name", cn);
+                    command.Parameters.AddWithValue("@Name", i);
+                    command.ExecuteNonQuery();
+                }
+            }
+
+            //Adventure Parts
+            if ("adventure" == Type.ToLower())
+            {
+                foreach (string i in composantAdventure1)
+                {
+                    MySqlCommand command = new MySqlCommand("UPDATE Stock SET Quantity = Quantity - 1 WHERE (Name=@Name AND Size=@Size AND Color=@Color)", cn);
+                    command.Parameters.AddWithValue("@Name", i);
+                    command.Parameters.AddWithValue("@Size", Size);
+                    command.Parameters.AddWithValue("@Color", Color);
+                    command.ExecuteNonQuery();
+                }
+                foreach (string i in composantAdventure2)
+                {
+                    MySqlCommand command = new MySqlCommand("UPDATE Stock SET Quantity = Quantity - 2 WHERE (Name=@Name AND Size=@Size)", cn);
+                    command.Parameters.AddWithValue("@Name", i);
+                    command.Parameters.AddWithValue("@Size", Size);
+                    command.ExecuteNonQuery();
+                }                
+            }
+
+            //Size Different common Parts
+            foreach (string i in composantSize1)
+            {
+                MySqlCommand command = new MySqlCommand("UPDATE Stock SET Quantity = Quantity - 1 WHERE (Name=@Name AND Size=@Size)", cn);
+                command.Parameters.AddWithValue("@Name", i);
+                command.Parameters.AddWithValue("@Size", Size);
+                command.ExecuteNonQuery();
+            }
+
+            foreach (string i in composantSize2)
+            {
+                MySqlCommand command = new MySqlCommand("UPDATE Stock SET Quantity = Quantity - 2 WHERE (Name=@Name AND Size=@Size)", cn);
+                command.Parameters.AddWithValue("@Name", i);
+                command.Parameters.AddWithValue("@Size", Size);
+                command.ExecuteNonQuery();
+            }           
+
         }
         
-        private void myBananasAreRipeToolStripMenuItem_Click(object sender, EventArgs e)
+        private void myBananasAreRipeToolStripMenuItem_Click(object sender, EventArgs e) //modification de ma commande
         {
             if (listView1.SelectedItems.Count > 0) //je peux pas selectioner du vide
             {
