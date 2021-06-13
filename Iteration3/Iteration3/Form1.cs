@@ -82,15 +82,7 @@ namespace Iteration3
         }
         private void copyTables(List<DataTable> listDt )
         {
-            if (PartsToOrderTable.Rows.Count != 0)
-            {
-                stockGrid.DataSource = PartsToOrderTable;
-                info.Text = "Please make sure to order the minimal stock";
-            }
-            else
-            {
-                info.Text = "All necessary parts are available";
-            }
+            
             listDt.Clear();
             
             StockTable = StockRender(StockTable).Copy();
@@ -109,6 +101,16 @@ namespace Iteration3
             listDt.Add(ExplorerTable);
             listDt.Add(AdventureTable);
             listDt.Add(PartsToOrderTable);
+
+            if (PartsToOrderTable.Rows.Count != 0)
+            {
+                stockGrid.DataSource = PartsToOrderTable;
+                info.Text = "Please make sure to order the minimal stock";
+            }
+            else
+            {
+                info.Text = "All necessary parts are available";
+            }
         }
         private void refillMinimum()
         {
