@@ -91,7 +91,7 @@
             this.connectionPanel.Controls.Add(this.label1);
             this.connectionPanel.Location = new System.Drawing.Point(0, 0);
             this.connectionPanel.Name = "connectionPanel";
-            this.connectionPanel.Size = new System.Drawing.Size(800, 457);
+            this.connectionPanel.Size = new System.Drawing.Size(801, 451);
             this.connectionPanel.TabIndex = 3;
             // 
             // connectTxt

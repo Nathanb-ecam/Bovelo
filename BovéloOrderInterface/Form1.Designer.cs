@@ -53,7 +53,6 @@
             this.label7 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.errorPhone = new System.Windows.Forms.Label();
-            this.emptyCheckout = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.connectTxt = new System.Windows.Forms.Label();
             this.connect = new System.Windows.Forms.Button();
@@ -61,6 +60,7 @@
             this.label8 = new System.Windows.Forms.Label();
             this.password = new System.Windows.Forms.TextBox();
             this.user = new System.Windows.Forms.TextBox();
+            this.emptyCheckout = new System.Windows.Forms.Button();
             this.messagefinal = new System.Windows.Forms.Label();
             this.delaytxt = new System.Windows.Forms.Label();
             this.label14 = new System.Windows.Forms.Label();
@@ -267,7 +267,7 @@
             this.recapTxt.HideSelection = false;
             this.recapTxt.Location = new System.Drawing.Point(341, 154);
             this.recapTxt.Name = "recapTxt";
-            this.recapTxt.Size = new System.Drawing.Size(333, 222);
+            this.recapTxt.Size = new System.Drawing.Size(444, 262);
             this.recapTxt.TabIndex = 38;
             this.recapTxt.UseCompatibleStateImageBehavior = false;
             this.recapTxt.View = System.Windows.Forms.View.Details;
@@ -342,8 +342,8 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.errorPhone);
             this.panel1.Controls.Add(this.panel2);
+            this.panel1.Controls.Add(this.errorPhone);
             this.panel1.Controls.Add(this.emptyCheckout);
             this.panel1.Controls.Add(this.messagefinal);
             this.panel1.Controls.Add(this.delaytxt);
@@ -367,16 +367,6 @@
             this.errorPhone.Name = "errorPhone";
             this.errorPhone.Size = new System.Drawing.Size(0, 13);
             this.errorPhone.TabIndex = 11;
-            // 
-            // emptyCheckout
-            // 
-            this.emptyCheckout.Location = new System.Drawing.Point(52, 525);
-            this.emptyCheckout.Name = "emptyCheckout";
-            this.emptyCheckout.Size = new System.Drawing.Size(153, 56);
-            this.emptyCheckout.TabIndex = 10;
-            this.emptyCheckout.Text = "Empty";
-            this.emptyCheckout.UseVisualStyleBackColor = true;
-            this.emptyCheckout.Click += new System.EventHandler(this.emptyCheckout_Click);
             // 
             // panel2
             // 
@@ -444,6 +434,16 @@
             this.user.Name = "user";
             this.user.Size = new System.Drawing.Size(233, 20);
             this.user.TabIndex = 0;
+            // 
+            // emptyCheckout
+            // 
+            this.emptyCheckout.Location = new System.Drawing.Point(52, 525);
+            this.emptyCheckout.Name = "emptyCheckout";
+            this.emptyCheckout.Size = new System.Drawing.Size(153, 56);
+            this.emptyCheckout.TabIndex = 10;
+            this.emptyCheckout.Text = "Empty";
+            this.emptyCheckout.UseVisualStyleBackColor = true;
+            this.emptyCheckout.Click += new System.EventHandler(this.emptyCheckout_Click);
             // 
             // messagefinal
             // 

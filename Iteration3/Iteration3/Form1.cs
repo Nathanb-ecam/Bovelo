@@ -24,19 +24,14 @@ namespace Iteration3
         {
             InitializeComponent();
             if (cn.State == ConnectionState.Closed) { cn.Open(); };
-            copyTables(listDataTables);
-            if (PartsToOrderTable.Rows.Count != 0)
-            {
-                stockGrid.DataSource = PartsToOrderTable;
-                info.Text = "Please make sure to order the minimal stock";
-            }
-            else
-            {
-                info.Text = "All necessary parts are available";
-            }
+            copyTables(listDataTables);  
             user.Text = "thierry";
-        }
 
+            generalList.Visible = false;
+            cityList.Visible = false;
+            explorerList.Visible = false;
+            adventureList.Visible = false;
+        }
         private void connect_Click(object sender, EventArgs e)
         {
             if (user.Text.Length != 0 && password.Text.Length != 0)
@@ -87,6 +82,15 @@ namespace Iteration3
         }
         private void copyTables(List<DataTable> listDt )
         {
+            if (PartsToOrderTable.Rows.Count != 0)
+            {
+                stockGrid.DataSource = PartsToOrderTable;
+                info.Text = "Please make sure to order the minimal stock";
+            }
+            else
+            {
+                info.Text = "All necessary parts are available";
+            }
             listDt.Clear();
             
             StockTable = StockRender(StockTable).Copy();
@@ -109,7 +113,11 @@ namespace Iteration3
         private void refillMinimum()
         {
             copyTables(listDataTables);
-            if(PartsToOrderTable.Rows.Count != 0)
+            generalList.Visible = false;
+            cityList.Visible = false;
+            explorerList.Visible = false;
+            adventureList.Visible = false;
+            if (PartsToOrderTable.Rows.Count != 0)
             {
                 foreach (DataRow row in PartsToOrderTable.Rows)
                 {
@@ -167,6 +175,7 @@ namespace Iteration3
                     rowT["quantity"] = quantityT + 20;
                 }
             }
+
             generalList.Value = 20;
             cityList.Value = 20;
             explorerList.Value = 20;
@@ -184,16 +193,20 @@ namespace Iteration3
                     rowT["quantity"] = quantityT + 50;
                 }
             }
+
             generalList.Value = 50;
             cityList.Value = 50;
             explorerList.Value = 50;
             adventureList.Value = 50;
             info.Text = "You will order 50 parts of everyting";
         }
-
         private void refillAllStocks()
         {
             refillMinimum();
+            generalList.Visible = true;
+            cityList.Visible = true;
+            explorerList.Visible = true;
+            adventureList.Visible = true;
 
             Dictionary<string, decimal> dictValues = new Dictionary<string, decimal>();
 
@@ -242,13 +255,17 @@ namespace Iteration3
             }
             info.Text = "Order done";
         }
-
         private void reset_Click(object sender, EventArgs e)
         {
             foreach (DataTable table in listDataTables)
             {
                 table.Reset();
             }
+
+            generalList.Visible = false;
+            cityList.Visible = false;
+            explorerList.Visible = false;
+            adventureList.Visible = false;
 
             listDataTables.Clear();
             info.Text = "";
@@ -259,21 +276,34 @@ namespace Iteration3
         }
         private void general_Click(object sender, EventArgs e)
         {
+            if (StockTable.Rows.Count == 0)
+            {
+                copyTables(listDataTables);
+            }
             stockGrid.DataSource = StockTable;
         }
-
         private void city_Click(object sender, EventArgs e)
         {
+            if (CityTable.Rows.Count == 0)
+            {
+                copyTables(listDataTables);
+            }
             stockGrid.DataSource = CityTable;
         }
-
         private void explorer_Click(object sender, EventArgs e)
         {
+            if (ExplorerTable.Rows.Count == 0)
+            {
+                copyTables(listDataTables);
+            }
             stockGrid.DataSource = ExplorerTable;
         }
-
         private void adventure_Click(object sender, EventArgs e)
         {
+            if (AdventureTable.Rows.Count == 0)
+            {
+                copyTables(listDataTables);
+            }
             stockGrid.DataSource = AdventureTable;
         }
         private void refillMin_Click(object sender, EventArgs e)
@@ -281,36 +311,35 @@ namespace Iteration3
             refillMinimum();
             stockGrid.DataSource = PartsToOrderTable;
         }
-
         private void refillAll_Click(object sender, EventArgs e)
         {
             refillAllStocks();
             stockGrid.DataSource = StockTable;
         }
-
         private void mediumRefill_Click(object sender, EventArgs e)
         {
             refillMedium();
             stockGrid.DataSource = StockTable;
         }
-
         private void largeRefill_Click(object sender, EventArgs e)
         {
             refillLarge();
             stockGrid.DataSource = StockTable;
 
         }
-
         private void disconnect_Click(object sender, EventArgs e)
         {
             connectionPanel.Visible = true;
             password.Text = "";
 
         }
-
         private void refresh_Click(object sender, EventArgs e)
         {
             copyTables(listDataTables);
+            generalList.Visible = false;
+            cityList.Visible = false;
+            explorerList.Visible = false;
+            adventureList.Visible = false;
             stockGrid.DataSource = StockTable;
             generalList.Value = 0;
             cityList.Value = 0;

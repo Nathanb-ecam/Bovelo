@@ -21,7 +21,8 @@ namespace Bovelo
         Agent agent;
         Order order = new Order(new Dictionary<Bike, List<int>>());
         Customer customer;
-
+        bool chartConfirmed = false;
+        bool connected = false;
         int delay;
 
         DataTable stockTable = new DataTable();
@@ -44,10 +45,7 @@ namespace Bovelo
             colorBox.SelectedIndex = 0;
             quantityBox.SelectedText = "1";
             NewGen_Catalog();
-            panelCatalog.Visible = true;
-            panelRecap.Visible = false;
-            panelOrder.Visible = false;
-            panel1.Visible = false;
+            panel2.Visible = true;
             user.Text = "khaled";
 
 
@@ -109,35 +107,52 @@ namespace Bovelo
         // les 3 fonctions qui suivent servent juste a determiner la page active
         private void recapBtn_Click(object sender, EventArgs e)
         {
-            recapTxt.Clear();
-            recapTxt.Columns.Add("Model", 100, HorizontalAlignment.Center);
-            recapTxt.Columns.Add("Color", 100, HorizontalAlignment.Center);
-            recapTxt.Columns.Add("Size", 100, HorizontalAlignment.Center);
-            recapTxt.Columns.Add("Quantity", 100, HorizontalAlignment.Center);
-            panelRecap.Visible = true;
-            panelOrder.Visible = false;
-            panelCatalog.Visible = false;
-            panel1.Visible = false;
-            messagefinal.Text = "";
-            generate_Recap();
+            if (connected)
+            {
+                panel1.Visible = false;
+                panelRecap.Visible = true;
+                panelCatalog.Visible = false;
+                panelOrder.Visible = false;
+                if (order.Bikes.Count != 0)
+                {
+                    recapTxt.Clear();
+                    recapTxt.Columns.Add("Model", 100, HorizontalAlignment.Center);
+                    recapTxt.Columns.Add("Color", 100, HorizontalAlignment.Center);
+                    recapTxt.Columns.Add("Size", 100, HorizontalAlignment.Center);
+                    recapTxt.Columns.Add("Quantity", 100, HorizontalAlignment.Center);
+                    messagefinal.Text = "";
+                    generate_Recap();
+                }
+                messagefinal.Text = "";
+            }
+
         }
         private void orderPageBtn_Click(object sender, EventArgs e)
         {
-            panelOrder.Visible = true;
-            panelRecap.Visible = false;
-            panelCatalog.Visible = false;
-            panel1.Visible = false;
+            if (connected) 
+            { 
+                panelOrder.Visible = true;
+                panelRecap.Visible = false;
+                panelCatalog.Visible = false;
+                panel1.Visible = false;
+            }
             messagefinal.Text = "";
         }
 
         private void delayBtn_Click(object sender, EventArgs e)
         {
-            messagefinal.Text = "";
-            panel1.Visible = true;
-            panelRecap.Visible = true;
-            panelOrder.Visible = false;
-            panelCatalog.Visible = false;
-            messagefinal.Text = "";
+            if (connected) 
+            {
+                if (!chartConfirmed)
+                {
+                    messagefinal.Text = "Add bikes to the chart and confirm it first";
+                }
+                panel1.Visible = true;
+                panel2.Visible = false;
+                panelRecap.Visible = false;
+                panelCatalog.Visible = false;
+                panelOrder.Visible = false;
+            }
 
         }
 
@@ -498,6 +513,7 @@ namespace Bovelo
                 recapTxt.Clear();
                 messagefinal.Text = "Thank you for your order :)";
                 delaytxt.Text = "";
+                chartConfirmed = false;
             }
             else if (order.Bikes.Count == 0)
             {
@@ -544,10 +560,13 @@ namespace Bovelo
         }
         private void catalogBtn_Click(object sender, EventArgs e)
         {
-            panelCatalog.Visible = true;
-            panelOrder.Visible = false;
-            panelRecap.Visible = false;
-
+            if (connected)
+            {
+                panel1.Visible = false;
+                panelRecap.Visible = false;
+                panelCatalog.Visible = true;
+                panelOrder.Visible = false;
+            }
         }
 
         // fonction qui va générer le contenu de la page catalogue de manière dynamique
@@ -623,6 +642,7 @@ namespace Bovelo
                 string s = dt.AddDays(delay).ToString();
                 string[] subs = s.Split(' ');
                 delaytxt.Text = String.Format("Delivery on {0}", subs[0]);
+                chartConfirmed = true;
                 panel1.Visible = true;
             }
             
@@ -651,7 +671,14 @@ namespace Bovelo
                             Agent tempAgent = new Agent(nameDB, idDB, phoneDB, "idk");
                             agent = tempAgent;
                             Console.WriteLine("Connected");
-                            panel2.Visible = false;
+                            connected = true;
+                            if (connected)
+                            {
+                                panel1.Visible = false;
+                                panelRecap.Visible = false;
+                                panelCatalog.Visible = true;
+                                panelOrder.Visible = false;
+                            }
                         }
                         else if (userDB == user.Text && passwordDB != password.Text)
                         {
@@ -683,7 +710,6 @@ namespace Bovelo
             nameBox.Text = "";
             phoneBox.Text = "";
             adressBox.Text = "";
-            messagefinal.Text = "";
         }
 
         private void phoneBox_KeyPress(object sender, KeyPressEventArgs e)
