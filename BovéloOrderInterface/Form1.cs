@@ -159,6 +159,7 @@ namespace Bovelo
         // pour ajouter les elements selectiones dans commande
         private void addBtn_Click(object sender, EventArgs e)
         {
+            
             string model = modelBox.Text;
             string size = sizeBox.Text;
             string color = colorBox.Text;
@@ -258,7 +259,7 @@ namespace Bovelo
                     if (row.Field<int>("quantity") > row.Field<int>("min"))
                     {
                     
-                        row["quantity"] = row.Field<int>("quantity") - 1;
+                        row["quantity"] = row.Field<int>("quantity") - row.Field<int>("min");
 
                     }
                     else
@@ -298,7 +299,7 @@ namespace Bovelo
                 {
                     if ((color == subs[2] && size == subs[1]) || (size is null) || (color is null && size == subs[1]) || (color == "Black" && size == subs[1]))
                     {
-                        row["quantity"] = quantity - 1;
+                        row["quantity"] = quantity - min;
 
                     }
                 }
@@ -644,6 +645,10 @@ namespace Bovelo
                 delaytxt.Text = String.Format("Delivery on {0}", subs[0]);
                 chartConfirmed = true;
                 panel1.Visible = true;
+                panel2.Visible = false;
+                panelRecap.Visible = false;
+                panelCatalog.Visible = false;
+                panelOrder.Visible = false;
             }
             
         }

@@ -52,7 +52,6 @@
             this.label10 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.errorPhone = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.connectTxt = new System.Windows.Forms.Label();
             this.connect = new System.Windows.Forms.Button();
@@ -60,6 +59,7 @@
             this.label8 = new System.Windows.Forms.Label();
             this.password = new System.Windows.Forms.TextBox();
             this.user = new System.Windows.Forms.TextBox();
+            this.errorPhone = new System.Windows.Forms.Label();
             this.emptyCheckout = new System.Windows.Forms.Button();
             this.messagefinal = new System.Windows.Forms.Label();
             this.delaytxt = new System.Windows.Forms.Label();
@@ -360,14 +360,6 @@
             this.panel1.Size = new System.Drawing.Size(1214, 619);
             this.panel1.TabIndex = 36;
             // 
-            // errorPhone
-            // 
-            this.errorPhone.AutoSize = true;
-            this.errorPhone.Location = new System.Drawing.Point(621, 206);
-            this.errorPhone.Name = "errorPhone";
-            this.errorPhone.Size = new System.Drawing.Size(0, 13);
-            this.errorPhone.TabIndex = 11;
-            // 
             // panel2
             // 
             this.panel2.Controls.Add(this.connectTxt);
@@ -434,6 +426,14 @@
             this.user.Name = "user";
             this.user.Size = new System.Drawing.Size(233, 20);
             this.user.TabIndex = 0;
+            // 
+            // errorPhone
+            // 
+            this.errorPhone.AutoSize = true;
+            this.errorPhone.Location = new System.Drawing.Point(621, 206);
+            this.errorPhone.Name = "errorPhone";
+            this.errorPhone.Size = new System.Drawing.Size(0, 13);
+            this.errorPhone.TabIndex = 11;
             // 
             // emptyCheckout
             // 
