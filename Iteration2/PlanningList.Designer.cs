@@ -1,6 +1,6 @@
 ﻿namespace BOVELO_PlanningList
 {
-    partial class Form1
+    partial class PlanningList
     {
         /// <summary>
         /// Required designer variable.

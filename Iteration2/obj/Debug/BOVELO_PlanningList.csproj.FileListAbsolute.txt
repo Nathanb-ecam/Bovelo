@@ -65,9 +65,7 @@ C:\Users\shop\Desktop\Prjt_GL\Code\IT2_Clone\Iteration2\bin\Debug\System.Memory.
 C:\Users\shop\Desktop\Prjt_GL\Code\IT2_Clone\Iteration2\bin\Debug\System.Numerics.Vectors.xml
 C:\Users\shop\Desktop\Prjt_GL\Code\IT2_Clone\Iteration2\bin\Debug\System.Runtime.CompilerServices.Unsafe.xml
 C:\Users\shop\Desktop\Prjt_GL\Code\IT2_Clone\Iteration2\obj\Debug\BOVELO_PlanningList.csprojAssemblyReference.cache
-C:\Users\shop\Desktop\Prjt_GL\Code\IT2_Clone\Iteration2\obj\Debug\BOVELO_PlanningList.AjoutCommande.resources
 C:\Users\shop\Desktop\Prjt_GL\Code\IT2_Clone\Iteration2\obj\Debug\BOVELO_PlanningList.Détail_et_modification.resources
-C:\Users\shop\Desktop\Prjt_GL\Code\IT2_Clone\Iteration2\obj\Debug\BOVELO_PlanningList.Form1.resources
 C:\Users\shop\Desktop\Prjt_GL\Code\IT2_Clone\Iteration2\obj\Debug\BOVELO_PlanningList.Properties.Resources.resources
 C:\Users\shop\Desktop\Prjt_GL\Code\IT2_Clone\Iteration2\obj\Debug\BOVELO_PlanningList.csproj.GenerateResource.cache
 C:\Users\shop\Desktop\Prjt_GL\Code\IT2_Clone\Iteration2\obj\Debug\BOVELO_PlanningList.csproj.CoreCompileInputs.cache
@@ -114,3 +112,5 @@ C:\Users\khale\Source\Repos\Bovelo\Iteration2\obj\Debug\BOVELO_PlanningList.cspr
 C:\Users\khale\Source\Repos\Bovelo\Iteration2\obj\Debug\BOVELO_PlanningList.csproj.CopyComplete
 C:\Users\khale\Source\Repos\Bovelo\Iteration2\obj\Debug\BOVELO_PlanningList.exe
 C:\Users\khale\Source\Repos\Bovelo\Iteration2\obj\Debug\BOVELO_PlanningList.pdb
+C:\Users\shop\Desktop\Prjt_GL\Code\IT2_Clone\Iteration2\obj\Debug\BOVELO_PlanningList.AddCommand.resources
+C:\Users\shop\Desktop\Prjt_GL\Code\IT2_Clone\Iteration2\obj\Debug\BOVELO_PlanningList.PlanningList.resources

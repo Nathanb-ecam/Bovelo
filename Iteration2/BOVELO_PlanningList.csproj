@@ -98,11 +98,11 @@
     <Compile Include="AdventureParts.cs" />
     <Compile Include="CityParts.cs" />
     <Compile Include="CommonParts.cs" />
-    <Compile Include="AjoutCommande.cs">
+    <Compile Include="AddCommand.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="AjoutCommande.Designer.cs">
-      <DependentUpon>AjoutCommande.cs</DependentUpon>
+    <Compile Include="AddCommand.Designer.cs">
+      <DependentUpon>AddCommand.cs</DependentUpon>
     </Compile>
     <Compile Include="Connexion.cs">
       <SubType>Form</SubType>
@@ -110,36 +110,37 @@
     <Compile Include="Connexion.Designer.cs">
       <DependentUpon>Connexion.cs</DependentUpon>
     </Compile>
-    <Compile Include="Détail et modification.cs">
+    <Compile Include="Detail_Modification.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Détail et modification.Designer.cs">
-      <DependentUpon>Détail et modification.cs</DependentUpon>
+    <Compile Include="Detail_Modification.Designer.cs">
+      <DependentUpon>Detail_Modification.cs</DependentUpon>
     </Compile>
     <Compile Include="ExplorerParts.cs" />
-    <Compile Include="Form1.cs">
+    <Compile Include="PlanningList.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="PlanningList.Designer.cs">
+      <DependentUpon>PlanningList.cs</DependentUpon>
     </Compile>
-    <Compile Include="Horaire.cs" />
-    <Compile Include="Monteur.cs" />
+    <Compile Include="Schedule.cs" />
+    <Compile Include="LocationParts.cs" />
+    <Compile Include="Assembler.cs" />
     <Compile Include="Planning_Master.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SizeParts.cs" />
-    <EmbeddedResource Include="AjoutCommande.resx">
-      <DependentUpon>AjoutCommande.cs</DependentUpon>
+    <EmbeddedResource Include="AddCommand.resx">
+      <DependentUpon>AddCommand.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Connexion.resx">
       <DependentUpon>Connexion.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Détail et modification.resx">
-      <DependentUpon>Détail et modification.cs</DependentUpon>
+    <EmbeddedResource Include="Detail_Modification.resx">
+      <DependentUpon>Detail_Modification.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="PlanningList.resx">
+      <DependentUpon>PlanningList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -150,6 +151,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="ClassDiagram1.cd" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

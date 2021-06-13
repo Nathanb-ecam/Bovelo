@@ -1,6 +1,6 @@
 ﻿namespace BOVELO_PlanningList
 {
-    partial class AjoutCommande
+    partial class AddCommand
     {
         /// <summary>
         /// Required designer variable.

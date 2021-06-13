@@ -6,38 +6,36 @@ using System.Threading.Tasks;
 
 namespace BOVELO_PlanningList
 {
-    class Monteur
+    class Assembler
     {
         string test0;
 
-        private string nameMonteur;
+        private string nameAssembler;
         private string identif2;
-
-        private List<string> ourMonteurs = new List<string>();
-        private Dictionary<string, string> Identification = new Dictionary<string, string>();
-
         private bool checkUp;
 
-        public string getMonteur { get { return nameMonteur; } set { test0 = value; } }
+        private List<string> Assemblers = new List<string>();
+        private Dictionary<string, string> Identification = new Dictionary<string, string>();
+      
+        public string getMonteur { get { return nameAssembler; } set { test0 = value; } }
 
-        public Monteur(string a)
+        public Assembler(string AssemblerName)
         {
-            this.nameMonteur = a;
-            addMonteur(a);
+            this.nameAssembler = AssemblerName;
+            addAssembler(AssemblerName);
         }
 
-        public Monteur(string a , string b)
+        public Assembler(string a , string b)
         {
-            this.nameMonteur = a;
+            this.nameAssembler = a;
             this.identif2 = b;
-
         }
 
         public bool checkIdentif()
         {
             foreach (KeyValuePair<string, string> test in Identification)
             {
-                if (test.Key == nameMonteur && test.Value == identif2)
+                if (test.Key == nameAssembler && test.Value == identif2)
                 {
                     checkUp = true;
                 }
@@ -50,9 +48,9 @@ namespace BOVELO_PlanningList
 
         }
 
-        public void addMonteur(string a)
+        public void addAssembler(string assemblerName)
         {
-            ourMonteurs.Add(a);
+            Assemblers.Add(assemblerName);
         }
     }
 }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BOVELO_PlanningList
 {
-    class Horaire
+    class Schedule
     {
         string test0;
 
@@ -18,7 +18,7 @@ namespace BOVELO_PlanningList
         public string HoraireTache { get { return horaireTache0;  } set { test0 = value; } }
         public string DureeTache { get { return dureeTache0; } set { test0 = value; } }
 
-        public Horaire(string a, string b)
+        public Schedule(string a, string b)
         {
             this.horaireTache0 = a;
             this.dureeTache0 = b;

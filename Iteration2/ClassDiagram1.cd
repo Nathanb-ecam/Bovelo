@@ -1,0 +1,114 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="BOVELO_PlanningList.AddCommand">
+    <Position X="2.75" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAACIAABAAAACAAABCIAAIAAAAEWAAgAAAAAA=</HashCode>
+      <FileName>AddCommand.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BOVELO_PlanningList.AdventureParts" Collapsed="true">
+    <Position X="12.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>AdventureParts.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BOVELO_PlanningList.Assembler" Collapsed="true">
+    <Position X="1" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAABAAKAAAgAAAAAAAAAAAAAAAQAAAgAACAQAAA=</HashCode>
+      <FileName>Assembler.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BOVELO_PlanningList.CityParts" Collapsed="true">
+    <Position X="11.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAgAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAA=</HashCode>
+      <FileName>CityParts.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BOVELO_PlanningList.CommonParts" Collapsed="true">
+    <Position X="5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>CommonParts.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BOVELO_PlanningList.Connexion" Collapsed="true">
+    <Position X="8.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAACAAABAAAACAAAACAAAIAAAAEGAAAgAAAAA=</HashCode>
+      <FileName>Connexion.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BOVELO_PlanningList.Détail_et_modification" Collapsed="true">
+    <Position X="11.5" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAgAACIAQBACgACAACBCoAAIAAAAkWAAAAAAAAA=</HashCode>
+      <FileName>Detail_Modification.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BOVELO_PlanningList.ExplorerParts" Collapsed="true">
+    <Position X="12.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAgAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAA=</HashCode>
+      <FileName>ExplorerParts.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BOVELO_PlanningList.PlanningList">
+    <Position X="5.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CA5AAAiAACAAQAAAAADBAABOggEaAAAoMWCEAIAIAAA=</HashCode>
+      <FileName>PlanningList.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BOVELO_PlanningList.Schedule" Collapsed="true">
+    <Position X="6.75" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAAAAAAAAAAACRAAAAgAAAAAAgAAAAQAAA=</HashCode>
+      <FileName>Schedule.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BOVELO_PlanningList.LocationParts" Collapsed="true">
+    <Position X="8.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAABEAgAAAQAAAAQgAAEAAAAQAQCGmAYCAAAQAgAA=</HashCode>
+      <FileName>LocationParts.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BOVELO_PlanningList.Planning_Master" Collapsed="true">
+    <Position X="1" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAACAAAgAAgAAAAAAAAAAAAAAAAAAAJAAAAA=</HashCode>
+      <FileName>Planning_Master.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BOVELO_PlanningList.Program" Collapsed="true">
+    <Position X="12" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BOVELO_PlanningList.SizeParts" Collapsed="true">
+    <Position X="10.25" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SizeParts.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BOVELO_PlanningList.Properties.Resources" Collapsed="true">
+    <Position X="6.75" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQAAAAAAAAAAAAAAAIA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="BOVELO_PlanningList.Properties.Settings" Collapsed="true">
+    <Position X="8.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

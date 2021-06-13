@@ -11,9 +11,9 @@ using MySql.Data.MySqlClient;
 
 namespace BOVELO_PlanningList
 {
-    public partial class AjoutCommande : Form
+    public partial class AddCommand : Form
     {
-        public AjoutCommande()
+        public AddCommand()
         {
             InitializeComponent();
         }
@@ -24,6 +24,7 @@ namespace BOVELO_PlanningList
         public string Monteur{ get { return textBox4.Text; } }
         
         private void button1_Click(object sender, EventArgs e)
+            //Confirm modification
         {
             DialogResult = DialogResult.Yes;
         }

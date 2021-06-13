@@ -22,7 +22,7 @@ namespace BOVELO_PlanningList
 
         private void button1_Click(object sender, EventArgs e)
         {
-            DialogResult = DialogResult.Yes;  //Pour la modification du forme enfant soit pris en compte dans la forme mère
+            DialogResult = DialogResult.Yes;  //To confirm modification
         }
     }
 }

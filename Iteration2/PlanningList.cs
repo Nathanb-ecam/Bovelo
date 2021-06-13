@@ -14,30 +14,30 @@ using MySql.Data.MySqlClient;
 
 namespace BOVELO_PlanningList
 {
-    public partial class Form1 : Form
+    public partial class PlanningList : Form
     {
-        public Form1()
+        public PlanningList()
         {
             InitializeComponent();
         }
-
+    
         MySqlConnection cn;      
 
         bool Connecter = false;
         bool test;
 
-        Horaire GT;
-        Monteur a;
+        Schedule GT;
+        Assembler a;
         Planning_Master b;
 
         ListViewItem element;
 
-        private int DRTache1;
+        private int OrderDuration;
 
         private void button1_Click(object sender, EventArgs e) // connexion bdd
         {
             if (button1.Text == "Se connecter")
-            {
+            {               
                 string identifiant;
                 string password;
 
@@ -48,7 +48,7 @@ namespace BOVELO_PlanningList
                         identifiant = m.identifiant;
                         password = m.password;
 
-                        a = new Monteur(identifiant, password);
+                        a = new Assembler(identifiant, password);
                         b = new Planning_Master(identifiant, password);
 
                         using (cn = new MySqlConnection("SERVER=193.191.240.67;user=nick;database=DataBase;port=63307;password=1234"))
@@ -331,9 +331,7 @@ namespace BOVELO_PlanningList
             {
                 ListViewItem element = listView1.SelectedItems[0]; //je rerentre mes données ds cette boucle, pour un code plus soignée on peut les sortir mais flemme
                 string idBike = element.SubItems[0].Text;
-                string Type = element.SubItems[1].Text;
-                string Color = element.SubItems[2].Text;
-                string Size = element.SubItems[3].Text;
+                string Type = element.SubItems[1].Text;               
                 string Monteur = element.SubItems[4].Text;
                 string Horaire = element.SubItems[5].Text;
                 string DureeTache = element.SubItems[6].Text;
@@ -341,8 +339,8 @@ namespace BOVELO_PlanningList
                 using(Détail_et_modification m = new Détail_et_modification()) //On crée notre nouvelle instante modification et detail
                 {
 
-                    GT = new Horaire(m.HoraireTache, m.DureeTache);
-                    a = new Monteur(m.Monteur);
+                    GT = new Schedule(m.HoraireTache, m.DureeTache);
+                    a = new Assembler(m.Monteur);
                     
                     m.idBike = idBike;
                     a.getMonteur = Monteur;
@@ -375,7 +373,7 @@ namespace BOVELO_PlanningList
 
         private void ajoutCommandeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            using(AjoutCommande m2 = new AjoutCommande())
+            using(AddCommand m2 = new AddCommand())
             {
                 if(m2.ShowDialog() == DialogResult.Yes)
                 {
@@ -396,7 +394,7 @@ namespace BOVELO_PlanningList
             this.element = listView1.SelectedItems[0]; //Je selectionne mes variables avec lequels je veux travailler
 
             string DureeTache = element.SubItems[6].Text;
-            this.DRTache1 = Int32.Parse(DureeTache);
+            this.OrderDuration = Int32.Parse(DureeTache);
 
             this.timer1.Enabled = true;
                       
@@ -408,10 +406,10 @@ namespace BOVELO_PlanningList
 
         private void TimeIsOn(object sender, EventArgs e)
         {
-            if (this.DRTache1 > 0)
+            if (this.OrderDuration > 0)
             {
-                this.DRTache1--;
-                this.element.SubItems[6].Text = DRTache1.ToString();
+                this.OrderDuration--;
+                this.element.SubItems[6].Text = OrderDuration.ToString();
             }
 
             else
