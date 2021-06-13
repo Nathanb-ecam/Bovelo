@@ -21,7 +21,8 @@ namespace Bovelo
         Agent agent;
         Order order = new Order(new Dictionary<Bike, List<int>>());
         Customer customer;
-
+        bool chartConfirmed = false;
+        bool connected = false;
         int delay;
 
         DataTable stockTable = new DataTable();
@@ -44,10 +45,9 @@ namespace Bovelo
             colorBox.SelectedIndex = 0;
             quantityBox.SelectedText = "1";
             NewGen_Catalog();
-            panelCatalog.Visible = true;
-            panelRecap.Visible = false;
-            panelOrder.Visible = false;
-            panel1.Visible = false;
+            panel2.Visible = true;
+            user.Text = "khaled";
+
 
         }
         private void label1_Click(object sender, EventArgs e)
@@ -107,35 +107,59 @@ namespace Bovelo
         // les 3 fonctions qui suivent servent juste a determiner la page active
         private void recapBtn_Click(object sender, EventArgs e)
         {
-            panelRecap.Visible = true;
-            panelOrder.Visible = false;
-            panelCatalog.Visible = false;
-            panel1.Visible = false;
-            messagefinal.Text = "";
+            if (connected)
+            {
+                panel1.Visible = false;
+                panelRecap.Visible = true;
+                panelCatalog.Visible = false;
+                panelOrder.Visible = false;
+                if (order.Bikes.Count != 0)
+                {
+                    recapTxt.Clear();
+                    recapTxt.Columns.Add("Model", 100, HorizontalAlignment.Center);
+                    recapTxt.Columns.Add("Color", 100, HorizontalAlignment.Center);
+                    recapTxt.Columns.Add("Size", 100, HorizontalAlignment.Center);
+                    recapTxt.Columns.Add("Quantity", 100, HorizontalAlignment.Center);
+                    messagefinal.Text = "";
+                    generate_Recap();
+                }
+                messagefinal.Text = "";
+            }
+
         }
         private void orderPageBtn_Click(object sender, EventArgs e)
         {
-            panelOrder.Visible = true;
-            panelRecap.Visible = false;
-            panelCatalog.Visible = false;
-            panel1.Visible = false;
+            if (connected) 
+            { 
+                panelOrder.Visible = true;
+                panelRecap.Visible = false;
+                panelCatalog.Visible = false;
+                panel1.Visible = false;
+            }
             messagefinal.Text = "";
         }
 
         private void delayBtn_Click(object sender, EventArgs e)
         {
-            messagefinal.Text = "";
-            panel1.Visible = true;
-            panelRecap.Visible = true;
-            panelOrder.Visible = false;
-            panelCatalog.Visible = false;
-            messagefinal.Text = "";
+            if (connected) 
+            {
+                if (!chartConfirmed)
+                {
+                    messagefinal.Text = "Add bikes to the chart and confirm it first";
+                }
+                panel1.Visible = true;
+                panel2.Visible = false;
+                panelRecap.Visible = false;
+                panelCatalog.Visible = false;
+                panelOrder.Visible = false;
+            }
 
         }
 
         // pour ajouter les elements selectiones dans commande
         private void addBtn_Click(object sender, EventArgs e)
         {
+            
             string model = modelBox.Text;
             string size = sizeBox.Text;
             string color = colorBox.Text;
@@ -149,18 +173,17 @@ namespace Bovelo
             {
                 orderBikeBuilder(t, s, c, quantity);
             }
-            generate_Recap();
-
         }
 
         private void generate_Recap()
         {
-            string recap = "";
+          
             int totalPrice = 0;
-
             // on parcourir le dictionnaire trier pour afficher le recap
             foreach (KeyValuePair<string, int> bike in order.RegroupedBikesDict)
             {
+                Console.WriteLine(bike);
+
                 if (bike.Key.Substring(0, 3) == "Cit")
                 {
                     totalPrice += (bike.Value * 100);
@@ -175,12 +198,13 @@ namespace Bovelo
                 }
                 if (bike.Value != 0)
                 {
-                    recap += String.Format("Vélo : {0}, quantité : {1} piece(s) \n", bike.Key, bike.Value);
-                }
+                    string[] subs = bike.Key.Split(new char[] { ',' });
+                    string[] row = { subs[0], subs[1], subs[2], bike.Value.ToString() };
+                    var listViewItem = new ListViewItem(row);
+                    recapTxt.Items.Add(listViewItem);
+                }                            
             }
             totalPriceTxt.Text = totalPrice.ToString();
-            recapTxt.Text = recap;
-            
         }
 
         private void resetAllTables()
@@ -200,14 +224,14 @@ namespace Bovelo
 
             if (cn.State == ConnectionState.Closed) { cn.Open(); };
             
-            MySqlCommand commandStock= new MySqlCommand("SELECT * FROM Stock ", cn);
+            MySqlCommand commandStock= new MySqlCommand("SELECT * FROM GeneralStock ", cn);
             MySqlDataReader myReaderStock;
             myReaderStock = commandStock.ExecuteReader();
             DataTable dataTableStock = new DataTable();
             dataTableStock.Load(myReaderStock);
             stockTable = dataTableStock.Copy();
 
-            MySqlCommand commandParts = new MySqlCommand("SELECT * FROM PartsToOrder ", cn);
+            MySqlCommand commandParts = new MySqlCommand("SELECT * FROM PartsToOrderStock ", cn);
             MySqlDataReader myReaderParts;
             myReaderParts = commandParts.ExecuteReader();
             DataTable dataTableParts = new DataTable();
@@ -216,21 +240,26 @@ namespace Bovelo
 
             int min = int.MaxValue;
             int quantity;
+
+            foreach (DataRow row in stockTable.Rows)
+            {
+                quantity = row.Field<int>("quantity") / row.Field<int>("min");
+                if (quantity < min)
+                {
+                    min = quantity;
+                }
+            }
+
             foreach (int value in Enumerable.Range(1, order.Bikes_list.Count))
             {
                 foreach (DataRow row in stockTable.Rows)
                 {
                     DataRow new_row;
-                    quantity = row.Field<int>("quantity") / row.Field<int>("min");
-
-                    if (quantity < min)
-                    {
-                        min = quantity;
-                    }
+                    
                     if (row.Field<int>("quantity") > row.Field<int>("min"))
                     {
                     
-                        row["quantity"] = row.Field<int>("quantity") - 1;
+                        row["quantity"] = row.Field<int>("quantity") - row.Field<int>("min");
 
                     }
                     else
@@ -238,7 +267,7 @@ namespace Bovelo
                         new_row = partsToOrderTable.NewRow();
 
                         new_row["name"] = row["name"];
-                        new_row["quantity"] = row["quantity"];
+                        new_row["quantity"] = row["min"];
                         new_row["Color"] = "General";
                         new_row["Size"] = "General";
                         new_row["min"] = row["min"];
@@ -270,7 +299,7 @@ namespace Bovelo
                 {
                     if ((color == subs[2] && size == subs[1]) || (size is null) || (color is null && size == subs[1]) || (color == "Black" && size == subs[1]))
                     {
-                        row["quantity"] = quantity - 1;
+                        row["quantity"] = quantity - min;
 
                     }
                 }
@@ -279,7 +308,7 @@ namespace Bovelo
                     new_row = partsToOrderTable.NewRow(); 
 
                     new_row["name"] = row["name"];
-                    new_row["quantity"] = row["quantity"];
+                    new_row["quantity"] = 1;
                     new_row["Color"] = row["Color"];
                     new_row["Size"] = row["Size"];
                     new_row["min"] = row["min"];
@@ -379,12 +408,12 @@ namespace Bovelo
             MySqlCommandBuilder ccmb = new MySqlCommandBuilder(city);
             city.Update(cityTable);
 
-            string sQuery = "Select * from Stock";
+            string sQuery = "Select * from GeneralStock";
             MySqlDataAdapter stock = new MySqlDataAdapter(sQuery, cn);
             MySqlCommandBuilder scmb = new MySqlCommandBuilder(stock);
             stock.Update(stockTable);
 
-            string pQuery = "Select * from PartsToOrder";
+            string pQuery = "Select * from PartsToOrderStock";
             MySqlDataAdapter parts = new MySqlDataAdapter(pQuery, cn);
             MySqlCommandBuilder pcmb = new MySqlCommandBuilder(parts);
             parts.Update(partsToOrderTable);
@@ -394,6 +423,8 @@ namespace Bovelo
         {
             int maxGeneralBikes = bikesAvailable();
             int missingCustomBikes = customBikes();
+
+            Console.WriteLine(maxGeneralBikes);
 
             int delay = 3; //3 days minimum
 
@@ -440,8 +471,9 @@ namespace Bovelo
         private void resetBtn_Click(object sender, EventArgs e)
         {
             order.reset();
+            resetAllTables();
             totalPriceTxt.Text = "";
-            recapTxt.Text = "";
+            recapTxt.Clear();
         }
 
         // pour confirmer une commande 
@@ -479,9 +511,10 @@ namespace Bovelo
                 cn.Close();
                 order.reset();
                 totalPriceTxt.Text = "";
-                recapTxt.Text = "";
+                recapTxt.Clear();
                 messagefinal.Text = "Thank you for your order :)";
                 delaytxt.Text = "";
+                chartConfirmed = false;
             }
             else if (order.Bikes.Count == 0)
             {
@@ -528,10 +561,13 @@ namespace Bovelo
         }
         private void catalogBtn_Click(object sender, EventArgs e)
         {
-            panelCatalog.Visible = true;
-            panelOrder.Visible = false;
-            panelRecap.Visible = false;
-
+            if (connected)
+            {
+                panel1.Visible = false;
+                panelRecap.Visible = false;
+                panelCatalog.Visible = true;
+                panelOrder.Visible = false;
+            }
         }
 
         // fonction qui va générer le contenu de la page catalogue de manière dynamique
@@ -607,7 +643,12 @@ namespace Bovelo
                 string s = dt.AddDays(delay).ToString();
                 string[] subs = s.Split(' ');
                 delaytxt.Text = String.Format("Delivery on {0}", subs[0]);
+                chartConfirmed = true;
                 panel1.Visible = true;
+                panel2.Visible = false;
+                panelRecap.Visible = false;
+                panelCatalog.Visible = false;
+                panelOrder.Visible = false;
             }
             
         }
@@ -635,7 +676,14 @@ namespace Bovelo
                             Agent tempAgent = new Agent(nameDB, idDB, phoneDB, "idk");
                             agent = tempAgent;
                             Console.WriteLine("Connected");
-                            panel2.Visible = false;
+                            connected = true;
+                            if (connected)
+                            {
+                                panel1.Visible = false;
+                                panelRecap.Visible = false;
+                                panelCatalog.Visible = true;
+                                panelOrder.Visible = false;
+                            }
                         }
                         else if (userDB == user.Text && passwordDB != password.Text)
                         {
@@ -667,7 +715,6 @@ namespace Bovelo
             nameBox.Text = "";
             phoneBox.Text = "";
             adressBox.Text = "";
-            messagefinal.Text = "";
         }
 
         private void phoneBox_KeyPress(object sender, KeyPressEventArgs e)
