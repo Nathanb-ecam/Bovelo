@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 namespace BOVELO_PlanningList
 {
     class ExplorerParts
+
+        //components of type explorer
+
     {
         private List<string> composant_nbre1 = new List<string>() { "cadre", "garde boue large" };
         private List<string> composant_nbre2 = new List<string>() { "pneu large" };

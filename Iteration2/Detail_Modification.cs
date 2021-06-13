@@ -18,8 +18,7 @@ namespace BOVELO_PlanningList
     
     {
         string changement1;
-        bool Connecter;
-        MySqlConnection cn;
+
         LocationParts parts;
         
         public string idBike { get { return textBox4.Text; } set { textBox4.Text = value; } } //readonly, we do not modify the id of an order
@@ -47,8 +46,13 @@ namespace BOVELO_PlanningList
         }     
 
         private void button2_Click(object sender, EventArgs e)
+
             //this button shows the different pieces and their location
+
         {
+            listView1.Clear();
+            listView2.Clear();
+
             parts = new LocationParts();
 
             List<string> commonParts = parts.getCommonParts();

@@ -8,6 +8,8 @@ namespace BOVELO_PlanningList
 {
     class SizeParts
     {
+        //The componants that are common to all bikes but differanciate by their size
+
         private List<string> composant_nbre1 = new List<string>() { "fourche" };
         private List<string> composant_nbre2 = new List<string>() { "roue" };
 

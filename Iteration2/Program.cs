@@ -22,23 +22,3 @@ namespace BOVELO_PlanningList
         }
     }
 }
-
-//private void create_bike_dict(Dictionary<string, int> dict)
-//{
-//    //We should integrate the DataBase table instead of this path
-//    string[] lines = File.ReadAllLines(@"C:\Users\khale\source\repos\Bovelo\BovéloOrderInterface\bikes_list.txt");
-
-//    foreach (string line in lines)
-//    {
-//        dict[line] = 0;
-//    }
-
-//}
-
-//foreach (KeyValuePair<string, int> entry in bikes_dict)
-//{
-//    if (entry.Value != 0)
-//    {
-//        recap += String.Format("{0} :    {1} piece(s)    {2} $ \n", entry.Key, entry.Value, entry.Value * t.Price);
-//    }
-//}

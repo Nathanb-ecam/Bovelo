@@ -8,34 +8,18 @@ namespace BOVELO_PlanningList
 {
     class Planning_Master
     {
-        private string identf1;
-        private string identf2;
-        private bool checkUp;
+        //This PlanningMaster class makes it possible to know who is connected as a manager
 
-        Dictionary<string, string> GoBackToTheShadows = new Dictionary<string, string>();
+        private string identf1;
+        private string password;
+
+        private List<string> ManagersConnected = new List<string>();
 
         public Planning_Master(string a, string b)
         {
             this.identf1 = a;
-            this.identf2 = b;
-        }
-
-        public bool checkIdentif()
-        {
-            foreach(KeyValuePair<string, string> test in GoBackToTheShadows)
-            {
-                if(test.Key == identf1 && test.Value == identf2)
-                {
-                    checkUp = true;
-                }
-                else
-                {
-                    checkUp = false;
-                }
-            }
-            return checkUp;
-           
-        }
-
+            this.password = b;
+            ManagersConnected.Add(a);
+        }    
     }
 }

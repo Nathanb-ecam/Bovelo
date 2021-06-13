@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 namespace BOVELO_PlanningList
 {
     class Schedule
+
+        //This class ables to change date and duration of an order
+
     {
         string test0;
 

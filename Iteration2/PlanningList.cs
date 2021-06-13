@@ -39,24 +39,22 @@ namespace BOVELO_PlanningList
         
         {
             if (button1.Text == "Se connecter")
-            {               
+            {
                 string identifiant;
                 string password;
+                string role;
 
                 using (Connexion m = new Connexion())
 
-                    //Here i'm calling my partial class Connection to retreive its information passed thru
+                //Here i'm calling my partial class Connection to retreive its information passed thru
 
                 {
                     if (m.ShowDialog() == DialogResult.Yes)
                     {
                         identifiant = m.identifiant;
                         password = m.password;
-
-                        //I create a new assembler and a new manager
-                        a = new Assembler(identifiant, password);
-                        b = new Planning_Master(identifiant, password);
-
+                        role = m.role;
+                        
                         using (cn = new MySqlConnection("SERVER=193.191.240.67;user=nick;database=mydb ;port=63307;password=1234"))
                         {
                             try
@@ -70,33 +68,88 @@ namespace BOVELO_PlanningList
                                 MessageBox.Show(ex.Message);
                             }
 
-                            MySqlCommand cmd = new MySqlCommand("SELECT * FROM Users", cn);
-                            using (MySqlDataReader Lire = cmd.ExecuteReader())
+                            if ("agent" == role.ToLower())
                             {
-                                if(Lire.Read())
+                                MySqlCommand command = new MySqlCommand("SELECT * FROM Agent", cn);
+                                DataTable data = new DataTable();
+                                data.Load(command.ExecuteReader());
+                                if (data.Rows.Count != 0)
                                 {
-                                    string identDB = Lire["userName"].ToString();
-                                    string pwDB = Lire["Password"].ToString();
+                                    foreach (DataRow row in data.Rows)
+                                    {
+                                        string userAgent = row.Field<string>("user");
+                                        string passwordAgent = row.Field<string>("password");
+                                        string nameAgent = row.Field<string>("Name");
+                                        string phoneAgent = row.Field<string>("Phone");
+                                        int idAgent = row.Field<int>("idAgent");
 
-                                    if (identifiant == identDB && password == pwDB)
-                                    {
-                                        MessageBox.Show("Bienvenue " + identifiant + " !");
-                                        keepOpen();
-                                    }
-                                    else
-                                    {
-                                        MessageBox.Show("Mauvaise identification, try again");
-                                        rentrePas();
+                                        if (userAgent == identifiant && passwordAgent == password)
+                                        {
+                                            MessageBox.Show("Connected");
+                                            Connecter = true;
+                                            keepOpen();
+                                            b = new Planning_Master(identifiant, password);
+                                        }
+                                        else if (userAgent == identifiant && passwordAgent != password)
+                                        {
+                                            MessageBox.Show("Wrong password");
+                                            rentrePas();
+                                        }
+                                        else
+                                        {
+                                            MessageBox.Show("Wrong user");
+                                            rentrePas();
+                                        }
                                     }
                                 }
                             }
+
+                            if("assembler" == role.ToLower())
+                            {
+                                MySqlCommand command = new MySqlCommand("SELECT * FROM Assembler", cn);
+                                DataTable data = new DataTable();
+                                data.Load(command.ExecuteReader());
+                                if (data.Rows.Count != 0)
+                                {
+                                    foreach (DataRow row in data.Rows)
+                                    {
+                                        string userAssembler = row.Field<string>("User");
+                                        string passwordAssembler = row.Field<string>("Password");
+                                        string nameAssembler = row.Field<string>("Name");
+                                        string phoneAssembler = row.Field<string>("Phone");
+                                        int idAssembler = row.Field<int>("idAssembler");
+
+                                        if (userAssembler == identifiant && passwordAssembler == password)
+                                        {
+                                            MessageBox.Show("Connected");
+                                            Connecter = true;
+                                            keepOpen();
+                                            a = new Assembler(identifiant, password);
+                                        }
+                                        else if (userAssembler == identifiant && passwordAssembler != password)
+                                        {
+                                            MessageBox.Show("Wrong password");
+                                            rentrePas();
+                                        }
+                                        else
+                                        {
+                                            MessageBox.Show("Wrong user");
+                                            rentrePas();
+                                        }
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                rentrePas();
+                            }
                         }
+                    }                   
+                    else
+                    {
+                        rentrePas();
                     }
                 }
-            }
-            else 
-            {
-                rentrePas();
             }
         }    
 
@@ -326,7 +379,11 @@ namespace BOVELO_PlanningList
                 command.Parameters.AddWithValue("@Name", i);
                 command.Parameters.AddWithValue("@Size", Size);
                 command.ExecuteNonQuery();
-            }           
+            }
+
+            MySqlCommand command0 = new MySqlCommand("UPDATE CityStock SET Location = @val", cn);
+            command0.Parameters.AddWithValue("@val", "HANGAR00");
+            command0.ExecuteNonQuery();
 
         }
         

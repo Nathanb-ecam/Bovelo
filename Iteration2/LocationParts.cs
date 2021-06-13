@@ -9,6 +9,7 @@ using MySql.Data.MySqlClient;
 namespace BOVELO_PlanningList
 {
     class LocationParts
+
         //To know and display all my parts and their common location
     {
         MySqlConnection cn;
