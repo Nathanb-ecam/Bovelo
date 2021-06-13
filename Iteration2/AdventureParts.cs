@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 namespace BOVELO_PlanningList
 {
     class AdventureParts
+        //Componants of type adventure
     {
-        private List<string> composant_nbre1 = new List<string>() { "cadre renforce" };
-        private List<string> composant_nbre2 = new List<string>() { "pneu large" };        
+        private List<string> composant_nbre1 = new List<string>() { "cadre renforce" }; //in quantity of use 1
+        private List<string> composant_nbre2 = new List<string>() { "pneu large" };     //in quantity of use 2
 
         public List<string> getList_Nbr1()
         {

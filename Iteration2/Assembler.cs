@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 namespace BOVELO_PlanningList
 {
     class Assembler
+
     {
         string test0;
 
         private string nameAssembler;
-        private string identif2;
+        private string password;
         private bool checkUp;
 
         private List<string> Assemblers = new List<string>();
@@ -25,17 +26,17 @@ namespace BOVELO_PlanningList
             addAssembler(AssemblerName);
         }
 
-        public Assembler(string a , string b)
+        public Assembler(string identif , string password)
         {
-            this.nameAssembler = a;
-            this.identif2 = b;
+            this.nameAssembler = identif;
+            this.password = password;
         }
 
         public bool checkIdentif()
         {
             foreach (KeyValuePair<string, string> test in Identification)
             {
-                if (test.Key == nameAssembler && test.Value == identif2)
+                if (test.Key == nameAssembler && test.Value == password)
                 {
                     checkUp = true;
                 }

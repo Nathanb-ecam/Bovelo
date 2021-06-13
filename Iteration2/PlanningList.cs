@@ -23,8 +23,7 @@ namespace BOVELO_PlanningList
     
         MySqlConnection cn;      
 
-        bool Connecter = false;
-        bool test;
+        bool Connecter = false;        
 
         Schedule GT;
         Assembler a;
@@ -34,7 +33,10 @@ namespace BOVELO_PlanningList
 
         private int OrderDuration;
 
-        private void button1_Click(object sender, EventArgs e) // connexion bdd
+        private void button1_Click(object sender, EventArgs e) 
+            
+            //This button makes connection with my database
+        
         {
             if (button1.Text == "Se connecter")
             {               
@@ -42,16 +44,20 @@ namespace BOVELO_PlanningList
                 string password;
 
                 using (Connexion m = new Connexion())
+
+                    //Here i'm calling my partial class Connection to retreive its information passed thru
+
                 {
                     if (m.ShowDialog() == DialogResult.Yes)
                     {
                         identifiant = m.identifiant;
                         password = m.password;
 
+                        //I create a new assembler and a new manager
                         a = new Assembler(identifiant, password);
                         b = new Planning_Master(identifiant, password);
 
-                        using (cn = new MySqlConnection("SERVER=193.191.240.67;user=nick;database=DataBase;port=63307;password=1234"))
+                        using (cn = new MySqlConnection("SERVER=193.191.240.67;user=nick;database=mydb ;port=63307;password=1234"))
                         {
                             try
                             {
@@ -88,7 +94,7 @@ namespace BOVELO_PlanningList
                     }
                 }
             }
-            else //pour la deco
+            else 
             {
                 rentrePas();
             }
@@ -96,7 +102,7 @@ namespace BOVELO_PlanningList
 
         public void keepOpen()
         {          
-            cn = new MySqlConnection("SERVER=193.191.240.67;user=nick;database=DataBase;port=63307;password=1234");
+            cn = new MySqlConnection("SERVER=193.191.240.67;user=nick;database=mydb ;port=63307;password=1234");
             try
             {
                 if (cn.State == ConnectionState.Closed) { cn.Open(); }
@@ -109,7 +115,6 @@ namespace BOVELO_PlanningList
             }                     
         }
 
-
         public void rentrePas()
         {
             cn.Close();
@@ -117,7 +122,10 @@ namespace BOVELO_PlanningList
             Connecter = false;
         }
 
-        private void button2_Click(object sender, EventArgs e) //pour chercher nos lignes de commandes ds la bdd. Deux options s'offre a nous, où on change encore la bdd où alors je fais des SELECT de plusieurs tables. J'ai choissi l'option 1 mais on peut modifier par après.      
+        private void button2_Click(object sender, EventArgs e) 
+            
+            //This method displays our orders in the listview
+
         {
             if(Connecter)
             {
@@ -143,50 +151,47 @@ namespace BOVELO_PlanningList
             else { MessageBox.Show("Vous n'etes pas connecter"); }
         }
 
-        private void jaiFinisMaTacheToolStripMenuItem_Click(object sender, EventArgs e) //j'ai finis ma tache donc je la supprime de la bdd
+        private void jaiFinisMaTacheToolStripMenuItem_Click(object sender, EventArgs e) 
         {
+
+            //This method will delete my order and change the stock according to the bike produced
+
             List<string> info = new List<string>();
             if (Connecter)
             {
-                if(listView1.SelectedItems.Count > 0) //je peux pas selectioner du vide
+                if(listView1.SelectedItems.Count > 0) //cannot select nothing
                 {
-                    ListViewItem element = listView1.SelectedItems[0]; //mon premier element ici est l'id ou peux rajouter les autres par apres #flemme
-
+                    ListViewItem element = listView1.SelectedItems[0]; 
                     string idBike = element.SubItems[0].Text;
 
                     var command = new MySqlCommand("SELECT Type, Color, Size From Bike WHERE idBike = @idBike", cn);
-                    command.Parameters.AddWithValue("@idBike", idBike);
-                    //var reader = command.ExecuteReader();
+                    command.Parameters.AddWithValue("@idBike", idBike);                    
                     using (MySqlDataReader Lire = command.ExecuteReader())
                     {
                         while (Lire.Read())
                         {
                             string Type = Lire["Type"].ToString();
                             string Color = Lire["Color"].ToString();
-                            string Size = Lire["Size"].ToString();
-                            //MessageBox.Show(Type + " " + Color + " " + Size);    
+                            string Size = Lire["Size"].ToString();                            
                             info.Add(Type);
                             info.Add(Color);
                             info.Add(Size);
                         }
                     }
-
                     command.CommandText = "DELETE FROM Bike WHERE idBike = @idBike";                    
                     command.ExecuteNonQuery();
                     element.Remove();
                     MessageBox.Show("Supprimé");
 
-                    //Supprimer mon stock  
-                    Stock(info[0], info[1], info[2]);
-
-                    
+                    //update stock 
+                    Stock(info[0], info[1], info[2]);                    
                 }
             }
         }       
 
         public void Stock(string Type, string Color, string Size)
         {
-            //C'est immonde mais je sais pas comment faire plus proprement
+            //this method updates the stock specifically to the order finished
 
             CommonParts a = new CommonParts();
             List<string> composant1 = a.getList_Nbr1();
@@ -215,21 +220,21 @@ namespace BOVELO_PlanningList
             //Common Parts
             foreach (string i in composant1)
             {
-                MySqlCommand command = new MySqlCommand("UPDATE Stock SET Quantity = Quantity - 1 WHERE Name = @Name", cn);                
+                MySqlCommand command = new MySqlCommand("UPDATE GeneralStock SET Quantity = Quantity - 1 WHERE Name = @Name", cn);                
                 command.Parameters.AddWithValue("@Name", i);                
                 command.ExecuteNonQuery();                
             }
 
             foreach (string i in composant2)
             {
-                MySqlCommand command = new MySqlCommand("UPDATE Stock SET Quantity = Quantity - 2 WHERE Name = @Name", cn);
+                MySqlCommand command = new MySqlCommand("UPDATE GeneralStock SET Quantity = Quantity - 2 WHERE Name = @Name", cn);
                 command.Parameters.AddWithValue("@Name", i);
                 command.ExecuteNonQuery();
             }
 
             foreach (string i in composant4)
             {
-                MySqlCommand command = new MySqlCommand("UPDATE Stock SET Quantity = Quantity - 4 WHERE Name = @Name", cn);
+                MySqlCommand command = new MySqlCommand("UPDATE GeneralStock SET Quantity = Quantity - 4 WHERE Name = @Name", cn);
                 command.Parameters.AddWithValue("@Name", i);
                 command.ExecuteNonQuery();
             }
@@ -239,7 +244,7 @@ namespace BOVELO_PlanningList
             {
                 foreach(string i in composantCity1)
                 {
-                    MySqlCommand command = new MySqlCommand("UPDATE Stock SET Quantity = Quantity - 1 WHERE (Name=@Name AND Size=@Size AND Color=@Color)", cn);
+                    MySqlCommand command = new MySqlCommand("UPDATE CityStock SET Quantity = Quantity - 1 WHERE (Name=@Name AND Size=@Size AND Color=@Color)", cn);
                     command.Parameters.AddWithValue("@Name", i);
                     command.Parameters.AddWithValue("@Size", Size);
                     command.Parameters.AddWithValue("@Color", Color);
@@ -247,14 +252,14 @@ namespace BOVELO_PlanningList
                 }
                 foreach (string i in composantCity2)
                 {
-                    MySqlCommand command = new MySqlCommand("UPDATE Stock SET Quantity = Quantity - 2 WHERE (Name=@Name AND Size=@Size)", cn);
+                    MySqlCommand command = new MySqlCommand("UPDATE CityStock SET Quantity = Quantity - 2 WHERE (Name=@Name AND Size=@Size)", cn);
                     command.Parameters.AddWithValue("@Name", i);
                     command.Parameters.AddWithValue("@Size", Size);                    
                     command.ExecuteNonQuery();
                 }
                 foreach (string i in composantCity1_SSCT)
                 {
-                    MySqlCommand command = new MySqlCommand("UPDATE Stock SET Quantity = Quantity - 1 WHERE Name=@Name", cn);
+                    MySqlCommand command = new MySqlCommand("UPDATE CityStock SET Quantity = Quantity - 1 WHERE Name=@Name", cn);
                     command.Parameters.AddWithValue("@Name", i);                    
                     command.ExecuteNonQuery();
                 }
@@ -265,7 +270,7 @@ namespace BOVELO_PlanningList
             {
                 foreach (string i in composantExplo1)
                 {
-                    MySqlCommand command = new MySqlCommand("UPDATE Stock SET Quantity = Quantity - 1 WHERE (Name=@Name AND Size=@Size AND Color=@Color)", cn);
+                    MySqlCommand command = new MySqlCommand("UPDATE ExplorerStock SET Quantity = Quantity - 1 WHERE (Name=@Name AND Size=@Size AND Color=@Color)", cn);
                     command.Parameters.AddWithValue("@Name", i);
                     command.Parameters.AddWithValue("@Size", Size);
                     command.Parameters.AddWithValue("@Color", Color);
@@ -273,14 +278,14 @@ namespace BOVELO_PlanningList
                 }
                 foreach (string i in composantExplo2)
                 {
-                    MySqlCommand command = new MySqlCommand("UPDATE Stock SET Quantity = Quantity - 2 WHERE (Name=@Name AND Size=@Size)", cn);
+                    MySqlCommand command = new MySqlCommand("UPDATE ExplorerStock SET Quantity = Quantity - 2 WHERE (Name=@Name AND Size=@Size)", cn);
                     command.Parameters.AddWithValue("@Name", i);
                     command.Parameters.AddWithValue("@Size", Size);
                     command.ExecuteNonQuery();
                 }
                 foreach (string i in composantExplo1_SSCT)
                 {
-                    MySqlCommand command = new MySqlCommand("UPDATE Stock SET Quantity = Quantity - 1 WHERE Name=@Name", cn);
+                    MySqlCommand command = new MySqlCommand("UPDATE ExplorerStock SET Quantity = Quantity - 1 WHERE Name=@Name", cn);
                     command.Parameters.AddWithValue("@Name", i);
                     command.ExecuteNonQuery();
                 }
@@ -291,7 +296,7 @@ namespace BOVELO_PlanningList
             {
                 foreach (string i in composantAdventure1)
                 {
-                    MySqlCommand command = new MySqlCommand("UPDATE Stock SET Quantity = Quantity - 1 WHERE (Name=@Name AND Size=@Size AND Color=@Color)", cn);
+                    MySqlCommand command = new MySqlCommand("UPDATE AdventureStock SET Quantity = Quantity - 1 WHERE (Name=@Name AND Size=@Size AND Color=@Color)", cn);
                     command.Parameters.AddWithValue("@Name", i);
                     command.Parameters.AddWithValue("@Size", Size);
                     command.Parameters.AddWithValue("@Color", Color);
@@ -299,7 +304,7 @@ namespace BOVELO_PlanningList
                 }
                 foreach (string i in composantAdventure2)
                 {
-                    MySqlCommand command = new MySqlCommand("UPDATE Stock SET Quantity = Quantity - 2 WHERE (Name=@Name AND Size=@Size)", cn);
+                    MySqlCommand command = new MySqlCommand("UPDATE AdventureStock SET Quantity = Quantity - 2 WHERE (Name=@Name AND Size=@Size)", cn);
                     command.Parameters.AddWithValue("@Name", i);
                     command.Parameters.AddWithValue("@Size", Size);
                     command.ExecuteNonQuery();
@@ -309,7 +314,7 @@ namespace BOVELO_PlanningList
             //Size Different common Parts
             foreach (string i in composantSize1)
             {
-                MySqlCommand command = new MySqlCommand("UPDATE Stock SET Quantity = Quantity - 1 WHERE (Name=@Name AND Size=@Size)", cn);
+                MySqlCommand command = new MySqlCommand("UPDATE GeneralStock SET Quantity = Quantity - 1 WHERE (Name=@Name AND Size=@Size)", cn);
                 command.Parameters.AddWithValue("@Name", i);
                 command.Parameters.AddWithValue("@Size", Size);
                 command.ExecuteNonQuery();
@@ -317,7 +322,7 @@ namespace BOVELO_PlanningList
 
             foreach (string i in composantSize2)
             {
-                MySqlCommand command = new MySqlCommand("UPDATE Stock SET Quantity = Quantity - 2 WHERE (Name=@Name AND Size=@Size)", cn);
+                MySqlCommand command = new MySqlCommand("UPDATE GeneralStock SET Quantity = Quantity - 2 WHERE (Name=@Name AND Size=@Size)", cn);
                 command.Parameters.AddWithValue("@Name", i);
                 command.Parameters.AddWithValue("@Size", Size);
                 command.ExecuteNonQuery();
@@ -325,23 +330,24 @@ namespace BOVELO_PlanningList
 
         }
         
-        private void myBananasAreRipeToolStripMenuItem_Click(object sender, EventArgs e) //modification de ma commande
+        private void myBananasAreRipeToolStripMenuItem_Click(object sender, EventArgs e) 
+
+            //This method will change my order, usefull for the manager
+
         {
-            if (listView1.SelectedItems.Count > 0) //je peux pas selectioner du vide
+            if (listView1.SelectedItems.Count > 0) 
             {
-                ListViewItem element = listView1.SelectedItems[0]; //je rerentre mes données ds cette boucle, pour un code plus soignée on peut les sortir mais flemme
+                ListViewItem element = listView1.SelectedItems[0]; 
                 string idBike = element.SubItems[0].Text;
                 string Type = element.SubItems[1].Text;               
                 string Monteur = element.SubItems[4].Text;
                 string Horaire = element.SubItems[5].Text;
                 string DureeTache = element.SubItems[6].Text;
 
-                using(Détail_et_modification m = new Détail_et_modification()) //On crée notre nouvelle instante modification et detail
+                using(Détail_et_modification m = new Détail_et_modification()) //Here we call on the partial class Detail_Modification that will send us the modified data
                 {
-
                     GT = new Schedule(m.HoraireTache, m.DureeTache);
-                    a = new Assembler(m.Monteur);
-                    
+                    a = new Assembler(m.Monteur);                    
                     m.idBike = idBike;
                     a.getMonteur = Monteur;
                     GT.HoraireTache = Horaire;
@@ -355,10 +361,10 @@ namespace BOVELO_PlanningList
                         cmd.Parameters.AddWithValue("@HoraireTache", m.HoraireTache);
                         cmd.Parameters.AddWithValue("@DureeTache", m.DureeTache);
                         cmd.Parameters.AddWithValue("@Type", m.Type);
-                        cmd.Parameters.AddWithValue("@idBike", idBike);  //comme readonly pas de m.ID car je ne fais que afficher
+                        cmd.Parameters.AddWithValue("@idBike", idBike); 
                         cmd.ExecuteNonQuery();
-
-                        //je le met directement à jour sans le bouton "actualiser"
+                        
+                        //change in the form
                         element.SubItems[1].Text = m.Type;
                         element.SubItems[4].Text = m.Monteur;
                         element.SubItems[5].Text = GT.HoraireTache;
@@ -372,8 +378,11 @@ namespace BOVELO_PlanningList
         }
 
         private void ajoutCommandeToolStripMenuItem_Click(object sender, EventArgs e)
+
+            //This method helps to add a new order to our planning list
+
         {
-            using(AddCommand m2 = new AddCommand())
+            using(AddCommand m2 = new AddCommand()) //use of the partial class AddCommand
             {
                 if(m2.ShowDialog() == DialogResult.Yes)
                 {
@@ -390,21 +399,22 @@ namespace BOVELO_PlanningList
         }
 
         private void jeCommenceToolStripMenuItem_Click(object sender, EventArgs e)
+
+            //This method start the counter when an assembler starts an order
+
         {
-            this.element = listView1.SelectedItems[0]; //Je selectionne mes variables avec lequels je veux travailler
+            this.element = listView1.SelectedItems[0]; 
 
             string DureeTache = element.SubItems[6].Text;
             this.OrderDuration = Int32.Parse(DureeTache);
 
             this.timer1.Enabled = true;
-                      
-
-            //    //MySqlCommand cmd = new MySqlCommand("UPDATE Bike SET DureeTache=@DureeTache WHERE idBike=@idBike", cn); //MiseAJourBDD
-            //    //cmd.Parameters.AddWithValue("@DureeTache", DRTache.ToString());
-            //    //cmd.Parameters.AddWithValue("@idBike", idBike);
         }
 
         private void TimeIsOn(object sender, EventArgs e)
+
+            //counter very quick as an exemple that it works but can be slowed down to a minute
+
         {
             if (this.OrderDuration > 0)
             {

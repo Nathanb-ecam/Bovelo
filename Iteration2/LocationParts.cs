@@ -9,6 +9,7 @@ using MySql.Data.MySqlClient;
 namespace BOVELO_PlanningList
 {
     class LocationParts
+        //To know and display all my parts and their common location
     {
         MySqlConnection cn;
 
@@ -68,10 +69,10 @@ namespace BOVELO_PlanningList
 
         public string getCommonLocation()
         {
-            cn = new MySqlConnection("server=193.191.240.67;user=nick;database=DataBase;port=63307;password=1234");
+            cn = new MySqlConnection("server=193.191.240.67;user=nick;database=mydb;port=63307;password=1234");
             if (cn.State == ConnectionState.Closed) { cn.Open(); }
 
-            MySqlCommand command = new MySqlCommand("SELECT * From Stock WHERE Quantity>min ", cn);            
+            MySqlCommand command = new MySqlCommand("SELECT * From GeneralStock WHERE Quantity>min ", cn);            
             using (MySqlDataReader Lire = command.ExecuteReader())
             {
                 while (Lire.Read())
@@ -87,7 +88,7 @@ namespace BOVELO_PlanningList
 
         public string getCityLocation()
         {
-            cn = new MySqlConnection("server = 193.191.240.67; user = nick; database = DataBase; port = 63307; password = 1234");
+            cn = new MySqlConnection("server = 193.191.240.67; user = nick; database=mydb; port = 63307; password = 1234");
             if (cn.State == ConnectionState.Closed) { cn.Open(); }
 
             MySqlCommand command = new MySqlCommand("SELECT * From CityStock WHERE Quantity>min ", cn);
@@ -105,7 +106,7 @@ namespace BOVELO_PlanningList
         }
         public string getExplorerLocation()
         {
-            cn = new MySqlConnection("server = 193.191.240.67; user = nick; database = DataBase; port = 63307; password = 1234");
+            cn = new MySqlConnection("server = 193.191.240.67; user = nick; database=mydb; port = 63307; password = 1234");
             if (cn.State == ConnectionState.Closed) { cn.Open(); }
 
             MySqlCommand command = new MySqlCommand("SELECT * From ExplorerStock WHERE Quantity>min ", cn);
@@ -123,7 +124,7 @@ namespace BOVELO_PlanningList
         }
         public string getAdventureLocation()
         {
-            cn = new MySqlConnection("server = 193.191.240.67; user = nick; database = DataBase; port = 63307; password = 1234");
+            cn = new MySqlConnection("server = 193.191.240.67; user = nick; database=mydb; port = 63307; password = 1234");
             if (cn.State == ConnectionState.Closed) { cn.Open(); }
 
             MySqlCommand command = new MySqlCommand("SELECT * From AdventureStock WHERE Quantity>min ", cn);
