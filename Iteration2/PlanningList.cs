@@ -381,10 +381,6 @@ namespace BOVELO_PlanningList
                 command.ExecuteNonQuery();
             }
 
-            MySqlCommand command0 = new MySqlCommand("UPDATE CityStock SET Location = @val", cn);
-            command0.Parameters.AddWithValue("@val", "HANGAR00");
-            command0.ExecuteNonQuery();
-
         }
         
         private void myBananasAreRipeToolStripMenuItem_Click(object sender, EventArgs e) 
