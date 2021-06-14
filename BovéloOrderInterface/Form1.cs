@@ -575,7 +575,7 @@ namespace Bovelo
         {
             FlowLayoutPanel fp = new FlowLayoutPanel();
             fp.Location = new System.Drawing.Point(200, 50);
-            fp.Size = new System.Drawing.Size(1105, 658);
+            fp.Size = new System.Drawing.Size(1005, 558);
             fp.FlowDirection = FlowDirection.LeftToRight;
             fp.AutoScroll = true;
             panelCatalog.Controls.Add(fp);
